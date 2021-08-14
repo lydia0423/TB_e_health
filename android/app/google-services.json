@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1089056283018",
+    "project_id": "tb-e-health",
+    "storage_bucket": "tb-e-health.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089056283018:android:8839ee34447e660c571073",
+        "android_client_info": {
+          "package_name": "com.example.tb_e_health"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089056283018-qkfrdtms45r0h0eujlspsj4lrgn5fsac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeWIVUe-BuNn1rZoIsHPp36j13SSpBGpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089056283018-qkfrdtms45r0h0eujlspsj4lrgn5fsac.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
