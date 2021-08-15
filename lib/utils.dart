@@ -2,6 +2,27 @@ import 'package:flutter/material.dart';
 
 extension HelloDate on DateTime {
   DateTime getToday() => DateTime(this.year, this.month, this.day);
+
+  DateTime getTodayEnd() => DateTime(this.year, this.month, this.day, 23, 59, 59);
+
+  DateTime setDate(DateTime date) => DateTime(
+    date.year,
+    date.month,
+    date.day, 
+    this.hour, 
+    this.minute, 
+    this.second, 
+    this.millisecond, 
+    this.microsecond,
+  );
+
+  DateTime setTime(TimeOfDay time) => DateTime(
+    this.year,
+    this.month,
+    this.day, 
+    time.hour, 
+    time.minute,
+  );
 }
 
 const HelloBlue = Color(0xFF00B2FF);
