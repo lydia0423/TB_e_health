@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
                 padding: const EdgeInsets.only(
                     top: 50.0, bottom: 0.0, left: 40.0, right: 30.0),
                 child: Image(
-                  image: AssetImage('assets/images/uni_logo.png'),
+                  image: AssetImage('assets/Images/uni_logo.png'),
                   width: 350,
                 ),
               ),
@@ -48,7 +48,7 @@ class _LoginState extends State<Login> {
                 padding: const EdgeInsets.only(
                     top: 0.0, bottom: 10.0, left: 75.0, right: 60.0),
                 child: Image(
-                  image: AssetImage('assets/images/app_logo.png'),
+                  image: AssetImage('assets/Images/app_logo.png'),
                   width: 280,
                 ),
               ),
