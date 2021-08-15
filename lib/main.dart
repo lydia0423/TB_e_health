@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tb_e_health/Screens/home_screen.dart';
 import 'package:tb_e_health/Screens/login.dart';
+import 'package:tb_e_health/Screens/navigations.dart';
 
 main() async {
   //~ initialises firebase instances for authentication and Cloud FireStore
@@ -36,7 +37,7 @@ class _MyAppState extends State<MyApp> {
         initialRoute: widget.myRoute,
         routes: {
           "/": (context) => Login(),
-          "/home": (context) => HomeScreen(),
+          "/home": (context) => Navigations(),
         });
   }
 }

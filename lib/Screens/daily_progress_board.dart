@@ -1,4 +1,4 @@
-import 'package:tb_e_health/Custom_Widget/hello_calendar.dart';
+import 'package:tb_e_health/Custom%20Widgets/hello_calendar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:tb_e_health/utils.dart';
@@ -45,7 +45,7 @@ class DailyProgressBoardScreen extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(20),
                   child: Text(
-                    dates[today]?? false 
+                    dates[today] ?? false
                         // today taken medication
                         ? 'YOU HAVE COMPLETED YOUR MEDICATION TODAY!'
                         : 'HAVE YOU TAKE YOUR MEDICATION?',
