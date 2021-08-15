@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/Custom_Widget/hello_calendar_selection.dart';
+import 'package:tb_e_health/Models/appointment.dart';
 
 import 'package:tb_e_health/utils.dart';
 
@@ -13,6 +14,20 @@ class SchedulerScreen extends StatefulWidget {
 class _SchedulerScreenState extends State<SchedulerScreen> {
 
   DateTime? dateTime;
+  // TODO: load from firebase
+  Appointment? appointment = Appointment(
+    datetime: DateTime(2021, 8, 18),
+    awaiting: false,
+  );
+
+  void _joinSession() {
+    Navigator.of(context).pushNamed('/teleSession');
+  }
+
+  // TODO: action save the appointment
+  void _applySession() {
+    //
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +46,8 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
             // TODO: get from state
             from: DateTime(2021, 8, 5),
             to: DateTime(2021, 8, 30),
-            appointment: DateTime(2021, 8, 18),
+            appointment: appointment!.datetime,
+            awaiting: appointment!.awaiting,
             onSelect: (date) {
               dateTime = dateTime?? date;
               setState(() {
@@ -39,7 +55,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               });
             },
           ),
-          if (dateTime != null) 
+          if (dateTime != null && (appointment == null || appointment!.awaiting)) 
             // TODO: show time picker
             SizedBox(
               height: 160,
@@ -52,7 +68,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
                 },
               ),
             ),
-          if (dateTime != null) 
+          if (dateTime != null && (appointment == null || appointment!.awaiting)) 
             SizedBox(
               height: 60,
               child: Padding(
@@ -63,12 +79,27 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
-                  // TODO: action save the appointment
-                  onPressed: () {},
+                  onPressed: _applySession,
                   child: Text('Confirm Session'),
                 ),
               ),
-            )
+            ),
+          if (appointment != null && !appointment!.awaiting)
+            SizedBox(
+              height: 60,
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                  onPressed: _joinSession,
+                  child: Text('Go to session'),
+                ),
+              ),
+            ),
         ],
       ),
     );

@@ -6,8 +6,9 @@ import 'package:get/get.dart';
 import 'package:tb_e_health/Screens/daily_progress_board.dart';
 import 'package:tb_e_health/Screens/home_screen.dart';
 import 'package:tb_e_health/Screens/login.dart';
+import 'package:tb_e_health/Screens/teleconsultation/session_screen.dart';
 
-import 'Screens/scheduler_screen.dart';
+import 'Screens/teleconsultation/scheduler_screen.dart';
 
 main() async {
   //~ initialises firebase instances for authentication and Cloud FireStore
@@ -42,6 +43,7 @@ class _MyAppState extends State<MyApp> {
           "/home": (context) => HomeScreen(),
           "/scheduler": (context) => SchedulerScreen(),
           "/dailyProgress": (context) => DailyProgressBoardScreen(),
+          "/teleSession": (context) => SessionScreen(),
         });
   }
 }
