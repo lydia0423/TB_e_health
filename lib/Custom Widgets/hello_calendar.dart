@@ -9,10 +9,13 @@ class HelloCalendar extends StatelessWidget {
 
   /// the day start TB treatment
   final DateTime from;
+
   /// the day complete TB treatment
   final DateTime to;
+
   /// the day ur supply can tahan
   final DateTime until;
+
   /// dates whether video is taken, true is done
   final Map<DateTime, bool> dates;
 
@@ -23,10 +26,10 @@ class HelloCalendar extends StatelessWidget {
     required this.to,
     required this.until,
     this.dates = const {},
-  }): assert(month <= DateTime.december && month >= DateTime.january);
+  }) : assert(month <= DateTime.december && month >= DateTime.january);
 
   String get _monthToString {
-    switch(month) {
+    switch (month) {
       case DateTime.january:
         return 'january';
       case DateTime.february:
@@ -109,7 +112,7 @@ class HelloCalendar extends StatelessWidget {
 
   Color? _computeColor(DateTime date) {
     var b = dates[date];
-    if (dates[date]?? false) {
+    if (dates[date] ?? false) {
       return HelloGreen;
     }
     // today or after that
@@ -129,7 +132,7 @@ class HelloCalendar extends StatelessWidget {
   }
 
   Widget _dayWidget(
-    BuildContext context, 
+    BuildContext context,
     DateTime date,
   ) {
     return DayBox(
@@ -142,18 +145,15 @@ class HelloCalendar extends StatelessWidget {
 
   _weekBuilder(BuildContext context, List<DateTime> week) {
     return Row(
-      mainAxisAlignment: week[0].day == 1
-          ? MainAxisAlignment.end
-          : MainAxisAlignment.start,
+      mainAxisAlignment:
+          week[0].day == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: week.map((day) {
         return _dayWidget(context, day);
       }).toList(),
     );
   }
 
-  Widget _calendarBuilder(
-    BuildContext context
-  ) {
+  Widget _calendarBuilder(BuildContext context) {
     List<List<DateTime>> weeks = [];
     var dayDate = DateTime(year, month);
     while (dayDate.month == month) {
@@ -161,7 +161,7 @@ class HelloCalendar extends StatelessWidget {
       do {
         weeks[weeks.length - 1].add(dayDate);
         dayDate = dayDate.add(const Duration(days: 1));
-      } while(dayDate.weekday != DateTime.sunday && dayDate.month == month);
+      } while (dayDate.weekday != DateTime.sunday && dayDate.month == month);
     }
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -214,19 +214,21 @@ class DayBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: size, width: size,
+      height: size,
+      width: size,
       padding: EdgeInsets.all(3),
       child: Container(
         decoration: color != null
-          ? BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.all(Radius.circular(size/2-3)),
-              border: border
-                ? Border.all(
-                  color: HelloBlue,
-                ) : null,
-            )
-          : null,
+            ? BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.all(Radius.circular(size / 2 - 3)),
+                border: border
+                    ? Border.all(
+                        color: HelloBlue,
+                      )
+                    : null,
+              )
+            : null,
         child: Center(
           child: Text('$day'),
         ),
