@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:bot_toast/bot_toast.dart';
+import 'package:get/get.dart';
+import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -131,9 +132,7 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.only(left: 34.0),
                   child: OutlinedButton(
-                      onPressed: () async {
-                        accountLogin();
-                      },
+                      onPressed: accountLogin,
                       child: Padding(
                         padding: const EdgeInsets.only(
                             top: 8.0, left: 45.0, right: 45.0, bottom: 8.0),
@@ -161,7 +160,8 @@ class _LoginState extends State<Login> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailCtrl.text, password: passwordCtrl.text);
-      Navigator.of(context).pushReplacementNamed('/home');
+
+      Get.offAllNamed("/home");
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         loginError(context, "invalidUser");
@@ -190,7 +190,8 @@ class _LoginState extends State<Login> {
         break;
     }
 
-    BotToast.showText(text: errorMsg);
+    //^ Build method for AlertDialog
+    customAlertDialog(context, title: "Error logging in", content: errorMsg);
   }
 
   //? Disposes of the widget once login is completed

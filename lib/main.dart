@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ main() async {
   await Firebase.initializeApp();
   FirebaseAuth.instance;
   //~ Redirects users
-  String myRoute = await checkLoggedIn();
+  String myRoute = "/";
   //~ Run application
   runApp(MyApp(myRoute));
 }
@@ -39,23 +39,4 @@ class _MyAppState extends State<MyApp> {
           "/home": (context) => HomeScreen(),
         });
   }
-}
-
-Future<String> checkLoggedIn() async {
-  String myRoute = "/home";
-  try {
-    User? currentUserId = FirebaseAuth.instance.currentUser;
-    if (currentUserId == null) {
-      myRoute = "/";
-    } else {
-      await FirebaseFirestore.instance
-          .collection("User")
-          .doc(currentUserId.uid)
-          .get();
-      myRoute = "/home";
-    }
-  } catch (e) {
-    print("$e: User is not logged in");
-  }
-  return myRoute;
 }
