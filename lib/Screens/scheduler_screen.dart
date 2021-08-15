@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/Custom_Widget/hello_calendar_selection.dart';
 
@@ -11,7 +12,7 @@ class SchedulerScreen extends StatefulWidget {
 
 class _SchedulerScreenState extends State<SchedulerScreen> {
 
-  DateTime? dateTime = null;
+  DateTime? dateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +34,41 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
             appointment: DateTime(2021, 8, 18),
             onSelect: (date) {
               dateTime = dateTime?? date;
-              dateTime = dateTime!.setDate(date);
+              setState(() {
+                dateTime = dateTime!.setDate(date);
+              });
             },
           ),
           if (dateTime != null) 
             // TODO: show time picker
-            SizedBox(),
+            SizedBox(
+              height: 160,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.time,
+                onDateTimeChanged: (time) {
+                  setState(() {
+                    dateTime = dateTime!.setTime(time);
+                  });
+                },
+              ),
+            ),
+          if (dateTime != null) 
+            SizedBox(
+              height: 60,
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                  // TODO: action save the appointment
+                  onPressed: () {},
+                  child: Text('Confirm Session'),
+                ),
+              ),
+            )
         ],
       ),
     );

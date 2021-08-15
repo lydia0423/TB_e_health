@@ -16,7 +16,7 @@ extension HelloDate on DateTime {
     this.microsecond,
   );
 
-  DateTime setTime(TimeOfDay time) => DateTime(
+  DateTime setTime(DateTime time) => DateTime(
     this.year,
     this.month,
     this.day, 

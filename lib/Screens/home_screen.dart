@@ -129,7 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 _featureButton(
                   child: Assets.images.iconSupport.svg(height: 30), 
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed("scheduler");
+                  },
                   title: 'Tele Consultation',
                 ),
               ],

@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tb_e_health/Screens/daily_progress_board.dart';
 import 'package:tb_e_health/Screens/home_screen.dart';
 import 'package:tb_e_health/Screens/login.dart';
+
+import 'Screens/scheduler_screen.dart';
 
 main() async {
   //~ initialises firebase instances for authentication and Cloud FireStore
@@ -37,6 +40,8 @@ class _MyAppState extends State<MyApp> {
         routes: {
           "/": (context) => Login(),
           "/home": (context) => HomeScreen(),
+          "/scheduler": (context) => SchedulerScreen(),
+          "/dailyProgress": (context) => DailyProgressBoardScreen(),
         });
   }
 }
