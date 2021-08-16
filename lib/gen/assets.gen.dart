@@ -10,18 +10,22 @@ import 'package:flutter/services.dart';
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  SvgGenImage get iconCart => const SvgGenImage('assets/images/icon_cart.svg');
+  AssetGenImage get appLogo =>
+      const AssetGenImage('assets/Images/app_logo.png');
+  SvgGenImage get iconCart => const SvgGenImage('assets/Images/icon_cart.svg');
   SvgGenImage get iconCloud =>
-      const SvgGenImage('assets/images/icon_cloud.svg');
-  SvgGenImage get iconFaq => const SvgGenImage('assets/images/icon_faq.svg');
-  SvgGenImage get iconHome => const SvgGenImage('assets/images/icon_home.svg');
+      const SvgGenImage('assets/Images/icon_cloud.svg');
+  SvgGenImage get iconFaq => const SvgGenImage('assets/Images/icon_faq.svg');
+  SvgGenImage get iconHome => const SvgGenImage('assets/Images/icon_home.svg');
   SvgGenImage get iconMobileInfo =>
-      const SvgGenImage('assets/images/icon_mobile_info.svg');
-  SvgGenImage get iconNote => const SvgGenImage('assets/images/icon_note.svg');
+      const SvgGenImage('assets/Images/icon_mobile_info.svg');
+  SvgGenImage get iconNote => const SvgGenImage('assets/Images/icon_note.svg');
   SvgGenImage get iconPeople =>
-      const SvgGenImage('assets/images/icon_people.svg');
+      const SvgGenImage('assets/Images/icon_people.svg');
   SvgGenImage get iconSupport =>
-      const SvgGenImage('assets/images/icon_support.svg');
+      const SvgGenImage('assets/Images/icon_support.svg');
+  AssetGenImage get uniLogo =>
+      const AssetGenImage('assets/Images/uni_logo.png');
 }
 
 class Assets {

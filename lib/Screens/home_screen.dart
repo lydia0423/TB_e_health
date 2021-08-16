@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:tb_e_health/Custom%20Widgets/video_widget.dart';
+import 'package:tb_e_health/Models/media_source.dart';
+import 'package:tb_e_health/Screens/upload_video.dart';
 import 'package:tb_e_health/gen/assets.gen.dart';
 
 import 'package:flutter/foundation.dart';
@@ -13,29 +18,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  File? fileMedia;
 
-  Widget _uploadWidget() =>
-      SizedBox(
-        height: 300,
-        width: 300,
-        child: GestureDetector(
-          onTap: () {}, // TODO: 
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
-            ),
-            child: Center(
-              child: Assets.images.iconCloud.svg(),
-            ),
-          ),
-        ),
-      );
-  
+  Widget _uploadWidget() => SizedBox(
+      height: 300,
+      width: 300,
+      child: GestureDetector(
+        onTap: () => capture(MediaSource.video),
+        child: (fileMedia == null)
+            ? Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: Center(
+                  child: Assets.images.iconCloud.svg(),
+                ),
+              )
+            : VideoWidget(fileMedia!),
+      ));
+
   Widget _featureButton({
     required Widget child,
     required void Function()? onTap,
     required String title,
-  }) => 
+  }) =>
       SizedBox(
         width: 80,
         child: Column(
@@ -47,12 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(32.0),
                 ),
                 child: SizedBox(
-                  height: 64, width: 64,
+                  height: 64,
+                  width: 64,
                   child: Center(
                     child: child,
                   ),
                 ),
-              ), 
+              ),
               onTap: onTap,
             ),
             const SizedBox(height: 4),
@@ -63,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       );
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,8 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 'Hello!',
                 style: Theme.of(context).textTheme.headline4!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
             ),
           ),
@@ -98,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(16),
             child: Text(
               'Upload Video',
-                style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.headline6,
             ),
           ),
           const SizedBox(
@@ -113,17 +120,17 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _featureButton(
-                  child: Assets.images.iconCart.svg(height: 30), 
+                  child: Assets.images.iconCart.svg(height: 30),
                   onTap: () {},
                   title: 'Drug Delivery',
                 ),
                 _featureButton(
-                  child: Assets.images.iconNote.svg(height: 30), 
+                  child: Assets.images.iconNote.svg(height: 30),
                   onTap: () {},
                   title: 'Side Effects',
                 ),
                 _featureButton(
-                  child: Assets.images.iconMobileInfo.svg(height: 30), 
+                  child: Assets.images.iconMobileInfo.svg(height: 30),
                   onTap: () {},
                   title: 'TB Info',
                 ),
@@ -139,7 +146,23 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      // bottomNavigationBar: ,
     );
+  }
+
+  Future capture(MediaSource source) async {
+    setState(() {
+      this.fileMedia = null;
+    });
+    final result = await Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => SourcePage(),
+    ));
+
+    if (result == null) {
+      return;
+    } else {
+      setState(() {
+        fileMedia = result;
+      });
+    }
   }
 }

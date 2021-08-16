@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 extension HelloDate on DateTime {
   DateTime getToday() => DateTime(this.year, this.month, this.day);
 
-  DateTime getTodayEnd() => DateTime(this.year, this.month, this.day, 23, 59, 59);
+  DateTime getTodayEnd() => DateTime(this.year, this.month, this.day, 23, 59, 59, 999);
 
   DateTime setDate(DateTime date) => DateTime(
     date.year,

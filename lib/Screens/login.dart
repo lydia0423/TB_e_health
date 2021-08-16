@@ -11,8 +11,11 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
+  final resetPasswordCtrl = TextEditingController();
 
   String enteredEmail = "";
+  String resetPasswordEmail = "";
+  String email = "";
   //^ Password field attributes - password visibility toggle + icon
   bool passwordHidden = true;
   var iconShowPassword;
@@ -64,7 +67,7 @@ class _LoginState extends State<Login> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0)),
-                  labelText: 'Username',
+                  labelText: 'Email',
                 ),
                 onChanged: (newText) {
                   setState(() {
@@ -98,39 +101,53 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              GestureDetector(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 30.0, top: 10),
                     child: Text('Forget Password?'),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10.0),
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('ResetPassword'),
+                            content: TextField(
+                              controller: resetPasswordCtrl,
+                              decoration:
+                                  InputDecoration(hintText: 'Enter your email'),
+                              onChanged: (value) {
+                                setState(() {
+                                  resetPasswordEmail = value;
+                                });
+                              },
+                            ),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      email = resetPasswordEmail;
+                                    });
+                                    resetPassword(email);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'OK',
+                                    style: TextStyle(color: Colors.black),
+                                  ))
+                            ],
+                          );
+                        });
+                  })
+            ]),
+            SizedBox(height: 14.0),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 30.0),
-                  child: OutlinedButton(
-                      onPressed: null,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 8.0, left: 5.0, right: 5.0, bottom: 8.0),
-                        child: Text('First Time Login',
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 18)),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(width: 1),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                      )),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 34.0),
+                  padding: const EdgeInsets.only(left: 15.0),
                   child: OutlinedButton(
                       onPressed: accountLogin,
                       child: Padding(
@@ -200,5 +217,12 @@ class _LoginState extends State<Login> {
     passwordCtrl.dispose();
     emailCtrl.dispose();
     super.dispose();
+  }
+
+  Future<void> resetPassword(String email) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    return customAlertDialog(context,
+        title: 'Email has been sent out',
+        content: 'Please check your mail box to reset password');
   }
 }
