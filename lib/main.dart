@@ -12,6 +12,7 @@ import 'package:tb_e_health/Screens/teleconsultation/session_screen.dart';
 
 import 'Screens/teleconsultation/scheduler_screen.dart';
 import 'package:tb_e_health/Screens/navigations.dart';
+import 'package:tb_e_health/theme.dart';
 
 main() async {
   bool kReleaseMode = false;
@@ -45,7 +46,7 @@ class _MyAppState extends State<MyApp> {
         builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
         title: "TB e-health",
-        theme: ThemeData.light(),
+        theme: helloTheme,
         //^ named Navigator routes
         initialRoute: widget.myRoute,
         routes: {
