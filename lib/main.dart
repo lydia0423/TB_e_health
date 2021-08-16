@@ -5,7 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tb_e_health/Screens/daily_progress_board.dart';
+import 'package:tb_e_health/Screens/home_screen.dart';
 import 'package:tb_e_health/Screens/login.dart';
+import 'package:tb_e_health/Screens/teleconsultation/session_screen.dart';
+
+import 'Screens/teleconsultation/scheduler_screen.dart';
 import 'package:tb_e_health/Screens/navigations.dart';
 
 main() async {
@@ -45,7 +50,10 @@ class _MyAppState extends State<MyApp> {
         initialRoute: widget.myRoute,
         routes: {
           "/": (context) => Login(),
-          "/home": (context) => Navigations(),
+          "/home": (context) => HomeScreen(),
+          "/scheduler": (context) => SchedulerScreen(),
+          "/dailyProgress": (context) => DailyProgressBoardScreen(),
+          "/teleSession": (context) => SessionScreen(),
         });
   }
 }

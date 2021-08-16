@@ -135,8 +135,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: 'TB Info',
                 ),
                 _featureButton(
-                  child: Assets.images.iconSupport.svg(height: 30),
-                  onTap: () {},
+                  child: Assets.images.iconSupport.svg(height: 30), 
+                  onTap: () {
+                    Navigator.of(context).pushNamed("/scheduler");
+                  },
                   title: 'Tele Consultation',
                 ),
               ],

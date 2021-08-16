@@ -1,35 +1,43 @@
 import 'package:flutter/material.dart';
 
 import '../utils.dart';
+import 'hello_calendar.dart';
 
-class HelloCalendar extends StatelessWidget {
+class HelloCalendarSelection extends StatefulWidget {
   final int year;
   final int month;
   // config data
 
   /// the day start TB treatment
   final DateTime from;
-
   /// the day complete TB treatment
   final DateTime to;
 
-  /// the day ur supply can tahan
-  final DateTime until;
+  final void Function(DateTime) onSelect;
 
-  /// dates whether video is taken, true is done
-  final Map<DateTime, bool> dates;
+  // load color for appointment
+  final DateTime? appointment;
+  final bool awaiting;
 
-  HelloCalendar({
+  HelloCalendarSelection({
     required this.year,
     required this.month,
     required this.from,
     required this.to,
-    required this.until,
-    this.dates = const {},
-  }) : assert(month <= DateTime.december && month >= DateTime.january);
+    required this.onSelect,
+    this.appointment,
+    this.awaiting = true,
+  }): assert(month <= DateTime.december && month >= DateTime.january);
+
+  _HelloCalendarSelection createState() => _HelloCalendarSelection();
+}
+
+class _HelloCalendarSelection extends State<HelloCalendarSelection> {
+
+  DateTime? selected;
 
   String get _monthToString {
-    switch (month) {
+    switch(widget.month) {
       case DateTime.january:
         return 'january';
       case DateTime.february:
@@ -111,57 +119,68 @@ class HelloCalendar extends StatelessWidget {
   }
 
   Color? _computeColor(DateTime date) {
-    var b = dates[date];
-    if (dates[date] ?? false) {
-      return HelloGreen;
-    }
-    // today or after that
-    if (date.isAfter(DateTime.now().subtract(const Duration(days: 1)))) {
-      if (date.isBefore(until)) {
-        // still have supply
-        return HelloYellow;
-      } else if (date.isBefore(to)) {
-        // need resupply
-        return HelloGrey;
-      }
-    } else if (date.isAfter(from)) {
-      // already pass but didnt take video
-      return HelloRed;
+    if (widget.appointment == null) {
+      return null;
+    } 
+    var a = widget.appointment!.getToday();
+    if (a.day == date.day && a.month == date.month && a.year == date.year) {
+      return widget.awaiting? HelloYellow : HelloGreen;
     }
     return null;
   }
 
   Widget _dayWidget(
-    BuildContext context,
+    BuildContext context, 
     DateTime date,
   ) {
-    return DayBox(
-      size: MediaQuery.of(context).size.width / 7,
-      day: date.day,
-      color: _computeColor(date),
-      border: date.day == DateTime.now().day,
+    bool isSelectable = date.isAfter(widget.from) && date.isBefore(widget.to);
+    var child = GestureDetector(
+      onTap: isSelectable? () {
+        setState(() {
+          selected = date;
+        });
+        widget.onSelect(date);
+      } : null,
+      child: SelectableDayBox(
+        size: MediaQuery.of(context).size.width / 7 - 8,
+        day: date.day,
+        color: _computeColor(date),
+        border: date.day == DateTime.now().day,
+        selectable: isSelectable,
+      ),
+    );
+    return SizedBox(
+      width: MediaQuery.of(context).size.width / 7, height: MediaQuery.of(context).size.width / 7,
+      child: selected == date
+          ? Card(
+              child: child,
+            )
+          : child,
     );
   }
 
   _weekBuilder(BuildContext context, List<DateTime> week) {
     return Row(
-      mainAxisAlignment:
-          week[0].day == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment: week[0].day == 1
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
       children: week.map((day) {
         return _dayWidget(context, day);
       }).toList(),
     );
   }
 
-  Widget _calendarBuilder(BuildContext context) {
+  Widget _calendarBuilder(
+    BuildContext context
+  ) {
     List<List<DateTime>> weeks = [];
-    var dayDate = DateTime(year, month);
-    while (dayDate.month == month) {
+    var dayDate = DateTime(widget.year, widget.month);
+    while (dayDate.month == widget.month) {
       weeks.add([]);
       do {
         weeks[weeks.length - 1].add(dayDate);
         dayDate = dayDate.add(const Duration(days: 1));
-      } while (dayDate.weekday != DateTime.sunday && dayDate.month == month);
+      } while(dayDate.weekday != DateTime.sunday && dayDate.month == widget.month);
     }
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -181,7 +200,7 @@ class HelloCalendar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
           child: Text(
-            '${_monthToString.toUpperCase()} $year',
+            '${_monthToString.toUpperCase()} ${widget.year}',
             style: TextStyle(
               fontSize: 40,
               fontWeight: FontWeight.bold,
@@ -198,37 +217,30 @@ class HelloCalendar extends StatelessWidget {
   }
 }
 
-class DayBox extends StatelessWidget {
-  final double size;
-  final int day;
-  final Color? color;
-  final bool border;
+class SelectableDayBox extends DayBox {
+  final bool selectable;
 
-  DayBox({
-    this.size = 60,
-    this.day = 1,
-    this.color,
-    this.border = false,
-  });
+  SelectableDayBox({
+    this.selectable = true,
+    double? size,
+    int day = 1,
+    Color? color,
+    bool border = false,
+  }) : super(
+    size: size?? 60,
+    day: day,
+    color: color,
+    border: border,
+  );
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: size,
-      width: size,
-      padding: EdgeInsets.all(3),
-      child: Container(
-        decoration: BoxDecoration(
-          color: color != null? color : null,
-          borderRadius: BorderRadius.all(Radius.circular(size/2-3)),
-          border: border
-            ? Border.all(
-              color: HelloBlue,
-            ) : null,
-        ),
-        child: Center(
-          child: Text('$day'),
-        ),
+    return Center(
+      child: DefaultTextStyle(
+        style: TextStyle(
+          color: selectable? Colors.black : Colors.grey,
+        ), 
+        child: super.build(context),
       ),
     );
   }
