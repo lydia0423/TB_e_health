@@ -1,23 +1,38 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tb_e_health/Custom%20Widgets/hello_calendar.dart';
 import 'package:flutter/material.dart';
+import 'package:tb_e_health/Models/submission.dart';
 
 import 'package:tb_e_health/utils.dart';
 
-class DailyProgressBoardScreen extends StatelessWidget {
+class DailyProgressBoardScreen extends StatefulWidget {
+  @override
+  _DailyProgressBoardScreenState createState() => _DailyProgressBoardScreenState();
+}
+
+class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
+
+  Map<DateTime, bool> dates = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSubmission();
+  }
+
+  _loadSubmission() async {
+    List<Submission> submissions = await findSubmissionOfUser(FirebaseAuth.instance.currentUser!.uid);
+    for (var submission in submissions) {
+      print(submission.videoTimestamp!.getToday());
+      dates[submission.videoTimestamp!.getToday()] = true;
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var today = DateTime.now().getToday();
     // TODO: get state
-    var dates = {
-      DateTime(2021, 8, 5): true,
-      DateTime(2021, 8, 6): true,
-      DateTime(2021, 8, 7): true,
-      DateTime(2021, 8, 8): true,
-      DateTime(2021, 8, 9): true,
-      DateTime(2021, 8, 10): true,
-      DateTime(2021, 8, 12): true,
-      DateTime(2021, 8, 13): true,
-    };
     return Scaffold(
       // TODO: primary color
       appBar: AppBar(
