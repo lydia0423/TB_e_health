@@ -1,4 +1,3 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,7 +8,7 @@ import 'package:tb_e_health/Screens/login.dart';
 import 'package:tb_e_health/Screens/navigations.dart';
 
 main() async {
-  bool kReleaseMode = false;
+  bool kReleaseMode = true;
   //~ initialises firebase instances for authentication and Cloud FireStore
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
