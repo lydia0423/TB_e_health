@@ -1,41 +1,28 @@
-import 'dart:io';
-
-import 'package:tb_e_health/Custom%20Widgets/video_widget.dart';
-import 'package:tb_e_health/Models/media_source.dart';
-import 'package:tb_e_health/Screens/upload_video.dart';
+import 'package:get/get.dart';
+import 'package:tb_e_health/Screens/video_upload.dart';
 import 'package:tb_e_health/gen/assets.gen.dart';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'HomeScreen';
-
-  const HomeScreen({Key? key}) : super(key: key);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  File? fileMedia;
-
   Widget _uploadWidget() => SizedBox(
       height: 300,
       width: 300,
       child: GestureDetector(
-        onTap: () => capture(MediaSource.video),
-        child: (fileMedia == null)
-            ? Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                child: Center(
-                  child: Assets.images.iconCloud.svg(),
-                ),
-              )
-            : VideoWidget(fileMedia!),
-      ));
+          onTap: () => Get.to(() => UploadVideo()),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            child: Center(
+              child: Assets.images.iconCloud.svg(),
+            ),
+          )));
 
   Widget _featureButton({
     required Widget child,
@@ -147,22 +134,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  Future capture(MediaSource source) async {
-    setState(() {
-      this.fileMedia = null;
-    });
-    final result = await Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => SourcePage(),
-    ));
-
-    if (result == null) {
-      return;
-    } else {
-      setState(() {
-        fileMedia = result;
-      });
-    }
   }
 }

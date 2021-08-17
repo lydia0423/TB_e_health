@@ -10,11 +10,12 @@ class ActiveUser {
       gender,
       healthInfo,
       notificationPreference,
-      address;
+      address,
+      userId;
 
   //^ Constructor
   ActiveUser(this.avatar, this.email, this.name, this.age, this.gender,
-      this.healthInfo, this.notificationPreference, this.address);
+      this.healthInfo, this.notificationPreference, this.address, this.userId);
 
   //? Factory - creates the ActiveUser instance from the JSON (database storage type) passed
   //? When Factory is used, implementing a constructor doesn't always create a new instance of its class
@@ -37,6 +38,7 @@ ActiveUser _activeUserFromJson(Map<dynamic, dynamic> json) {
     json["UserHealthInfo"] as String,
     json["UserNotificationPreference"] as String,
     json["UserAddress"] as String,
+    json["UserId"] as String,
   );
 }
 
@@ -50,6 +52,7 @@ Map<String, String> _activeUserToJson(ActiveUser instance) => <String, String>{
       "UserHealthInfo": instance.healthInfo,
       "UserNotificationPreference": instance.notificationPreference,
       "UserAddress": instance.address,
+      "UserId": instance.userId,
     };
 
 //? Retrieves list of all users
@@ -101,4 +104,13 @@ Future<String> findUser(String queryField, String queryItem) async {
     print("$e : User not found");
   }
   return docId;
+}
+
+//? Checks if the entered UserId belongs to a valid user
+Future<bool> validUser(String userId) async {
+  var validUser = await FirebaseFirestore.instance
+      .collection("User")
+      .where("UserId", isEqualTo: userId)
+      .get();
+  return validUser.docs.isNotEmpty;
 }
