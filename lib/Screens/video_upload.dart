@@ -83,24 +83,22 @@ class _UploadVideoState extends State<UploadVideo> {
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, right: 30.0),
                 child: InkWell(
-                    onTap: () {
-                      uploadFile();
-                      customAlertDialog(context,
-                          title: 'Reminder',
-                          content: 'Upload video successfully');
-                      // TODO: Get the userID
-                      // if (await validUser(widget.userId.value)) {
-                      //   uploadFile();
-                      //   customAlertDialog(context,
-                      //       title: 'Reminder',
-                      //       content: 'Upload video successfully');
-                      // }
-                      // } else {
-                      //   //~ UserId is invalid
-                      //   customAlertDialog(context,
-                      //       title: "Invalid User",
-                      //       content: "No user with this ID has been found!");
-                      // }
+                    onTap: () async {
+                      // uploadFile();
+                      // customAlertDialog(context,
+                      //     title: 'Reminder',
+                      //     content: 'Upload video successfully');
+                      if (await validUser(widget.userId.value)) {
+                        uploadFile();
+                        customAlertDialog(context,
+                            title: 'Reminder',
+                            content: 'Upload video successfully');
+                      } else {
+                        //~ UserId is invalid
+                        customAlertDialog(context,
+                            title: "Invalid User",
+                            content: "No user with this ID has been found!");
+                      }
                     },
                     child: Icon(
                       Icons.send,
