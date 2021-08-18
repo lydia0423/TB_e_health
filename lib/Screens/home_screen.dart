@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 120,
+            height: 100,
             child: Center(
               child: Text(
                 'Hello!',
@@ -116,13 +116,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {},
                   title: 'Side Effects',
                 ),
+                // _featureButton(
+                //   child: Assets.images.iconMobileInfo.svg(height: 30),
+                //   onTap: () {},
+                //   title: 'TB Info',
+                // ),
                 _featureButton(
-                  child: Assets.images.iconMobileInfo.svg(height: 30),
-                  onTap: () {},
-                  title: 'TB Info',
-                ),
-                _featureButton(
-                  child: Assets.images.iconSupport.svg(height: 30), 
+                  child: Assets.images.iconSupport.svg(height: 30),
                   onTap: () {
                     Navigator.of(context).pushNamed("/scheduler");
                   },
