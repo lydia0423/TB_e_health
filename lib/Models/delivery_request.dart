@@ -51,17 +51,17 @@ class DrugDeliveryRequest {
 
   factory DrugDeliveryRequest.fromJson(Map<String, dynamic> json) {
     return DrugDeliveryRequest(
-      type: json["orderType"],
-      approvedBy: json["OrderApprovedBy"],
-      id: json["OrderId"],
-      item: json["OrderItem"],
-      status: json["OrderStatus"],
-      requestDate: json["RequestDate"],
-      therapyEndDate: json["OrderTherapyEndDate"],
-      therapyStartDate: json["OrderTherapyStartDate"],
-      userAddress: json["UserAddress"],
-      userId: json["UserId"],
-      userName: json["UserName"],
+      type: json["orderType"]?? '',
+      approvedBy: json["OrderApprovedBy"]?? '',
+      id: json["OrderId"]?? '',
+      item: ((json["OrderItem"]?? []) as List<dynamic>).map<String>((e) => e).toList(),
+      status: json["OrderStatus"]?? '',
+      requestDate: json["RequestDate"]?? '',
+      therapyEndDate: json["OrderTherapyEndDate"]?? '',
+      therapyStartDate: json["OrderTherapyStartDate"]?? '',
+      userAddress: json["UserAddress"]?? '',
+      userId: json["UserId"]?? '',
+      userName: json["UserName"]?? '',
     );
   }
 }
@@ -78,11 +78,12 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId, {
       query = query.where("OrderStatus", isNotEqualTo: OrderStatus.Received);
     }
     QuerySnapshot snapshot = await query.get();
-    print('\n\tConverting\n');
     for (var doc in snapshot.docs) {
+      print(doc.data());
       var submission = DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
       result.add(submission);
     }
+    print(result.length);
     return result;
   } catch (e) {
     print(e);

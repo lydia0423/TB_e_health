@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// TODO: remove
 class Submission {
   String? userId;
   DateTime? videoTimestamp;

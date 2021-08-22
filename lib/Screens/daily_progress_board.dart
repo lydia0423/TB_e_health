@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tb_e_health/Custom%20Widgets/hello_calendar.dart';
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Models/submission.dart';
+// import 'package:tb_e_health/Models/submission.dart';
+import 'package:tb_e_health/Models/video_uploaded.dart';
 
 import 'package:tb_e_health/utils.dart';
 
@@ -21,10 +22,9 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
   }
 
   _loadSubmission() async {
-    List<Submission> submissions = await findSubmissionOfUser(FirebaseAuth.instance.currentUser!.uid);
+    List<VideoUploaded> submissions = await findVideoUploadedOfUser(FirebaseAuth.instance.currentUser!.uid);
     for (var submission in submissions) {
-      print(submission.videoTimestamp!.getToday());
-      dates[submission.videoTimestamp!.getToday()] = true;
+      dates[DateTime.parse(submission.timestamp).getToday()] = true;
     }
     setState(() {});
   }
