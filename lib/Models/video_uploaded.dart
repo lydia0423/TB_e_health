@@ -51,3 +51,21 @@ Future<String?> uploadVideo(VideoUploaded video) async {
 
   return docId;
 }
+
+Future<List<VideoUploaded>> findVideoUploadedOfUser(String userId) async {
+  List<VideoUploaded> result = [];
+  try {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection("VideoUploaded")
+        .where("UserId", isEqualTo: userId)
+        .get();
+    for (var doc in snapshot.docs) {
+      var submission = videoUploadedFromJson(doc.data() as Map<String, dynamic>);
+      result.add(submission);
+    }
+    return result;
+  } catch (e) {
+    print(e);
+    return result;
+  }
+}

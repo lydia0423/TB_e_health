@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:tb_e_health/Screens/drug_delivery/drug_delivery_screen.dart';
 import 'package:tb_e_health/Screens/video_upload.dart';
 import 'package:tb_e_health/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +109,11 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _featureButton(
                   child: Assets.images.iconCart.svg(height: 30),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => DrugDeliveryScreen())
+                    );
+                  },
                   title: 'Drug Delivery',
                 ),
                 _featureButton(
