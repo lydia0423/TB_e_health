@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tb_e_health/Models/delivery_request.dart';
 import 'package:tb_e_health/Screens/drug_delivery/request_display_card.dart';
+import 'package:get/get.dart';
+
+import 'drug_request_screen.dart';
 
 class DrugRequestListScreen extends StatefulWidget {
   @override
@@ -12,6 +15,13 @@ class DrugRequestListScreen extends StatefulWidget {
 class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
 
   // TabController tabController = TabController();
+
+  _requestNewDrugDelivery(BuildContext context) {
+    Get.to(() => DrugRequestScreen(
+      dateFrom: DateTime(2021, 9, 1),
+      dateUntil: DateTime(2021, 9, 15),
+    ));
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -145,6 +155,10 @@ class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _requestNewDrugDelivery(context),
+        child: Icon(Icons.add),
       ),
     );
   }

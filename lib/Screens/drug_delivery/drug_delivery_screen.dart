@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tb_e_health/Screens/drug_delivery/drug_request_list.dart';
 
 class DrugDeliveryScreen extends StatelessWidget {
@@ -36,13 +37,32 @@ class DrugDeliveryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        leading: Padding(
+          padding: const EdgeInsets.only(top: 20.0, left: 30.0),
+          child: IconButton(
+            icon: new Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 35.0,
+            ),
+            onPressed: () => Get.back(),
+          ),
+        ),
+      ),
       body: Column(
         children: [
           SizedBox(height: 16,),
           _rowSelection('', 'Drug Delivery', () {
             Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => DrugRequestListScreen())
+              MaterialPageRoute(
+                builder: (context) => DrugRequestListScreen(),
+                settings: RouteSettings(
+                  name: 'DrugRequestListScreen'
+                )
+              )
             );
           }),
           _rowSelection('', 'Speak to a Nurse', () {}),
