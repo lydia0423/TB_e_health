@@ -5,11 +5,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:tb_e_health/Api/firebase_api.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/Custom%20Widgets/video_widget.dart';
-import 'package:tb_e_health/Models/user.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
-import 'package:tb_e_health/Screens/home_screen.dart';
+
+import 'navigations.dart';
 
 // ignore: must_be_immutable
 class UploadVideo extends StatefulWidget {
@@ -39,7 +38,7 @@ class _UploadVideoState extends State<UploadVideo> {
                 color: Colors.black,
                 size: 35.0,
               ),
-              onPressed: () => Get.to(() => HomeScreen())),
+              onPressed: () => Get.to(() => Navigations())),
         ),
       ),
       body: Column(
@@ -88,17 +87,6 @@ class _UploadVideoState extends State<UploadVideo> {
                       // customAlertDialog(context,
                       //     title: 'Reminder',
                       //     content: 'Upload video successfully');
-                      if (await validUser(widget.userId.value)) {
-                        uploadFile();
-                        customAlertDialog(context,
-                            title: 'Reminder',
-                            content: 'Upload video successfully');
-                      } else {
-                        //~ UserId is invalid
-                        customAlertDialog(context,
-                            title: "Invalid User",
-                            content: "No user with this ID has been found!");
-                      }
                     },
                     child: Icon(
                       Icons.send,
@@ -158,7 +146,7 @@ class _UploadVideoState extends State<UploadVideo> {
 
   VideoUploaded uploadMyVideo(ValueNotifier userId) {
     String videoPath = fileMedia.toString();
-    String uid = userId.value;
+    String uid = "UM00001";
     videoPath = url!;
 
     VideoUploaded myVideo = VideoUploaded(uid, date, videoPath);
