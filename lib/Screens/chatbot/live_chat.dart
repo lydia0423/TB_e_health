@@ -39,13 +39,16 @@ class _LiveChatState extends State<LiveChat> {
       ),
       body: Stack(
         children: <Widget>[
-          AnimatedList(
-            key: _listKey,
-            initialItemCount: _data.length,
-            itemBuilder:
-                (BuildContext context, int index, Animation<double> animation) {
-              return buildItem(_data[index], animation, index);
-            },
+          Container(
+            height: 680,
+            child: AnimatedList(
+              key: _listKey,
+              initialItemCount: _data.length,
+              itemBuilder: (BuildContext context, int index,
+                  Animation<double> animation) {
+                return buildItem(_data[index], animation, index);
+              },
+            ),
           ),
           SizedBox(height: 60.0),
           // text field and icon field
@@ -128,21 +131,17 @@ Widget buildItem(String item, Animation<double> animation, int index) {
       padding: EdgeInsets.only(
         top: 10.0,
       ),
-      child: SingleChildScrollView(
-        child: Container(
-          alignment: mine ? Alignment.topLeft : Alignment.topRight,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20.0, bottom: 10.0),
-            child: SingleChildScrollView(
-              child: Bubble(
-                child: Text(
-                  item.replaceAll("<bot>", ""),
-                  style: TextStyle(color: mine ? Colors.white : Colors.black),
-                ),
-                color: mine ? Colors.blue : Colors.grey[200],
-                padding: BubbleEdges.all(10),
-              ),
+      child: Container(
+        alignment: mine ? Alignment.topLeft : Alignment.topRight,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20.0, bottom: 10.0),
+          child: Bubble(
+            child: Text(
+              item.replaceAll("<bot>", ""),
+              style: TextStyle(color: mine ? Colors.white : Colors.black),
             ),
+            color: mine ? Colors.blue : Colors.grey[200],
+            padding: BubbleEdges.all(10),
           ),
         ),
       ),
