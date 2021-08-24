@@ -3,15 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class ActiveUser {
   //^ Attributes
-  String avatar,
-      email,
-      name,
-      age,
-      gender,
-      healthInfo,
-      notificationPreference,
-      address,
-      userId;
+  String avatar, email, name, age, gender, healthInfo, address, userId;
+  bool notificationPreference;
 
   //^ Constructor
   ActiveUser(this.avatar, this.email, this.name, this.age, this.gender,
@@ -23,7 +16,7 @@ class ActiveUser {
       _activeUserFromJson(json);
 
   //? Converts the ActiveUser into a map of key/value pairs
-  Map<String, String> toJson() => _activeUserToJson(this);
+  //Map<String, String> toJson() => _activeUserToJson(this);
 }
 
 //? Converts map of values from Firestore into ActiveUser class.
@@ -36,14 +29,15 @@ ActiveUser _activeUserFromJson(Map<dynamic, dynamic> json) {
     json["UserAge"] as String,
     json["UserGender"] as String,
     json["UserHealthInfo"] as String,
-    json["UserNotificationPreference"] as String,
+    json["UserNotificationPreference"] as bool,
     json["UserAddress"] as String,
     json["UserId"] as String,
   );
 }
 
 //? Converts the ActiveUser class into key/value pairs
-Map<String, String> _activeUserToJson(ActiveUser instance) => <String, String>{
+Map<String, dynamic> _activeUserToJson(ActiveUser instance) =>
+    <String, dynamic>{
       "UserAvatar": instance.avatar,
       "UserEmail": instance.email,
       "UserName": instance.name,
@@ -86,31 +80,6 @@ Future<ActiveUser> myActiveUser({String? docId}) async {
   var activeUserDetails =
       await FirebaseFirestore.instance.collection("User").doc(currentId).get();
 
-  final ActiveUser activeUser =
-      ActiveUser.fromJson(activeUserDetails.data()!.cast());
+  final ActiveUser activeUser = ActiveUser.fromJson(activeUserDetails.data()!);
   return activeUser;
-}
-
-//? Checks if the user email exists in the database
-Future<String> findUser(String queryField, String queryItem) async {
-  String docId = '';
-  try {
-    QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection("User")
-        .where(queryField, isEqualTo: queryItem)
-        .get();
-    docId = snapshot.docs[0].id;
-  } catch (e) {
-    print("$e : User not found");
-  }
-  return docId;
-}
-
-//? Checks if the entered UserId belongs to a valid user
-Future<bool> validUser(String userId) async {
-  var validUser = await FirebaseFirestore.instance
-      .collection("User")
-      .where("UserId", isEqualTo: userId)
-      .get();
-  return validUser.docs.isNotEmpty;
 }
