@@ -71,19 +71,19 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 100,
             child: Center(
-              child: Text(
-                'Hello!',
-                style: Theme.of(context).textTheme.headline4!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Text('Hello!',
+                    style:
+                        TextStyle(fontSize: 45.0, fontWeight: FontWeight.bold)),
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(12),
             child: Text(
-              'How can we help you today?',
-              style: Theme.of(context).textTheme.headline6,
+              'Mary',
+              style: TextStyle(fontSize: 30.0),
             ),
           ),
           SizedBox(
@@ -121,11 +121,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () {},
                   title: 'Side Effects',
                 ),
-                // _featureButton(
-                //   child: Assets.images.iconMobileInfo.svg(height: 30),
-                //   onTap: () {},
-                //   title: 'TB Info',
-                // ),
                 _featureButton(
                   child: Assets.images.iconSupport.svg(height: 30),
                   onTap: () {

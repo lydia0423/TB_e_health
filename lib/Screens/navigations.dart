@@ -50,28 +50,28 @@ class _NavigationsState extends State<Navigations> {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Icon(
                         Icons.question_answer_rounded,
-                        size: 35,
+                        size: 30,
                       ),
                     ),
-                    label: ''),
+                    label: 'FAQ'),
                 BottomNavigationBarItem(
                     icon: Padding(
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Icon(
                         Icons.home,
-                        size: 35,
+                        size: 30,
                       ),
                     ),
-                    label: ''),
+                    label: 'Home'),
                 BottomNavigationBarItem(
                     icon: Padding(
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Icon(
                         Icons.person,
-                        size: 35,
+                        size: 30,
                       ),
                     ),
-                    label: '')
+                    label: 'Profile')
               ],
             ),
           ),

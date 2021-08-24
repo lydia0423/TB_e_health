@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/Screens/navigations.dart';
 import 'package:tb_e_health/Screens/tb_info/tb_dots.dart';
 import 'package:tb_e_health/Screens/tb_info/tb_overview.dart';
 import 'package:tb_e_health/Screens/tb_info/tb_side_effect_info.dart';
@@ -14,6 +16,20 @@ class _QnAState extends State<QnA> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 30.0),
+          child: IconButton(
+              icon: new Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+                size: 35.0,
+              ),
+              onPressed: () => Get.to(() => Navigations())),
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
