@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tb_e_health/Models/delivery_request.dart';
 import 'package:tb_e_health/utils.dart';
+import 'package:uuid/uuid.dart';
 
 class DrugRequestScreen extends StatelessWidget {
 
@@ -17,6 +20,7 @@ class DrugRequestScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
+        toolbarHeight: 80,
         backgroundColor: Colors.transparent,
         leading: Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 30.0),
@@ -30,59 +34,96 @@ class DrugRequestScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: HelloRed,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            padding: EdgeInsets.all(20),
-            child: RichText(
-              text: TextSpan(
-                text: 'By clicking ‘Confirm Order’, the DOTS staff will understand that you wish for your DOTS medications from ',
-                children: [
-                  TextSpan(
-                    text: '${dateFrom.day}/${dateFrom.month}/${dateFrom.year}',
-                    style: TextStyle(
-                      color: Colors.blue,
+      body: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: [
+            // SizedBox(heigrht: 30),
+            Container(
+              decoration: BoxDecoration(
+                color: HelloRed,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              padding: EdgeInsets.all(20),
+              child: RichText(
+                text: TextSpan(
+                  text: 'By clicking ‘Confirm Order’, the DOTS staff will understand that you wish for your DOTS medications from ',
+                  children: [
+                    TextSpan(
+                      text: '${dateFrom.day}/${dateFrom.month}/${dateFrom.year}',
+                      style: TextStyle(
+                        color: Colors.blue,
+                      ),
                     ),
-                  ),
-                  TextSpan(
-                    text: ' to ',
-                  ),
-                  TextSpan(
-                    text: '${dateUntil.day}/${dateUntil.month}/${dateUntil.year}',
-                    style: TextStyle(
-                      color: Colors.blue,
+                    TextSpan(
+                      text: ' to ',
                     ),
-                  ),
-                  TextSpan(
-                    text: ' to be delivered directly to your house instead of coming to UMMC to collect your medication. Please confirm your order at least 1 week before your medications finish.',
-                  ),
-                ]
+                    TextSpan(
+                      text: '${dateUntil.day}/${dateUntil.month}/${dateUntil.year}',
+                      style: TextStyle(
+                        color: Colors.blue,
+                      ),
+                    ),
+                    TextSpan(
+                      text: ' to be delivered directly to your house instead of coming to UMMC to collect your medication. Please confirm your order at least 1 week before your medications finish.',
+                    ),
+                  ]
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          Text('Confirm Use of Service By'),
-          Row(
-            children: [
-              Icon(Icons.calendar_today),
-              Text('${DateTime.now()}'),
-            ],
-          ),
-          ElevatedButton(
-            onPressed: () {}, 
-            child: Text('Confirm Order'),
-          ),
-          TextButton(
-            onPressed: () {}, 
-            child: Text('I’ll Come To Clinic For Next Prescription'),
-          ),
-        ],
+            SizedBox(
+              height: 12,
+            ),
+            Text('Confirm Use of Service By'),
+            Row(
+              children: [
+                Icon(Icons.calendar_today),
+                Text('${DateTime.now()}'),
+              ],
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                var now = DateTime.now();
+                await createDrugDeliveryRequest(DrugDeliveryRequest(
+                  type: OrderType.Delivery,
+                  id: Uuid().v4(),
+                  requestDate: '${now.year}-${now.month}-${now.day}',
+                  // TODO: get user start and end
+                  userId: FirebaseAuth.instance.currentUser!.uid,
+                ));
+                Get.back();
+              }, 
+              child: SizedBox(
+                height: 40,
+                width: 240,
+                child: Center(child: Text('Confirm Order')),
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                var now = DateTime.now();
+                await createDrugDeliveryRequest(DrugDeliveryRequest(
+                  type: OrderType.Pickup,
+                  id: Uuid().v4(),
+                  requestDate: '${now.year}-${now.month}-${now.day}',
+                  // TODO: get user start and end
+                  userId: FirebaseAuth.instance.currentUser!.uid,
+                ));
+                Get.back();
+              }, 
+              child: SizedBox(
+                height: 40,
+                width: 240,
+                child: Center(
+                  child: Text(
+                    'I’ll Come To Clinic For Next Prescription',
+                    textAlign: TextAlign.center,
+                  )
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -25,6 +25,8 @@ class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
   
   @override
   Widget build(BuildContext context) {
+    print('HERE');
+    print(FirebaseAuth.instance.currentUser!.uid);
     return Scaffold(
       body: DefaultTabController(
         length: 2,
