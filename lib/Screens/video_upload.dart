@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:tb_e_health/Api/firebase_api.dart';
+import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/Custom%20Widgets/video_widget.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
 
@@ -83,10 +84,15 @@ class _UploadVideoState extends State<UploadVideo> {
                 padding: const EdgeInsets.only(top: 10.0, right: 30.0),
                 child: InkWell(
                     onTap: () async {
-                      // uploadFile();
-                      // customAlertDialog(context,
-                      //     title: 'Reminder',
-                      //     content: 'Upload video successfully');
+                      if (fileMedia != null) {
+                        uploadFile();
+                        customAlertDialog(context,
+                            title: 'Reminder',
+                            content: 'Upload video successfully');
+                      } else {
+                        customAlertDialog(context,
+                            title: 'Warning', content: 'No video is recorded');
+                      }
                     },
                     child: Icon(
                       Icons.send,
@@ -137,14 +143,14 @@ class _UploadVideoState extends State<UploadVideo> {
     final snapshot = await task!.whenComplete(() => {});
     url = await snapshot.ref.getDownloadURL();
 
-    uploadVideo(uploadMyVideo(widget.userId));
+    uploadVideo(uploadMyVideo());
 
     setState(() {
       fileMedia = null;
     });
   }
 
-  VideoUploaded uploadMyVideo(ValueNotifier userId) {
+  VideoUploaded uploadMyVideo() {
     String videoPath = fileMedia.toString();
     String uid = "UM00001";
     videoPath = url!;

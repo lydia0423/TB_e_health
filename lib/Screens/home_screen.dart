@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'HomeScreen';
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -110,9 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 _featureButton(
                   child: Assets.images.iconCart.svg(height: 30),
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => DrugDeliveryScreen())
-                    );
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DrugDeliveryScreen()));
                   },
                   title: 'Drug Delivery',
                 ),
