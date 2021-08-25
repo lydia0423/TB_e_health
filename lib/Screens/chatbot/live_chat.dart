@@ -34,7 +34,7 @@ class _LiveChatState extends State<LiveChat> {
                 color: Colors.black,
                 size: 35.0,
               ),
-              onPressed: () => Get.to(() => QnA())),
+              onPressed: () => Get.back()),
         ),
       ),
       body: Stack(
