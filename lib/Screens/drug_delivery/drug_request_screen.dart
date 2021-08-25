@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/Models/delivery_request.dart';
 import 'package:tb_e_health/utils.dart';
+import 'package:uuid/uuid.dart';
 
 class DrugRequestScreen extends StatelessWidget {
   final DateTime dateFrom;
@@ -17,6 +20,7 @@ class DrugRequestScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
+        toolbarHeight: 80,
         backgroundColor: Colors.transparent,
         leading: Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 30.0),
@@ -86,12 +90,44 @@ class DrugRequestScreen extends StatelessWidget {
             ],
           ),
           ElevatedButton(
-            onPressed: () {},
-            child: Text('Confirm Order'),
+            onPressed: () async {
+              var now = DateTime.now();
+              await createDrugDeliveryRequest(DrugDeliveryRequest(
+                type: OrderType.Delivery,
+                id: Uuid().v4(),
+                requestDate: '${now.year}-${now.month}-${now.day}',
+                // TODO: get user start and end
+                userId: FirebaseAuth.instance.currentUser!.uid,
+              ));
+              Get.back();
+            },
+            child: SizedBox(
+              height: 40,
+              width: 240,
+              child: Center(child: Text('Confirm Order')),
+            ),
           ),
           TextButton(
-            onPressed: () {},
-            child: Text('I’ll Come To Clinic For Next Prescription'),
+            onPressed: () async {
+              var now = DateTime.now();
+              await createDrugDeliveryRequest(DrugDeliveryRequest(
+                type: OrderType.Pickup,
+                id: Uuid().v4(),
+                requestDate: '${now.year}-${now.month}-${now.day}',
+                // TODO: get user start and end
+                userId: FirebaseAuth.instance.currentUser!.uid,
+              ));
+              Get.back();
+            },
+            child: SizedBox(
+              height: 40,
+              width: 240,
+              child: Center(
+                  child: Text(
+                'I’ll Come To Clinic For Next Prescription',
+                textAlign: TextAlign.center,
+              )),
+            ),
           ),
         ],
       ),

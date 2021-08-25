@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // enum OrderStatus{Pending,Arriving,Received,Unknown}
@@ -51,7 +53,7 @@ class DrugDeliveryRequest {
 
   factory DrugDeliveryRequest.fromJson(Map<String, dynamic> json) {
     return DrugDeliveryRequest(
-      type: json["orderType"]?? '',
+      type: json["OrderType"]?? '',
       approvedBy: json["OrderApprovedBy"]?? '',
       id: json["OrderId"]?? '',
       item: ((json["OrderItem"]?? []) as List<dynamic>).map<String>((e) => e).toList(),
@@ -63,6 +65,22 @@ class DrugDeliveryRequest {
       userId: json["UserId"]?? '',
       userName: json["UserName"]?? '',
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'OrderType': type,
+      'OrderApprovedBy': approvedBy,
+      'OrderId': id,
+      'OrderItem': item,
+      'OrderStatus': status,
+      'RequestDate': requestDate,
+      'OrderTherapyEndDate': therapyEndDate,
+      'OrderTherapyStartDate': therapyStartDate,
+      'UserAddress': userAddress,
+      'UserId': userId,
+      'UserName': userName,
+    };
   }
 }
 
@@ -89,4 +107,8 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId, {
     print(e);
     return result;
   }
+}
+
+Future<void> createDrugDeliveryRequest(DrugDeliveryRequest request) async {
+  await FirebaseFirestore.instance.collection('DrugDeliveryRequest').add(request.toJson());
 }
