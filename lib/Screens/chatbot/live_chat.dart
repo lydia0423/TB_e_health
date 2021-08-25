@@ -59,10 +59,7 @@ class _LiveChatState extends State<LiveChat> {
               child: Container(
                 color: Colors.white,
                 child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                  ),
+                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 10.0),
                   child: TextField(
                     style: TextStyle(color: Colors.black),
                     decoration: InputDecoration(
