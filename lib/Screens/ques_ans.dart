@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/Screens/navigations.dart';
 import 'package:tb_e_health/Screens/tb_info/tb_dots.dart';
@@ -19,16 +19,14 @@ class _QnAState extends State<QnA> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 30.0),
-          child: IconButton(
-              icon: new Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-                size: 35.0,
-              ),
-              onPressed: () => Get.to(() => Navigations())),
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return LiveChat();
+        })),
+        child: Icon(Icons.live_help_outlined),
+        backgroundColor: Colors.black,
       ),
       body: Center(
         child: Column(
@@ -46,9 +44,10 @@ class _QnAState extends State<QnA> {
                   padding: EdgeInsets.all(20),
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  pushNewScreen(
                     context,
-                    MaterialPageRoute(builder: (context) => Overview()),
+                    screen: Overview(),
+                    withNavBar: true, // OPTIONAL VALUE. True by default.
                   );
                 },
                 child: Text(
@@ -74,9 +73,10 @@ class _QnAState extends State<QnA> {
                   padding: EdgeInsets.all(20),
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  pushNewScreen(
                     context,
-                    MaterialPageRoute(builder: (context) => SymptomsInfo()),
+                    screen: SymptomsInfo(),
+                    withNavBar: true, // OPTIONAL VALUE. True by default.
                   );
                 },
                 child: Text(
@@ -102,9 +102,10 @@ class _QnAState extends State<QnA> {
                   padding: EdgeInsets.all(20),
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  pushNewScreen(
                     context,
-                    MaterialPageRoute(builder: (context) => SideEffectInfo()),
+                    screen: SideEffectInfo(),
+                    withNavBar: true, // OPTIONAL VALUE. True by default.
                   );
                 },
                 child: Text(
@@ -130,9 +131,10 @@ class _QnAState extends State<QnA> {
                   padding: EdgeInsets.all(20),
                 ),
                 onPressed: () {
-                  Navigator.push(
+                  pushNewScreen(
                     context,
-                    MaterialPageRoute(builder: (context) => DotsTherapyInfo()),
+                    screen: DotsTherapyInfo(),
+                    withNavBar: true, // OPTIONAL VALUE. True by default.
                   );
                 },
                 child: Text(
@@ -146,33 +148,6 @@ class _QnAState extends State<QnA> {
               ), //parameters of Button class
             ),
             SizedBox(height: 30.0),
-            SizedBox(
-              height: 70, //height of button
-              width: 280, //width of button
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.black, //background color of button
-                  shape: RoundedRectangleBorder(
-                      //to set border radius to button
-                      borderRadius: BorderRadius.circular(30)),
-                  padding: EdgeInsets.all(20),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LiveChat()),
-                  );
-                },
-                child: Text(
-                  'Live Chat',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ), //parameters of Button class
-            ),
           ],
         ),
       ),

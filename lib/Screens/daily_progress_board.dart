@@ -1,18 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tb_e_health/Custom%20Widgets/hello_calendar.dart';
 import 'package:flutter/material.dart';
-// import 'package:tb_e_health/Models/submission.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
+import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
 
 import 'package:tb_e_health/utils.dart';
 
 class DailyProgressBoardScreen extends StatefulWidget {
   @override
-  _DailyProgressBoardScreenState createState() => _DailyProgressBoardScreenState();
+  _DailyProgressBoardScreenState createState() =>
+      _DailyProgressBoardScreenState();
 }
 
 class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
-
   Map<DateTime, bool> dates = {};
 
   @override
@@ -22,7 +22,8 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
   }
 
   _loadSubmission() async {
-    List<VideoUploaded> submissions = await findVideoUploadedOfUser(FirebaseAuth.instance.currentUser!.uid);
+    List<VideoUploaded> submissions =
+        await findVideoUploadedOfUser(FirebaseAuth.instance.currentUser!.uid);
     for (var submission in submissions) {
       dates[DateTime.parse(submission.timestamp).getToday()] = true;
     }
@@ -37,6 +38,14 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
       // TODO: primary color
       appBar: AppBar(
         elevation: 0,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return LiveChat();
+        })),
+        child: Icon(Icons.live_help_outlined),
+        backgroundColor: Colors.black,
       ),
       body: Column(
         children: [

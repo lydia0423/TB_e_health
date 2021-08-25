@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
 import 'package:tb_e_health/Screens/ques_ans.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,12 +28,13 @@ class _LiveChatState extends State<LiveChat> {
         leading: Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 30.0),
           child: IconButton(
-              icon: new Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-                size: 35.0,
-              ),
-              onPressed: () => Get.to(() => QnA())),
+            icon: new Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 35.0,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
       ),
       body: Stack(
