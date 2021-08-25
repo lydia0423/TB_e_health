@@ -28,12 +28,13 @@ class _FAQState extends State<FAQ> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 30.0),
           child: IconButton(
-              icon: new Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-                size: 35.0,
-              ),
-              onPressed: () => Get.to(() => DrugDeliveryScreen())),
+            icon: new Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 35.0,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
       ),
       body: FutureBuilder(

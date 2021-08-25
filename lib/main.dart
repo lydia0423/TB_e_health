@@ -20,7 +20,6 @@ main() async {
   FirebaseAuth.instance;
   //~ Redirects users
   String myRoute = await checkLoggedIn();
-  //String myRoute = "/";
   //~ Run application
   runApp(DevicePreview(
     enabled: kReleaseMode,

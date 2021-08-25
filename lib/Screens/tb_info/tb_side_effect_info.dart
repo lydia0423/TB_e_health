@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/Screens/ques_ans.dart';
 
 class SideEffectInfo extends StatelessWidget {
@@ -12,13 +12,22 @@ class SideEffectInfo extends StatelessWidget {
         leading: Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 30.0),
           child: IconButton(
-              icon: new Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-                size: 35.0,
-              ),
-              onPressed: () => Get.back()),
+            icon: new Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 35.0,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return LiveChat();
+        })),
+        child: Icon(Icons.live_help_outlined),
+        backgroundColor: Colors.black,
       ),
       body: SingleChildScrollView(
         child: Column(

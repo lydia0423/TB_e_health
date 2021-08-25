@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/Custom Widgets/hello_calendar_selection.dart';
 import 'package:tb_e_health/Models/appointment.dart';
+import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
 
 import 'package:tb_e_health/utils.dart';
 
@@ -10,9 +11,7 @@ class SchedulerScreen extends StatefulWidget {
   _SchedulerScreenState createState() => _SchedulerScreenState();
 }
 
-
 class _SchedulerScreenState extends State<SchedulerScreen> {
-
   DateTime? dateTime;
   // TODO: load from firebase
   Appointment? appointment = Appointment(
@@ -38,6 +37,14 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
       appBar: AppBar(
         elevation: 0,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return LiveChat();
+        })),
+        child: Icon(Icons.live_help_outlined),
+        backgroundColor: Colors.black,
+      ),
       body: Column(
         children: [
           HelloCalendarSelection(
@@ -49,13 +56,14 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
             appointment: appointment!.datetime,
             awaiting: appointment!.awaiting,
             onSelect: (date) {
-              dateTime = dateTime?? date;
+              dateTime = dateTime ?? date;
               setState(() {
                 dateTime = dateTime!.setDate(date);
               });
             },
           ),
-          if (dateTime != null && (appointment == null || appointment!.awaiting)) 
+          if (dateTime != null &&
+              (appointment == null || appointment!.awaiting))
             // TODO: show time picker
             SizedBox(
               height: 160,
@@ -68,7 +76,8 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
                 },
               ),
             ),
-          if (dateTime != null && (appointment == null || appointment!.awaiting)) 
+          if (dateTime != null &&
+              (appointment == null || appointment!.awaiting))
             SizedBox(
               height: 60,
               child: Padding(

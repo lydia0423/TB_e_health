@@ -8,6 +8,7 @@ import 'package:tb_e_health/Api/firebase_api.dart';
 import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/Custom%20Widgets/video_widget.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
+import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
 
 import 'navigations.dart';
 
@@ -34,13 +35,22 @@ class _UploadVideoState extends State<UploadVideo> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 30.0),
           child: IconButton(
-              icon: new Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-                size: 35.0,
-              ),
-              onPressed: () => Get.to(() => Navigations())),
+            icon: new Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 35.0,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return LiveChat();
+        })),
+        child: Icon(Icons.live_help_outlined),
+        backgroundColor: Colors.black,
       ),
       body: Column(
         children: [
