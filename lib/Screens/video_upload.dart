@@ -1,16 +1,14 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:tb_e_health/Api/firebase_api.dart';
 import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/Custom%20Widgets/video_widget.dart';
+import 'package:tb_e_health/Models/user.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
 import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
-
-import 'navigations.dart';
 
 // ignore: must_be_immutable
 class UploadVideo extends StatefulWidget {
@@ -28,6 +26,7 @@ class _UploadVideoState extends State<UploadVideo> {
 
   @override
   Widget build(BuildContext context) {
+    print("prepare to upload video...");
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -118,6 +117,7 @@ class _UploadVideoState extends State<UploadVideo> {
   }
 
   Future capture(MediaSource source) async {
+    print("recording...");
     setState(() {
       this.fileMedia = null;
     });
@@ -153,19 +153,24 @@ class _UploadVideoState extends State<UploadVideo> {
     final snapshot = await task!.whenComplete(() => {});
     url = await snapshot.ref.getDownloadURL();
 
-    uploadVideo(uploadMyVideo());
+    VideoUploaded? videoToUpload = await uploadMyVideo();
+    if (videoToUpload != null) {
+      uploadVideo(videoToUpload);
+    }
 
     setState(() {
       fileMedia = null;
     });
   }
 
-  VideoUploaded uploadMyVideo() {
+  Future<VideoUploaded?> uploadMyVideo() async {
     String videoPath = fileMedia.toString();
-    String uid = "UM00001";
-    videoPath = url!;
+      ActiveUser currentUser = await myActiveUser();
+      String userId = currentUser.userId;
+      print(userId+" uploaded a video...");
+      videoPath = url!;
 
-    VideoUploaded myVideo = VideoUploaded(uid, date, videoPath);
-    return myVideo;
+      VideoUploaded myVideo = VideoUploaded(userId, date, videoPath);
+      return myVideo;
   }
 }
