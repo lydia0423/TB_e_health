@@ -3,10 +3,32 @@
 A new Flutter project.
 
 ## Getting Started
+###Setup Guide
+### Installation
+- install flutter-sdk (https://flutter.dev/docs/get-started/install)
+- install dart-sdk (https://dart.dev/get-dart)
+- install android-studio (https://developer.android.com/studio)
+
+### Run project
+- update dependencies
+```yaml
+flutter pub get
+```
+- add a virtual device in Android Studio > Settings > ADV Manager, start the virtual device
+- IntelliJ: choose 'sdk gphone x86(mobile)' and run 
+- VS Code: search for "Flutter run additional args" in user settings
+```yaml
+flutter run --no-sound-null-safety
+```
+
+## Layout
 
 Login page
 - username : lydia@test.com
 - password : lydiaTest
+
+toi@gmail.com
+toitoi
 
 Device Preview
 - when creating the UI, please use device preview to check on each phone size to make sure the designs work well
