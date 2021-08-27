@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/Models/user.dart';
-import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 
 import 'daily_progress_board.dart';
 

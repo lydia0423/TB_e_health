@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/Screens/ques_ans.dart';
+import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/ques_ans.dart';
 
-class SymptomsInfo extends StatelessWidget {
+class Overview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +37,7 @@ class SymptomsInfo extends StatelessWidget {
               width: 500,
               child: Center(
                 child: Text(
-                  'Symptoms of Tuberculosis',
+                  'Overview of Tuberculosis',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
@@ -53,11 +53,9 @@ class SymptomsInfo extends StatelessWidget {
                 child: Padding(
                     padding: const EdgeInsets.all(30.0),
                     child: Text(
-                      'Typical symptoms of TB include:\n'
-                      '- a persistent cough that lasts more than 3 weeks and usually brings up phlegm, which may be bloody\n'
-                      '- Weight loss\n- Night sweats\n- High Temperature\n- Tiredness and Fatigue\n'
-                      '- Lost of appetite\n- Swellings in the neck\n\n'
-                      'You should see a GP if you have a cough that lasts more than 3 weeks or you cough up blood.\n',
+                      'Tuberculosis (TB) is a bacterial infection spread through inhaling tiny droplets from the coughs or sneezes of an infected person.'
+                      '\n\nIt mainly affects the lungs, but it can affect any part of the body, including the tummy (abdomen), glands, bones and nervous system.'
+                      '\n\nTB is a potentially serious condition, but it can be cured if it is treated with the right antibiotics',
                       style: TextStyle(fontSize: 18),
                     )))
           ],

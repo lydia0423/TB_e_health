@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tb_e_health/Screens/drug_delivery/drug_delivery_screen.dart';
+import 'package:tb_e_health/screens/drug_delivery/drug_delivery_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class FAQ extends StatefulWidget {

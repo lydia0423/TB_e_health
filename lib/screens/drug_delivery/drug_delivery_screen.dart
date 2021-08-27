@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/Screens/drug_delivery/drug_request_list.dart';
-import 'package:tb_e_health/Screens/drug_delivery/faq_screen.dart';
+import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/drug_delivery/drug_request_list.dart';
+import 'package:tb_e_health/screens/drug_delivery/faq_screen.dart';
 
 class DrugDeliveryScreen extends StatelessWidget {
   Widget _rowSelection(String logo, String title, void Function() onTap) {

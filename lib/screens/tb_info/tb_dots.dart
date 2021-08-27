@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/Screens/ques_ans.dart';
+import 'package:get/get.dart';
+import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/navigations.dart';
+import 'package:tb_e_health/screens/ques_ans.dart';
 
-class SideEffectInfo extends StatelessWidget {
+class DotsTherapyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +39,7 @@ class SideEffectInfo extends StatelessWidget {
               width: 500,
               child: Center(
                 child: Text(
-                  'Side Effects of Tuberculosis',
+                  'Dots Therapy',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
@@ -51,17 +53,17 @@ class SideEffectInfo extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.grey),
                 child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Text(
-                      'Like all medicines, the medicine you take to cure TB infection can have side effects.\n\n'
-                      'Tell your doctor right away if you have:\n\n'
-                      '- Dizziness when sitting, standing or lying down.\n'
-                      '- Less appetite\n- Stomach upset, nausea/vomiting\n- Pain in your lower chest or heartburn.\n- Flu-like symptoms with fever\n'
-                      '- Severe tiredness or weakness.\n- Fevers or chills.\n- Severe diarrhea or light colored stools (poop).\n'
-                      '- Brown, tea-colored, or cola-colored urine.\n\n'
-                      'Read more about the side effects of TB treatment OR schedule a call with our staff. \n',
-                      style: TextStyle(fontSize: 18),
-                    )))
+                  padding: const EdgeInsets.all(30.0),
+                  child: Text(
+                    'If you have TB disease, you will take several medicines when you start your treatment to kill the TB germs in your body. They are:\n\n'
+                    '1. Isoniazid (i-so-ni-a-zid)\n2. Rifampin (ri-fam-pin)\n3. Ethambutol (eth-am-byoo-tol)\n4. Pyrazinamide (peer-a-zin-a-mide)\n\n'
+                    'What is “DOTS”?\n\n'
+                    'DOT is short for Directly Observed Therapy. Depending on your medicine plan, a healthcare worker will meet with you every day '
+                    'or a few times a week to watch you take your TB pills. He or she will bring you your pills at the place and time  most easy for you.'
+                    'This can help you stay with your medicine plan. \n',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ))
           ],
         ),
       ),

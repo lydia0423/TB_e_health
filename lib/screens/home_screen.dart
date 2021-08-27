@@ -1,9 +1,9 @@
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:tb_e_health/Models/user.dart';
-import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/Screens/drug_delivery/drug_delivery_screen.dart';
-import 'package:tb_e_health/Screens/teleconsultation/scheduler_screen.dart';
-import 'package:tb_e_health/Screens/video_upload.dart';
+import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/drug_delivery/drug_delivery_screen.dart';
+import 'package:tb_e_health/screens/teleconsultation/scheduler_screen.dart';
+import 'package:tb_e_health/screens/video_upload.dart';
 import 'package:tb_e_health/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 

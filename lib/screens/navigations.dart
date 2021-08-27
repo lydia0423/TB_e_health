@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Screens/profile.dart';
-import 'package:tb_e_health/Screens/ques_ans.dart';
+import 'package:tb_e_health/screens/profile.dart';
+import 'package:tb_e_health/screens/ques_ans.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'home_screen.dart';

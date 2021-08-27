@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/Screens/navigations.dart';
-import 'package:tb_e_health/Screens/tb_info/tb_dots.dart';
-import 'package:tb_e_health/Screens/tb_info/tb_overview.dart';
-import 'package:tb_e_health/Screens/tb_info/tb_side_effect_info.dart';
-import 'package:tb_e_health/Screens/tb_info/tb_symptom_info.dart';
+import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/navigations.dart';
+import 'package:tb_e_health/screens/tb_info/tb_dots.dart';
+import 'package:tb_e_health/screens/tb_info/tb_overview.dart';
+import 'package:tb_e_health/screens/tb_info/tb_side_effect_info.dart';
+import 'package:tb_e_health/screens/tb_info/tb_symptom_info.dart';
 
 class QnA extends StatefulWidget {
   @override

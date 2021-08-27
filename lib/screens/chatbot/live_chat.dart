@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tb_e_health/Screens/ques_ans.dart';
+import 'package:tb_e_health/screens/ques_ans.dart';
 import 'package:http/http.dart' as http;
 
 class LiveChat extends StatefulWidget {

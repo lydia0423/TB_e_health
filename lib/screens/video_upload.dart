@@ -8,7 +8,7 @@ import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/Custom%20Widgets/video_widget.dart';
 import 'package:tb_e_health/Models/user.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
-import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 
 // ignore: must_be_immutable
 class UploadVideo extends StatefulWidget {

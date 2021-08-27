@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tb_e_health/Custom%20Widgets/hello_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
-import 'package:tb_e_health/Screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 
 import 'package:tb_e_health/utils.dart';
 
