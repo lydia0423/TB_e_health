@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/anonymous_user.dart';
 
@@ -13,6 +11,10 @@ class AuthService {
   AnonymousUser? _anonymousUserFromFirebaseUser(User? user) {
     return user?.uid != null ?
     AnonymousUser(uid: user!.uid) : null;
+  }
+
+  User? currentFirebaseUser() {
+    return _auth.currentUser;
   }
 
   Future<ActiveUser?> _activeUserFromFirebaseUser(User? user) async {
@@ -36,17 +38,6 @@ class AuthService {
   Stream<dynamic> get activeUser {
     return _auth.authStateChanges()
         .map((user) => _activeUserFromFirebaseUser(user));
-  }
-
-  // sign in anonymous
-  Future signInAnon() async {
-    try {
-      UserCredential userCredential = await _auth.signInAnonymously();
-      return _anonymousUserFromFirebaseUser(userCredential.user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
   }
 
   // sign in with email & password
