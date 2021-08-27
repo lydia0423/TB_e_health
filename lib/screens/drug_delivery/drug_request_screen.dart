@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/Models/delivery_request.dart';
+import 'package:tb_e_health/models/delivery_request.dart';
 import 'package:tb_e_health/utils.dart';
 import 'package:uuid/uuid.dart';
 
@@ -92,12 +93,17 @@ class DrugRequestScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               var now = DateTime.now();
+              ActiveUser user = await myActiveUser();
               await createDrugDeliveryRequest(DrugDeliveryRequest(
                 type: OrderType.Delivery,
                 id: Uuid().v4(),
                 requestDate: '${now.year}-${now.month}-${now.day}',
                 // TODO: get user start and end
-                userId: FirebaseAuth.instance.currentUser!.uid,
+                userId: user.userId,
+                userName: user.name,
+                userAddress: user.address,
+                therapyEndDate: user.therapyEndDate,
+                therapyStartDate: user.therapyStartDate,
               ));
               Get.back();
             },
@@ -110,12 +116,17 @@ class DrugRequestScreen extends StatelessWidget {
           TextButton(
             onPressed: () async {
               var now = DateTime.now();
+              ActiveUser user = await myActiveUser();
               await createDrugDeliveryRequest(DrugDeliveryRequest(
                 type: OrderType.Pickup,
                 id: Uuid().v4(),
                 requestDate: '${now.year}-${now.month}-${now.day}',
                 // TODO: get user start and end
-                userId: FirebaseAuth.instance.currentUser!.uid,
+                userId: user.userId,
+                userName: user.name,
+                userAddress: user.address,
+                therapyEndDate: user.therapyEndDate,
+                therapyStartDate: user.therapyStartDate,
               ));
               Get.back();
             },

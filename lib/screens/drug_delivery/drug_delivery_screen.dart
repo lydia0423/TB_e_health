@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/drug_delivery/drug_request_list.dart';
 import 'package:tb_e_health/screens/drug_delivery/faq_screen.dart';

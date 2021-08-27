@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tb_e_health/models/active_user.dart';
 
 // enum OrderStatus{Pending,Arriving,Received,Unknown}
 
@@ -111,4 +112,30 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId, {
 
 Future<void> createDrugDeliveryRequest(DrugDeliveryRequest request) async {
   await FirebaseFirestore.instance.collection('DrugDeliveryRequest').add(request.toJson());
+}
+
+Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfActiveUser(Future<ActiveUser> userFuture, {bool history = false}) async {
+  String userId = (await userFuture).userId;
+  List<DrugDeliveryRequest> result = [];
+  try {
+    Query<Map<String, dynamic>> query = FirebaseFirestore.instance
+        .collection("DrugDeliveryRequest")
+        .where("UserId", isEqualTo: userId);
+    if (history) {
+      query = query.where("OrderStatus", isEqualTo: OrderStatus.Received);
+    } else {
+      query = query.where("OrderStatus", isNotEqualTo: OrderStatus.Received);
+    }
+    QuerySnapshot snapshot = await query.get();
+    for (var doc in snapshot.docs) {
+      print(doc.data());
+      var submission = DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
+      result.add(submission);
+    }
+    print(result.length);
+    return result;
+  } catch (e) {
+    print(e);
+    return result;
+  }
 }

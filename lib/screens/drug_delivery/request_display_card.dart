@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Models/delivery_request.dart';
+import 'package:tb_e_health/models/delivery_request.dart';
 
 class RequestDisplayCard extends StatelessWidget {
   final DrugDeliveryRequest request;
