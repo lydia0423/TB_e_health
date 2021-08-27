@@ -3,12 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class ActiveUser {
   //^ Attributes
-  String avatar, email, name, age, gender, healthInfo, address, userId;
+  String avatar, email, name, age, gender, healthInfo, address, userId, therapyEndDate, therapyStartDate;
   bool notificationPreference;
 
   //^ Constructor
   ActiveUser(this.avatar, this.email, this.name, this.age, this.gender,
-      this.healthInfo, this.notificationPreference, this.address, this.userId);
+      this.healthInfo, this.notificationPreference, this.address, this.userId, {
+        this.therapyEndDate = "2021-08-20",
+        this.therapyStartDate = "2021-09-30"});
 
   //? Factory - creates the ActiveUser instance from the JSON (database storage type) passed
   //? When Factory is used, implementing a constructor doesn't always create a new instance of its class
@@ -32,6 +34,8 @@ ActiveUser _activeUserFromJson(Map<dynamic, dynamic> json) {
     json["UserNotificationPreference"] as bool,
     json["UserAddress"] as String,
     json["UserId"] as String,
+    therapyEndDate: json["TherapyEndDate"] as String,
+    therapyStartDate: json["TherapyStartDate"] as String,
   );
 }
 
@@ -47,6 +51,8 @@ Map<String, dynamic> _activeUserToJson(ActiveUser instance) =>
       "UserNotificationPreference": instance.notificationPreference,
       "UserAddress": instance.address,
       "UserId": instance.userId,
+      "TherapyEndDate": instance.therapyEndDate,
+      "TherapyStartDate": instance.therapyStartDate,
     };
 
 //? Retrieves list of all users
