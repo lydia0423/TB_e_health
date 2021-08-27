@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,27 @@ class AuthService {
     AnonymousUser(uid: user!.uid) : null;
   }
 
+  Future<ActiveUser?> _activeUserFromFirebaseUser(User? user) async {
+    if (user?.uid == null) {
+      return null;
+    } else {
+      var userDetails = await FirebaseFirestore.instance
+          .collection("User")
+          .doc(user!.uid)
+          .get();
+
+      return ActiveUser.fromJson(userDetails.data()!);
+    }
+  }
+
   // auth change user stream
   Stream<AnonymousUser?> get user {
     return _auth.authStateChanges()
     .map((user) => _anonymousUserFromFirebaseUser(user));
+  }
+  Stream<dynamic> get activeUser {
+    return _auth.authStateChanges()
+        .map((user) => _activeUserFromFirebaseUser(user));
   }
 
   // sign in anonymous
@@ -32,7 +50,23 @@ class AuthService {
   }
 
   // sign in with email & password
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: email, password: password
+      );
+      return _activeUserFromFirebaseUser(userCredential.user);
 
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return "invalidUser";
+      } else if (e.code == 'wrong-password') {
+        return "invalidPassword";
+      } else if (e.code == "invalid-email") {
+        return "invalidEmail";
+      }
+    }
+  }
 
   // sign out
   Future signOut() async {
@@ -48,6 +82,9 @@ class AuthService {
 
 
   // reset password
+  Future<void> resetPassword(String email) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
 
 
 }

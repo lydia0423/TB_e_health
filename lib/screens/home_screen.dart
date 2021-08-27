@@ -1,5 +1,5 @@
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:tb_e_health/Models/user.dart';
+import 'package:tb_e_health/Models/active_user.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/drug_delivery/drug_delivery_screen.dart';
 import 'package:tb_e_health/screens/teleconsultation/scheduler_screen.dart';
