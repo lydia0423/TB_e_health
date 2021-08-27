@@ -9,13 +9,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  final _formKey = GlobalKey<FormState>();
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
   final resetPasswordCtrl = TextEditingController();
 
-  String enteredEmail = "";
-  String resetPasswordEmail = "";
-  String email = "";
+  String email = '';
+  String password = '';
+
   //^ Password field attributes - password visibility toggle + icon
   bool passwordHidden = true;
   var iconShowPassword;
@@ -23,7 +25,7 @@ class _LoginState extends State<Login> {
   //? Intialises inital value of variables
   @override
   void initState() {
-    enteredEmail = "";
+    email = '';
     passwordHidden = true;
     iconShowPassword = Icons.visibility_off_rounded;
     super.initState();
@@ -59,6 +61,50 @@ class _LoginState extends State<Login> {
             SizedBox(
               height: 60,
             ),
+            Container(
+              color: Colors.red,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      onChanged: (val) {
+                        setState(() {
+                          email = val;
+                        });
+                      },
+                    ),
+                    TextFormField(
+                      onChanged: (val) {
+                        setState(() {
+                          password = val;
+                        });
+                      },
+                      controller: passwordCtrl,
+                      obscureText: passwordHidden,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0)
+                        ),
+                        labelText: 'Password',
+                        suffixIcon: IconButton(
+                          icon: Icon(iconShowPassword),
+                          color: Colors.black,
+                          onPressed: () {
+                            setState(() {
+                              passwordHidden = !passwordHidden;
+                              (passwordHidden)
+                                  ? iconShowPassword = Icons.visibility_off_rounded
+                                  : iconShowPassword = Icons.visibility_rounded;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(
                   top: 20.0, bottom: 0.0, left: 30.0, right: 30.0),
@@ -71,7 +117,7 @@ class _LoginState extends State<Login> {
                 ),
                 onChanged: (newText) {
                   setState(() {
-                    enteredEmail = newText;
+                    email = newText;
                   });
                 },
               ),
@@ -84,7 +130,8 @@ class _LoginState extends State<Login> {
                 obscureText: passwordHidden,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
+                      borderRadius: BorderRadius.circular(30.0)
+                  ),
                   labelText: 'Password',
                   suffixIcon: IconButton(
                     icon: Icon(iconShowPassword),
@@ -116,11 +163,12 @@ class _LoginState extends State<Login> {
                             title: Text('ResetPassword'),
                             content: TextField(
                               controller: resetPasswordCtrl,
-                              decoration:
-                                  InputDecoration(hintText: 'Enter your email'),
+                              decoration: InputDecoration(
+                                  hintText: 'Enter your email'
+                              ),
                               onChanged: (value) {
                                 setState(() {
-                                  resetPasswordEmail = value;
+                                  email = value;
                                 });
                               },
                             ),
@@ -128,7 +176,7 @@ class _LoginState extends State<Login> {
                               TextButton(
                                   onPressed: () {
                                     setState(() {
-                                      email = resetPasswordEmail;
+                                      email = email;
                                     });
                                     resetPassword(email);
                                     Navigator.pop(context);
