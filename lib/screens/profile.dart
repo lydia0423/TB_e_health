@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Models/active_user.dart';
+import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/services/auth_service.dart';
 
 import 'daily_progress_board.dart';
 
@@ -11,6 +11,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+  AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -43,7 +46,7 @@ class _ProfileState extends State<Profile> {
                             Icons.logout,
                             size: 30.0,
                           ),
-                          onTap: () => logout(),
+                          onTap: () => _auth.signOut(),
                         )
                       ],
                     ),
@@ -216,9 +219,4 @@ class _ProfileState extends State<Profile> {
         });
   }
 
-  //? Logout function
-  void logout() async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.pushNamedAndRemoveUntil(context, "/", ModalRoute.withName("/"));
-  }
 }
