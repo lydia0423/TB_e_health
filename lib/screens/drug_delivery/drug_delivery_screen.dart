@@ -17,7 +17,7 @@ class DrugDeliveryScreen extends StatelessWidget {
               child: SizedBox(
                 width: 100,
                 height: 100,
-                child: Icon(Icons.help),
+                child: ImageIcon(AssetImage(logo)),
               ),
             ),
             SizedBox(width: 24),
@@ -66,13 +66,14 @@ class DrugDeliveryScreen extends StatelessWidget {
           SizedBox(
             height: 16,
           ),
-          _rowSelection('', 'Drug Delivery', () {
+          _rowSelection('assets/Images/drug_delivery.png', 'Drug Delivery', () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => DrugRequestListScreen(),
                 settings: RouteSettings(name: 'DrugRequestListScreen')));
           }),
-          _rowSelection('', 'Speak to a Nurse', () {}),
-          _rowSelection('', 'FAQs', () {
+          _rowSelection(
+              'assets/Images/speak_to_nurse.png', 'Speak to a Nurse', () {}),
+          _rowSelection('assets/Images/faq.png', 'FAQs', () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => FAQ(),
                 settings: RouteSettings(name: 'FQA')));
