@@ -25,17 +25,17 @@ class ActiveUser {
 //! This method is invoked by ActiveUser.fromJson. Don't call this method.
 ActiveUser _activeUserFromJson(Map<dynamic, dynamic> json) {
   return ActiveUser(
-    json["UserAvatar"] as String,
-    json["UserEmail"] as String,
-    json["UserName"] as String,
-    json["UserAge"] as String,
-    json["UserGender"] as String,
-    json["UserHealthInfo"] as String,
-    json["UserNotificationPreference"] as bool,
-    json["UserAddress"] as String,
-    json["UserId"] as String,
-    therapyEndDate: json["TherapyEndDate"] as String,
-    therapyStartDate: json["TherapyStartDate"] as String,
+    (json["UserAvatar"] as String?)?? '',
+    (json["UserEmail"] as String?)?? '',
+    (json["UserName"] as String?)?? '',
+    (json["UserAge"] as String?)?? '',
+    (json["UserGender"] as String?)?? '',
+    (json["UserHealthInfo"] as String?)?? '',
+    (json["UserNotificationPreference"] as bool?)?? true,
+    (json["UserAddress"] as String?)?? '',
+    (json["UserId"] as String?)?? '',
+    therapyEndDate: (json["TherapyEndDate"] as String?)?? '',
+    therapyStartDate: (json["TherapyStartDate"] as String?)?? '',
   );
 }
 
