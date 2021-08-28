@@ -6,7 +6,6 @@ import 'package:tb_e_health/models/anonymous_user.dart';
 import 'package:tb_e_health/screens/wrapper.dart';
 import 'package:tb_e_health/services/auth_service.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -28,6 +27,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Wrapper(),
       ),
     );
