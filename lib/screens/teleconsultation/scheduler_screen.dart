@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:tb_e_health/Custom Widgets/hello_calendar_selection.dart';
 import 'package:tb_e_health/Models/appointment.dart';
+import 'package:tb_e_health/Screens/teleconsultation/session_screen.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 
 import 'package:tb_e_health/utils.dart';
@@ -20,7 +22,11 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
   );
 
   void _joinSession() {
-    Navigator.of(context).pushNamed('/teleSession');
+    pushNewScreen(
+      context,
+      screen: SessionScreen(),
+      withNavBar: true,
+    );
   }
 
   // TODO: action save the appointment
@@ -35,7 +41,19 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     return Scaffold(
       // TODO: primary color
       appBar: AppBar(
-        elevation: 0,
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 30.0),
+          child: IconButton(
+            icon: new Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 35.0,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
@@ -104,7 +122,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
                       borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
-                  onPressed: _joinSession,
+                  onPressed: () => _joinSession(),
                   child: Text('Go to session'),
                 ),
               ),
