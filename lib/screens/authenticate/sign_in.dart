@@ -11,7 +11,6 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-
   final _formKey = GlobalKey<FormState>();
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
@@ -73,7 +72,6 @@ class _SignInState extends State<SignIn> {
               ),
             ),
 
-
             // LOGO
             Container(
               child: Padding(
@@ -89,12 +87,10 @@ class _SignInState extends State<SignIn> {
               height: 60,
             ),
 
-
             // LOGIN FORM
             Padding(
               padding: const EdgeInsets.only(
-                  top: 20.0, bottom: 0.0, left: 30.0, right: 30.0
-              ),
+                  top: 20.0, bottom: 0.0, left: 30.0, right: 30.0),
               child: Container(
                 child: Form(
                   key: _formKey,
@@ -116,7 +112,9 @@ class _SignInState extends State<SignIn> {
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
-                        validator: (v) => v!.length < 6 ? 'Password at least 6 characters' : null,
+                        validator: (v) => v!.length < 6
+                            ? 'Password at least 6 characters'
+                            : null,
                         onChanged: (v) {
                           setState(() {
                             password = v;
@@ -126,15 +124,12 @@ class _SignInState extends State<SignIn> {
                         obscureText: passwordHidden,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30.0)
-                          ),
+                              borderRadius: BorderRadius.circular(30.0)),
                           labelText: 'Password',
                           suffixIcon: IconButton(
-                            icon: Icon(
-                              passwordHidden ?
-                              Icons.visibility_off_rounded :
-                              Icons.visibility_rounded
-                            ),
+                            icon: Icon(passwordHidden
+                                ? Icons.visibility_off_rounded
+                                : Icons.visibility_rounded),
                             color: Colors.black,
                             onPressed: () {
                               setState(() {
@@ -149,7 +144,6 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
             ),
-
 
             // FORGET PASSWORD
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -168,7 +162,7 @@ class _SignInState extends State<SignIn> {
                             content: TextField(
                               controller: resetPasswordCtrl,
                               decoration:
-                              InputDecoration(hintText: 'Enter your email'),
+                                  InputDecoration(hintText: 'Enter your email'),
                               onChanged: (value) {
                                 setState(() {
                                   email = value;
@@ -181,7 +175,8 @@ class _SignInState extends State<SignIn> {
                                     _auth.resetPassword(email);
                                     return customAlertDialog(context,
                                         title: 'Email has been sent out',
-                                        content: 'Please check your mail box to reset password');
+                                        content:
+                                            'Please check your mail box to reset password');
                                   },
                                   child: Text(
                                     'OK',
@@ -193,9 +188,7 @@ class _SignInState extends State<SignIn> {
                   })
             ]),
 
-
             SizedBox(height: 14.0),
-
 
             // LOGIN BUTTON
             Row(
@@ -206,15 +199,14 @@ class _SignInState extends State<SignIn> {
                   child: OutlinedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          dynamic result = await _auth.signInWithEmailAndPassword(
-                              emailCtrl.text,
-                              passwordCtrl.text
-                          );
+                          dynamic result =
+                              await _auth.signInWithEmailAndPassword(
+                                  emailCtrl.text, passwordCtrl.text);
                           if (result is String) {
-                            print('SignIn: error!!! '+result);
+                            print('SignIn: error!!! ' + result);
                             loginError(context, result);
                           } else {
-                            print('SignIn: '+(result as ActiveUser).userId);
+                            print('SignIn: ' + (result as ActiveUser).userId);
                           }
                         }
                       },
@@ -234,13 +226,9 @@ class _SignInState extends State<SignIn> {
                 ),
               ],
             ),
-
-
-
           ],
         ),
       ),
     );
   }
 }
-
