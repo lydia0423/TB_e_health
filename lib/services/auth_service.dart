@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/anonymous_user.dart';
 
 class AuthService {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user obj based on FirebaseUser
   AnonymousUser? _anonymousUserFromFirebaseUser(User? user) {
-    return user?.uid != null ?
-    AnonymousUser(uid: user!.uid) : null;
+    return user?.uid != null ? AnonymousUser(uid: user!.uid) : null;
   }
 
   User? currentFirebaseUser() {
@@ -32,22 +32,23 @@ class AuthService {
 
   // auth change user stream
   Stream<AnonymousUser?> get user {
-    return _auth.authStateChanges()
-    .map((user) => _anonymousUserFromFirebaseUser(user));
+    return _auth
+        .authStateChanges()
+        .map((user) => _anonymousUserFromFirebaseUser(user));
   }
+
   Stream<dynamic> get activeUser {
-    return _auth.authStateChanges()
+    return _auth
+        .authStateChanges()
         .map((user) => _activeUserFromFirebaseUser(user));
   }
 
   // sign in with email & password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email.trim(), password: password
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email.trim(), password: password);
       return _activeUserFromFirebaseUser(userCredential.user);
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return "invalidUser";
@@ -64,18 +65,18 @@ class AuthService {
     try {
       return await _auth.signOut();
     } catch (e) {
-      print('auth: '+e.toString());
+      print('auth: ' + e.toString());
       return null;
     }
   }
 
   // register with email & password
 
-
   // reset password
-  Future<void> resetPassword(String email) async {
+  Future<void> resetPassword(BuildContext context, String email) async {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    return customAlertDialog(context,
+        title: 'Email has been sent out',
+        content: 'Please check your mail box to reset password');
   }
-
-
 }
