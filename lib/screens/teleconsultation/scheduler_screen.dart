@@ -7,6 +7,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/appointment.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/teleconsultation/datetime_picker.dart';
 import 'package:tb_e_health/screens/teleconsultation/request_appointment_screen.dart';
 
 import 'package:tb_e_health/utils.dart';
@@ -23,6 +24,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     pushNewScreen(
       context,
       screen: RequestApointmentScreen(),
+      // screen: DateTimePicker(),
       withNavBar: false,
     );
   }
@@ -65,8 +67,8 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
             FloatingActionButton(
               onPressed: () =>
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return LiveChat();
-                  })),
+                return LiveChat();
+              })),
               child: Icon(Icons.live_help_outlined),
               backgroundColor: Colors.black,
             ),
@@ -82,9 +84,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
       //   backgroundColor: Colors.black,
       // ),
       body: FutureBuilder<LinkedHashMap<DateTime, List<Appointment>>>(
-        future: findAppointOfActiveUserAsMapping(
-            myActiveUser()
-        ),
+        future: findAppointOfActiveUserAsMapping(myActiveUser()),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
@@ -112,6 +112,7 @@ class SchedulerScreenContent extends StatefulWidget {
   final LinkedHashMap<DateTime, List<Appointment>> content;
 
   SchedulerScreenContent(this.content);
+
   @override
   _SchedulerScreenContentState createState() => _SchedulerScreenContentState();
 }
@@ -123,7 +124,7 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
   @override
   void initState() {
     super.initState();
-    _selectedEvents = ValueNotifier(widget.content[focusDateTime]?? []);
+    _selectedEvents = ValueNotifier(widget.content[focusDateTime] ?? []);
   }
 
   @override
@@ -135,13 +136,13 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
           firstDay: DateTime.now().subtract(Duration(days: 7)),
           lastDay: DateTime.now().add(Duration(days: 90)),
           eventLoader: (dateTime) {
-            return widget.content[dateTime]?? [];
+            return widget.content[dateTime] ?? [];
           },
           selectedDayPredicate: (day) {
             return isSameDay(focusDateTime, day);
           },
           onDaySelected: (selectedDay, focusedDay) {
-            _selectedEvents.value = widget.content[focusedDay]?? [];
+            _selectedEvents.value = widget.content[focusedDay] ?? [];
             setState(() {
               // focusDateTime = selectedDay;
               focusDateTime = focusedDay; // update `_focusedDay` here as well

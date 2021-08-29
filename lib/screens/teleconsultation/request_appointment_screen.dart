@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
 import 'package:tb_e_health/Custom Widgets/hello_calendar_selection.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/appointment.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
-import 'package:get/get.dart';
 
 import 'package:tb_e_health/utils.dart';
 
@@ -131,6 +128,7 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
                 ),
               ),
             ),
+          SizedBox(height: 30.0),
         ],
       ),
     );
