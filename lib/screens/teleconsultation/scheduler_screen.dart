@@ -1,10 +1,14 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:tb_e_health/Custom Widgets/hello_calendar_selection.dart';
-import 'package:tb_e_health/Models/appointment.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:tb_e_health/Screens/teleconsultation/session_screen.dart';
+import 'package:tb_e_health/models/active_user.dart';
+import 'package:tb_e_health/models/appointment.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/teleconsultation/request_appointment_screen.dart';
 
 import 'package:tb_e_health/utils.dart';
 
@@ -14,24 +18,14 @@ class SchedulerScreen extends StatefulWidget {
 }
 
 class _SchedulerScreenState extends State<SchedulerScreen> {
-  DateTime? dateTime;
-  // TODO: load from firebase
-  Appointment? appointment = Appointment(
-    datetime: DateTime(2021, 8, 18),
-    awaiting: false,
-  );
+  DateTime focusDateTime = DateTime.now();
 
-  void _joinSession() {
+  void _requestAppointment() {
     pushNewScreen(
       context,
-      screen: SessionScreen(),
-      withNavBar: true,
+      screen: RequestApointmentScreen(),
+      withNavBar: false,
     );
-  }
-
-  // TODO: action save the appointment
-  void _applySession() {
-    //
   }
 
   @override
@@ -55,80 +49,133 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return LiveChat();
-        })),
-        child: Icon(Icons.live_help_outlined),
-        backgroundColor: Colors.black,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 15.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 24),
+              child: FloatingActionButton(
+                key: Key('add'),
+                heroTag: Key('add'),
+                onPressed: _requestAppointment,
+                child: Icon(Icons.add),
+              ),
+            ),
+            FloatingActionButton(
+              onPressed: () =>
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return LiveChat();
+              })),
+              child: Icon(Icons.live_help_outlined),
+              backgroundColor: Colors.black,
+            ),
+          ],
+        ),
       ),
-      body: Column(
-        children: [
-          HelloCalendarSelection(
-            year: today.year,
-            month: today.month,
-            // TODO: get from state
-            from: DateTime(2021, 8, 5),
-            to: DateTime(2021, 8, 30),
-            appointment: appointment!.datetime,
-            awaiting: appointment!.awaiting,
-            onSelect: (date) {
-              dateTime = dateTime ?? date;
-              setState(() {
-                dateTime = dateTime!.setDate(date);
-              });
+      // FloatingActionButton(
+      //   onPressed: () =>
+      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //     return LiveChat();
+      //   })),
+      //   child: Icon(Icons.live_help_outlined),
+      //   backgroundColor: Colors.black,
+      // ),
+      body: FutureBuilder<LinkedHashMap<DateTime, List<Appointment>>>(
+        future: findAppointOfActiveUserAsMapping(
+          myActiveUser()
+        ),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Center(
+                child: SizedBox(
+                  child: Text('Facing Error'),
+                ),
+              );
+            } else if (snapshot.hasData) {
+              return SchedulerScreenContent(snapshot.data!);
+            }
+          }
+          return Center(
+            child: SizedBox(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class SchedulerScreenContent extends StatefulWidget {
+  final LinkedHashMap<DateTime, List<Appointment>> content;
+
+  SchedulerScreenContent(this.content);
+  @override
+  _SchedulerScreenContentState createState() => _SchedulerScreenContentState();
+}
+
+class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
+  DateTime focusDateTime = DateTime.now();
+  late final ValueNotifier<List<Appointment>> _selectedEvents;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedEvents = ValueNotifier(widget.content[focusDateTime]?? []);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TableCalendar(
+          focusedDay: focusDateTime, 
+          firstDay: DateTime.now().subtract(Duration(days: 7)), 
+          lastDay: DateTime.now().add(Duration(days: 90)),
+          eventLoader: (dateTime) {
+            return widget.content[dateTime]?? [];
+          },
+          selectedDayPredicate: (day) {
+            return isSameDay(focusDateTime, day);
+          },
+          onDaySelected: (selectedDay, focusedDay) {
+            _selectedEvents.value = widget.content[focusedDay]?? [];
+            setState(() {
+              // focusDateTime = selectedDay;
+              focusDateTime = focusedDay; // update `_focusedDay` here as well
+            });
+          },
+        ),
+        Expanded(
+          child: ValueListenableBuilder<List<Appointment>>(
+            valueListenable: _selectedEvents,
+            builder: (context, value, _) {
+              return ListView.builder(
+                itemCount: value.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                      vertical: 4.0,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: ListTile(
+                      onTap: () => print('${value[index]}'),
+                      title: Text('${value[index]}'),
+                    ),
+                  );
+                },
+              );
             },
           ),
-          if (dateTime != null &&
-              (appointment == null || appointment!.awaiting))
-            // TODO: show time picker
-            SizedBox(
-              height: 160,
-              child: CupertinoDatePicker(
-                mode: CupertinoDatePickerMode.time,
-                onDateTimeChanged: (time) {
-                  setState(() {
-                    dateTime = dateTime!.setTime(time);
-                  });
-                },
-              ),
-            ),
-          if (dateTime != null &&
-              (appointment == null || appointment!.awaiting))
-            SizedBox(
-              height: 60,
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                  ),
-                  onPressed: _applySession,
-                  child: Text('Confirm Session'),
-                ),
-              ),
-            ),
-          if (appointment != null && !appointment!.awaiting)
-            SizedBox(
-              height: 60,
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                  ),
-                  onPressed: () => _joinSession(),
-                  child: Text('Go to session'),
-                ),
-              ),
-            ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }
