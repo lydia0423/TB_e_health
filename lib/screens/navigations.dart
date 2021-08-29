@@ -62,7 +62,7 @@ class _NavigationsState extends State<Navigations> {
           Icons.question_answer_rounded,
           size: 30,
         ),
-        title: ("TB Info"),
+        title: ("Useful Information"),
         activeColorPrimary: Colors.black,
         inactiveColorPrimary: Colors.grey[400],
       ),
