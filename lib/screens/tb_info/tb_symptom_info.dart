@@ -7,19 +7,9 @@ class SymptomsInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 30.0),
-            child: IconButton(
-              icon: new Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-                size: 35.0,
-              ),
-              onPressed: () => Navigator.pop(context),
-            ),
+        appBar: AppBar(centerTitle: true,
+          title: Text(
+            'Symptoms of Tuberculosis',
           ),
         ),
         floatingActionButton: FloatingActionButton(
@@ -32,19 +22,6 @@ class SymptomsInfo extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Container(
-              height: 100,
-              width: 500,
-              child: Center(
-                child: Text(
-                  'Symptoms of Tuberculosis',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
             Container(
                 margin: EdgeInsets.all(20.0),
                 decoration: BoxDecoration(

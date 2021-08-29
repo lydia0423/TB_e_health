@@ -16,21 +16,9 @@ class Faq extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
-        title: Text('FAQ'),
-        foregroundColor: Colors.black,
-        toolbarHeight: 70.0,
-        backgroundColor: Colors.white,
-        leading: Padding(
-          padding: const EdgeInsets.only(top: 20.0, left: 30.0),
-          child: IconButton(
-            icon: new Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 35.0,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
+        centerTitle: true,
+        title: Text(
+          'FAQ',
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -45,10 +33,6 @@ class Faq extends StatelessWidget {
         padding: const EdgeInsets.all(25),
         child: Column(
           children: [
-            Text('FAQ',
-            style: TextStyle(
-              fontSize: 35,
-            )),
             // Display the data loaded from sample.json
             items.length > 0
                 ? Expanded(
