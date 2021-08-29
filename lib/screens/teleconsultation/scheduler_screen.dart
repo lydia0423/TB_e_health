@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:tb_e_health/Screens/teleconsultation/session_screen.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/appointment.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
@@ -66,8 +65,8 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
             FloatingActionButton(
               onPressed: () =>
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return LiveChat();
-              })),
+                    return LiveChat();
+                  })),
               child: Icon(Icons.live_help_outlined),
               backgroundColor: Colors.black,
             ),
@@ -84,7 +83,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
       // ),
       body: FutureBuilder<LinkedHashMap<DateTime, List<Appointment>>>(
         future: findAppointOfActiveUserAsMapping(
-          myActiveUser()
+            myActiveUser()
         ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
@@ -132,8 +131,8 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
     return Column(
       children: [
         TableCalendar(
-          focusedDay: focusDateTime, 
-          firstDay: DateTime.now().subtract(Duration(days: 7)), 
+          focusedDay: focusDateTime,
+          firstDay: DateTime.now().subtract(Duration(days: 7)),
           lastDay: DateTime.now().add(Duration(days: 90)),
           eventLoader: (dateTime) {
             return widget.content[dateTime]?? [];

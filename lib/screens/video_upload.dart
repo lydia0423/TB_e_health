@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
@@ -21,7 +22,7 @@ class UploadVideo extends StatefulWidget {
 class _UploadVideoState extends State<UploadVideo> {
   File? fileMedia;
   UploadTask? task;
-  String date = DateTime.now().toString();
+  DateTime datetime = DateTime.now();
   String? url;
 
   @override
@@ -51,7 +52,7 @@ class _UploadVideoState extends State<UploadVideo> {
         child: Icon(Icons.live_help_outlined),
         backgroundColor: Colors.black,
       ),
-      body: Column(
+      body: ListView(
         children: [
           (fileMedia == null)
               ? Padding(
@@ -165,12 +166,12 @@ class _UploadVideoState extends State<UploadVideo> {
 
   Future<VideoUploaded?> uploadMyVideo() async {
     String videoPath = fileMedia.toString();
-      ActiveUser currentUser = await myActiveUser();
-      String userId = currentUser.userId;
-      print(userId+" uploaded a video...");
-      videoPath = url!;
+    ActiveUser currentUser = await myActiveUser();
+    String userId = currentUser.userId;
+    print(userId + " uploaded a video...");
+    videoPath = url!;
 
-      VideoUploaded myVideo = VideoUploaded(userId, date, videoPath);
-      return myVideo;
+    VideoUploaded myVideo = VideoUploaded(userId, videoPath, datetime);
+    return myVideo;
   }
 }

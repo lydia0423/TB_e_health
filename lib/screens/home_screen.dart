@@ -82,8 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
           future: myActiveUser(),
           builder: (BuildContext context, AsyncSnapshot<ActiveUser> user) {
             if (user.hasData) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              return ListView(
+                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 100,
