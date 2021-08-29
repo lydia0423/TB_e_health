@@ -17,6 +17,10 @@ class AuthService {
     return _auth.currentUser;
   }
 
+  ActiveUser? currentActiveUser() {
+
+  }
+
   Future<ActiveUser?> _activeUserFromFirebaseUser(User? user) async {
     if (user?.uid == null) {
       return null;

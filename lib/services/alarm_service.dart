@@ -1,30 +1,40 @@
 import 'dart:isolate';
 import 'package:android_alarm_manager/android_alarm_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:tb_e_health/services/auth_service.dart';
 import 'package:tb_e_health/services/local_alert.dart';
 import 'package:tb_e_health/services/user_service.dart';
 
 class AlarmService {
+
   // 10pm
-  static void firstReminder() {
+  static void firstReminder() async {
     final DateTime now = DateTime.now();
     print('[$now] firstReminder: started ...');
     // everyday 10pm check if the user submitted
-    if (!UserService.videoUploaded('uid')) {
-      // call notification!
-      print('[$now] firstReminder: call notification');
-      LocalAlert.initializeSetting();
-      LocalAlert.displayNotification('Reminder',
-          'Reminder: You have yet to upload your video, please do so by 12pm.');
-    }
+    checkAndShowAlert();
   }
 
   // 11pm
   static void secondReminder() {
     final DateTime now = DateTime.now();
     print('[$now] secondReminder: started ...');
-    if (!UserService.videoUploaded('uid')) {
+    // everyday 11pm check if the user submitted
+    checkAndShowAlert();
+  }
+
+  static void checkAndShowAlert() async {
+    final DateTime now = DateTime.now();
+    await Firebase.initializeApp();
+    UserService userService = UserService();
+    bool userHasUploadedVideo = await userService.videoUploaded();
+    if (!userHasUploadedVideo) {
       // call notification!
-      print('[$now] secondReminder: call notification');
+      print('[$now] firstReminder: call notification');
+      LocalAlert.initializeSetting();
+      LocalAlert.displayNotification('Reminder',
+          'Reminder: You have yet to upload your video, please do so by 12pm.');
     }
   }
 
