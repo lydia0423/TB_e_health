@@ -49,7 +49,8 @@ class SideEffectInfo extends StatelessWidget {
                 margin: EdgeInsets.all(20.0),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey),
+                    color: Colors.grey[100],
+                    border: Border.all(color: Colors.grey)),
                 child: Padding(
                     padding: const EdgeInsets.all(30.0),
                     child: Text(

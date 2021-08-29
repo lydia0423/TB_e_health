@@ -138,7 +138,7 @@ class _QnAState extends State<QnA> {
                   );
                 },
                 child: Text(
-                  'Dots Therapy',
+                  'FAQ',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
