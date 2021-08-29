@@ -81,7 +81,7 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
           ),
         ),
       ),
-      body: Column(
+      body: ListView(
         children: [
           HelloCalendarSelection(
             year: today.year,
