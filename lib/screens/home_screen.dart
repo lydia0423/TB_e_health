@@ -7,6 +7,8 @@ import 'package:tb_e_health/screens/video_upload.dart';
 import 'package:tb_e_health/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
+import 'drug_delivery/drug_request_list.dart';
+
 class HomeScreen extends StatefulWidget {
   static String id = 'HomeScreen';
 
@@ -130,7 +132,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             pushNewScreen(
                               context,
-                              screen: DrugDeliveryScreen(),
+                              screen: DrugRequestListScreen(),
+                              // screen: DrugDeliveryScreen(),
                               withNavBar:
                                   true, // OPTIONAL VALUE. True by default.
                             );
