@@ -45,7 +45,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
         child: Icon(Icons.live_help_outlined),
         backgroundColor: Colors.black,
       ),
-      body: Column(
+      body: ListView(
         children: [
           HelloCalendarSelection(
             year: today.year,

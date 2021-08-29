@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
@@ -51,7 +52,7 @@ class _UploadVideoState extends State<UploadVideo> {
         child: Icon(Icons.live_help_outlined),
         backgroundColor: Colors.black,
       ),
-      body: Column(
+      body: ListView(
         children: [
           (fileMedia == null)
               ? Padding(

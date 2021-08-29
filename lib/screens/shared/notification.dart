@@ -23,15 +23,24 @@ class _NotificationLocalState extends State<NotificationLocal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IconButton(
-        icon: Icon(
-          Icons.notifications,
-          size: 30,
-          color: Colors.blue,
-        ),
-        onPressed: () {
-          displayNotification('test notification');
-        },
+      body: Column(
+        children: [
+          IconButton(
+            icon: Icon(
+              Icons.notifications,
+              size: 30,
+              color: Colors.blue,
+            ),
+            onPressed: () {
+              displayNotification('test notification');
+            },
+          ),
+          ElevatedButton(
+              onPressed: () {
+                print('back to wrapper');
+              },
+              child: Text('OK')),
+        ],
       ),
     );
   }
