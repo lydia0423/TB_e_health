@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/anonymous_user.dart';
+import 'package:tb_e_health/services/user_service.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -17,9 +18,7 @@ class AuthService {
     return _auth.currentUser;
   }
 
-  ActiveUser? currentActiveUser() {
-
-  }
+  ActiveUser? currentActiveUser() {}
 
   Future<ActiveUser?> _activeUserFromFirebaseUser(User? user) async {
     if (user?.uid == null) {
@@ -64,7 +63,40 @@ class AuthService {
     }
   }
 
-  // sign out
+  UserService _user = UserService();
+
+  // sign in with email & password
+  Future signInWithUserIdAndPassword(String userId, String password) async {
+    print('signInWithUserIdAndPassword: userId = ' + userId);
+    String email = '';
+    try {
+      email = await _user.getUserEmailByUserId(userId);
+      print('signInWithUserIdAndPassword: email is ' + email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return "invalidUser";
+      }
+    }
+    if (email == '') {
+      return "invalidUser";
+    }
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email.trim(), password: password);
+      return _activeUserFromFirebaseUser(userCredential.user);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        return "invalidUser";
+      } else if (e.code == 'wrong-password') {
+        return "invalidPassword";
+      } else if (e.code == "invalid-email") {
+        return "invalidEmail";
+      }
+    }
+  }
+
+// sign out
   Future signOut() async {
     try {
       return await _auth.signOut();
@@ -74,9 +106,9 @@ class AuthService {
     }
   }
 
-  // register with email & password
+// register with email & password
 
-  // reset password
+// reset password
   Future<void> resetPassword(BuildContext context, String email) async {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
     return customAlertDialog(context,

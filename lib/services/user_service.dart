@@ -9,6 +9,29 @@ class UserService {
     return true;
   }
 
+  Future<String> getUserEmailByUserId(String userId) async {
+    try {
+      QuerySnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection("User")
+          .where("UserId", isEqualTo: userId)
+          .limit(1)
+          .get();
+
+      dynamic json = userSnapshot.docs.first.data();
+      final ActiveUser activeUser = ActiveUser.fromJson(json);
+      String email = activeUser.email;
+      print('getUserEmailByUserId: userId = ' + userId + ' , email = ' + email);
+      return email;
+    } catch (e) {
+      print(e);
+      return '';
+    }
+  }
+
+  String getUserIdByUserEmail() {
+    return '';
+  }
+
   // check user uploaded video
   Future<bool> videoUploaded() async {
     AuthService _auth = AuthService();
