@@ -172,16 +172,20 @@ class _SignInState extends State<SignIn> {
                             actions: [
                               TextButton(
                                   onPressed: () {
-                                    _auth.resetPassword(email);
-                                    return customAlertDialog(context,
-                                        title: 'Email has been sent out',
-                                        content:
-                                            'Please check your mail box to reset password');
+                                    (email.isEmpty)
+                                        ? customAlertDialog(context,
+                                            title: 'Email cannot be empty',
+                                            content:
+                                                'Please enter your registered email')
+                                        : _auth.resetPassword(context, email);
                                   },
                                   child: Text(
                                     'OK',
                                     style: TextStyle(color: Colors.black),
-                                  ))
+                                  )),
+                              TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text('Cancel'))
                             ],
                           );
                         });

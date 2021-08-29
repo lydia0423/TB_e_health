@@ -10,17 +10,8 @@ class Navigations extends StatefulWidget {
 }
 
 class _NavigationsState extends State<Navigations> {
-  // int _currentIndex = 1;
-
-  // final List<Widget> _pages = [QnA(), HomeScreen(), Profile()];
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 1);
-
-  // void onTabTapped(int index) {
-  //   setState(() {
-  //     _currentIndex = index;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

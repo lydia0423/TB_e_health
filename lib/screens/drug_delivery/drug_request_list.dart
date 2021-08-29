@@ -48,7 +48,7 @@ class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
                         onPressed: () => Navigator.of(context).pop(),
                         icon: Icon(Icons.arrow_back, color: Colors.white),
                       ),
-                      SizedBox(width: 12),
+                      SizedBox(width: 10),
                       Text(
                         'Drug Delivery Service',
                         style: TextStyle(
@@ -158,7 +158,7 @@ class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 15.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[

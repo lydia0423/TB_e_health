@@ -15,6 +15,7 @@ class RequestDisplayCard extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(15),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               request.requestDate, 
