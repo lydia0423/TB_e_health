@@ -34,6 +34,6 @@ class UserService {
       return foundVideo;
     }
     print('videoUploaded: user not loggedIn, cant check, thus no notification');
-    return false;
+    return true;
   }
 }
