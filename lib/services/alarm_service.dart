@@ -38,7 +38,7 @@ class AlarmService {
     int alarmId0 = 0;
     print('dailyAlarm id $alarmId0 scheduled at 10pm');
     await AndroidAlarmManager.periodic(
-      const Duration(minutes: 5), // TODO : 5mins for test now.
+      const Duration(minutes: 1), // TODO : 5mins for test now.
       // const Duration(hours: 24), //Do the same every 24 hours
       alarmId0, //Different ID for each alarm
       ReminderCallService.firstReminder,
