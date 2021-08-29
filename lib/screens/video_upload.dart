@@ -22,7 +22,7 @@ class UploadVideo extends StatefulWidget {
 class _UploadVideoState extends State<UploadVideo> {
   File? fileMedia;
   UploadTask? task;
-  String date = DateTime.now().toString();
+  DateTime datetime = DateTime.now();
   String? url;
 
   @override
@@ -166,12 +166,12 @@ class _UploadVideoState extends State<UploadVideo> {
 
   Future<VideoUploaded?> uploadMyVideo() async {
     String videoPath = fileMedia.toString();
-      ActiveUser currentUser = await myActiveUser();
-      String userId = currentUser.userId;
-      print(userId+" uploaded a video...");
-      videoPath = url!;
+    ActiveUser currentUser = await myActiveUser();
+    String userId = currentUser.userId;
+    print(userId + " uploaded a video...");
+    videoPath = url!;
 
-      VideoUploaded myVideo = VideoUploaded(userId, date, videoPath);
-      return myVideo;
+    VideoUploaded myVideo = VideoUploaded(userId, videoPath, datetime);
+    return myVideo;
   }
 }

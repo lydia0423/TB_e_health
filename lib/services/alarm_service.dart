@@ -76,8 +76,8 @@ class AlarmService {
     await AndroidAlarmManager.periodic(
         const Duration(seconds: 5), 1, AlarmService.firstReminder);
     // everyday 11 pm second reminder check
-    await AndroidAlarmManager.periodic(
-        const Duration(seconds: 10), 2, AlarmService.secondReminder);
+    await AndroidAlarmManager.oneShotAt(
+        DateTime.now(), 2, AlarmService.secondReminder);
     // everyday 12 pm final check
     await AndroidAlarmManager.periodic(
         const Duration(seconds: 15), 3, AlarmService.finalChecking);

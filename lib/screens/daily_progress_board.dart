@@ -25,7 +25,7 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
     List<VideoUploaded> submissions =
         await findVideoUploadedOfUser(FirebaseAuth.instance.currentUser!.uid);
     for (var submission in submissions) {
-      dates[DateTime.parse(submission.timestamp).getToday()] = true;
+      dates[DateTime.now()] = true;
     }
     setState(() {});
   }
