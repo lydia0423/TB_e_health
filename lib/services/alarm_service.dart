@@ -1,51 +1,13 @@
 import 'dart:isolate';
 import 'package:android_alarm_manager/android_alarm_manager.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:tb_e_health/services/auth_service.dart';
-import 'package:tb_e_health/services/local_alert.dart';
-import 'package:tb_e_health/services/user_service.dart';
+import 'package:tb_e_health/services/reminder_call.dart';
 
+// alarm to call reminder
 class AlarmService {
-
-  // 10pm
-  static void firstReminder() async {
-    final DateTime now = DateTime.now();
-    print('[$now] firstReminder: started ...');
-    // everyday 10pm check if the user submitted
-    checkAndShowAlert();
-  }
-
-  // 11pm
-  static void secondReminder() {
-    final DateTime now = DateTime.now();
-    print('[$now] secondReminder: started ...');
-    // everyday 11pm check if the user submitted
-    checkAndShowAlert();
-  }
-
-  static void checkAndShowAlert() async {
-    final DateTime now = DateTime.now();
-    await Firebase.initializeApp();
-    UserService userService = UserService();
-    bool userHasUploadedVideo = await userService.videoUploaded();
-    if (!userHasUploadedVideo) {
-      // call notification!
-      print('[$now] firstReminder: call notification');
-      LocalAlert.initializeSetting();
-      LocalAlert.displayNotification('Reminder',
-          'Reminder: You have yet to upload your video, please do so by 12pm.');
-    }
-  }
-
-  // 12pm
-  static void finalChecking() {}
-
-  static void meetingAlarm() {
-    final DateTime now = DateTime.now();
-    print('[$now] meetingAlarm: started ...');
-    // call notification!
-    print('[$now] meetingAlarm: call notification');
+  static initAlarm() async {
+    DateTime now = new DateTime.now();
+    dailyAlarm();
+    print('initAlarm: ' + now.toString());
   }
 
   // meeting
@@ -55,7 +17,7 @@ class AlarmService {
       const Duration(seconds: 1),
       // Ensure we have a unique alarm ID.
       meetingId,
-      meetingAlarm,
+      ReminderCallService.meetingReminder,
       exact: true,
       wakeup: true,
     );
@@ -71,15 +33,47 @@ class AlarmService {
     print("[$now] Hello, world! isolate=$isolateId");
   }
 
-  static initAlarm() async {
+  static dailyAlarm() async {
     // everyday 10 pm first reminder check
+    int alarmId0 = 0;
+    print('dailyAlarm id $alarmId0 scheduled at 10pm');
     await AndroidAlarmManager.periodic(
-        const Duration(seconds: 5), 1, AlarmService.firstReminder);
+      const Duration(minutes: 1), //Do the same every 24 hours
+      // const Duration(hours: 24), //Do the same every 24 hours
+      alarmId0, //Different ID for each alarm
+      ReminderCallService.firstReminder,
+      exact: true,
+      wakeup: true, //the device will be woken up when the alarm fires
+      startAt: DateTime.now(),
+      // startAt: DateTime(DateTime.now().year, DateTime.now().month,
+      //     DateTime.now().day, 22, 0), //Start whit the specific time 10:00 pm
+      rescheduleOnReboot: true, //Work after reboot
+    );
     // everyday 11 pm second reminder check
-    await AndroidAlarmManager.oneShotAt(
-        DateTime.now(), 2, AlarmService.secondReminder);
-    // everyday 12 pm final check
+    int alarmId1 = 1;
+    print('dailyAlarm id $alarmId1 scheduled at 11pm');
     await AndroidAlarmManager.periodic(
-        const Duration(seconds: 15), 3, AlarmService.finalChecking);
+      const Duration(hours: 24), //Do the same every 24 hours
+      alarmId1, //Different ID for each alarm
+      ReminderCallService.secondReminder,
+      exact: true,
+      wakeup: true, //the device will be woken up when the alarm fires
+      startAt: DateTime(DateTime.now().year, DateTime.now().month,
+          DateTime.now().day, 23, 0), //Start whit the specific time 11:00 pm
+      rescheduleOnReboot: true, //Work after reboot
+    );
+    // everyday 12 pm final check
+    int alarmId2 = 2;
+    print('dailyAlarm id $alarmId2 scheduled at 12pm');
+    await AndroidAlarmManager.periodic(
+      const Duration(hours: 24), //Do the same every 24 hours
+      alarmId2, //Different ID for each alarm
+      ReminderCallService.finalChecking,
+      exact: true,
+      wakeup: true, //the device will be woken up when the alarm fires
+      startAt: DateTime(DateTime.now().year, DateTime.now().month,
+          DateTime.now().day, 24, 0), //Start whit the specific time 12:00 pm
+      rescheduleOnReboot: true, //Work after reboot
+    );
   }
 }
