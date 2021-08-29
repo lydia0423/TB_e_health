@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:tb_e_health/models/faq_data.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/navigations.dart';
+import 'package:tb_e_health/screens/tb_info/faq.dart';
 import 'package:tb_e_health/screens/tb_info/tb_dots.dart';
 import 'package:tb_e_health/screens/tb_info/tb_overview.dart';
 import 'package:tb_e_health/screens/tb_info/tb_side_effect_info.dart';
 import 'package:tb_e_health/screens/tb_info/tb_symptom_info.dart';
+import 'package:tb_e_health/services/load_data.dart';
 
 class QnA extends StatefulWidget {
   @override
@@ -130,10 +133,14 @@ class _QnAState extends State<QnA> {
                       borderRadius: BorderRadius.circular(30)),
                   padding: EdgeInsets.all(20),
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  LoadDataService load = LoadDataService();
+                  List<dynamic> data = await load.readJson();
+                  print(data);
                   pushNewScreen(
                     context,
-                    screen: DotsTherapyInfo(),
+                    screen: Faq(items: data,),
+                    // screen: DotsTherapyInfo(),
                     withNavBar: true, // OPTIONAL VALUE. True by default.
                   );
                 },

@@ -89,6 +89,8 @@ flutter:
     - assets/Images/faq.png
     - assets/Images/speak_to_nurse.png
     - assets/images/
+    - assets/json/faq_data.json
+    - assets/json/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

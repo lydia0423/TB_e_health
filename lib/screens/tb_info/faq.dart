@@ -1,16 +1,26 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/screens/navigations.dart';
-import 'package:tb_e_health/screens/ques_ans.dart';
+import 'dart:convert';
 
-class DotsTherapyInfo extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:tb_e_health/models/faq_data.dart';
+import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/shared/info_card.dart';
+
+class Faq extends StatelessWidget {
+  final List<dynamic> items;
+
+  Faq({
+    required this.items,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Colors.transparent,
+        title: Text('FAQ'),
+        foregroundColor: Colors.black,
+        toolbarHeight: 70.0,
+        backgroundColor: Colors.white,
         leading: Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 30.0),
           child: IconButton(
@@ -31,39 +41,39 @@ class DotsTherapyInfo extends StatelessWidget {
         child: Icon(Icons.live_help_outlined),
         backgroundColor: Colors.black,
       ),
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.all(25),
         child: Column(
           children: [
-            Container(
-              height: 100,
-              width: 500,
-              child: Center(
-                child: Text(
-                  'Dots Therapy',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-                margin: EdgeInsets.all(20.0),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey),
-                child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: Text(
-                    'If you have TB disease, you will take several medicines when you start your treatment to kill the TB germs in your body. They are:\n\n'
-                    '1. Isoniazid (i-so-ni-a-zid)\n2. Rifampin (ri-fam-pin)\n3. Ethambutol (eth-am-byoo-tol)\n4. Pyrazinamide (peer-a-zin-a-mide)\n\n'
-                    'What is “DOTS”?\n\n'
-                    'DOT is short for Directly Observed Therapy. Depending on your medicine plan, a healthcare worker will meet with you every day '
-                    'or a few times a week to watch you take your TB pills. He or she will bring you your pills at the place and time  most easy for you.'
-                    'This can help you stay with your medicine plan. \n',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ))
+            Text('FAQ',
+            style: TextStyle(
+              fontSize: 35,
+            )),
+            // Display the data loaded from sample.json
+            items.length > 0
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.all(5.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey[100],
+                              border: Border.all(color: Colors.grey)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              items[index].title + '\n'
+                              + items[index].text,
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                : Container()
           ],
         ),
       ),
