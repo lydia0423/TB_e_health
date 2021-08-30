@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/Models/active_user.dart';
 import 'package:tb_e_health/Screens/teleconsultation/scheduler_screen.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
@@ -313,8 +314,8 @@ class _SideEffectState extends State<SideEffect> {
                         final DateTime? picked = await showDatePicker(
                           context: context,
                           initialDate: selectedDate, // Refer step 1
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2025),
+                          firstDate: DateTime.now().subtract(Duration(days: 6)),
+                          lastDate: DateTime.now(),
                         );
                         if (picked != null && picked != selectedDate)
                           setState(() {
@@ -388,7 +389,7 @@ class _SideEffectState extends State<SideEffect> {
               child: (Padding(
                 padding: const EdgeInsets.fromLTRB(30.0, 30.0, 20.0, 10.0),
                 child: Text(
-                  'Tap to Speak to Our Staff for Advice',
+                  'Tap to book a appointment with our staff',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
@@ -464,5 +465,7 @@ class _SideEffectState extends State<SideEffect> {
     }).catchError((onError) {
       print(onError);
     });
+    customAlertDialog(context,
+        title: 'Reminder', content: 'Sucessfully submit the form!');
   }
 }
