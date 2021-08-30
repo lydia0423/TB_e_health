@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-
 import 'active_user.dart';
 
 class AppointmentStatus {
@@ -12,6 +11,7 @@ class AppointmentStatus {
 }
 
 class Appointment {
+  final String id;
   final String appointmentDate;
   final String appointmentEndTime;
   final String appointmentStartTime;
@@ -20,6 +20,7 @@ class Appointment {
   final String userName;
 
   Appointment({
+    this.id = '',
     this.appointmentDate = "2021-08-26",
     this.appointmentEndTime = "09:00",
     this.appointmentStartTime = "09:00",
@@ -45,17 +46,19 @@ class Appointment {
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
     return Appointment(
-      appointmentDate: json["AppointmentDate"]?? "2021-08-26",
-      appointmentEndTime: json["AppointmentEndTime"]?? '09:30',
-      appointmentStartTime: json["AppointmentStartTime"]?? '09:00',
-      appointmentStatus: json["AppointmentStatus"]?? AppointmentStatus.pending,
-      userId: json["UserId"]?? 'UM00001',
-      userName: json["UserName"]?? 'Lydia',
+      id: json["id"] ?? '',
+      appointmentDate: json["AppointmentDate"] ?? "2021-08-26",
+      appointmentEndTime: json["AppointmentEndTime"] ?? '09:30',
+      appointmentStartTime: json["AppointmentStartTime"] ?? '09:00',
+      appointmentStatus: json["AppointmentStatus"] ?? AppointmentStatus.pending,
+      userId: json["UserId"] ?? 'UM00001',
+      userName: json["UserName"] ?? 'Lydia',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'AppointmentDate': appointmentDate,
       'AppointmentEndTime': appointmentEndTime,
       'AppointmentStartTime': appointmentStartTime,
@@ -71,7 +74,8 @@ class Appointment {
   }
 }
 
-Future<List<Appointment>> findAppointOfActiveUser(Future<ActiveUser> userFuture) async {
+Future<List<Appointment>> findAppointOfActiveUser(
+    Future<ActiveUser> userFuture) async {
   String userId = (await userFuture).userId;
   List<Appointment> result = [];
   try {
@@ -80,7 +84,7 @@ Future<List<Appointment>> findAppointOfActiveUser(Future<ActiveUser> userFuture)
         .where("UserId", isEqualTo: userId);
     QuerySnapshot snapshot = await query.get();
     for (var doc in snapshot.docs) {
-      print(doc.data());
+      print('${doc.id} ${doc.data()}');
       var submission = Appointment.fromJson(doc.data() as Map<String, dynamic>);
       result.add(submission);
     }
@@ -95,17 +99,35 @@ int _getHashCode(DateTime key) {
   return key.day * 1000000 + key.month * 10000 + key.year;
 }
 
-Future<LinkedHashMap<DateTime, List<Appointment>>> findAppointOfActiveUserAsMapping(Future<ActiveUser> userFuture) async {
+Future<LinkedHashMap<DateTime, List<Appointment>>>
+    findAppointOfActiveUserAsMapping(Future<ActiveUser> userFuture) async {
   final List<Appointment> result = await findAppointOfActiveUser(userFuture);
-  final LinkedHashMap<DateTime, List<Appointment>> map = LinkedHashMap<DateTime, List<Appointment>>(
+  final LinkedHashMap<DateTime, List<Appointment>> map =
+      LinkedHashMap<DateTime, List<Appointment>>(
     equals: isSameDay,
     hashCode: _getHashCode,
   )..addAll(<DateTime, List<Appointment>>{
-    for (var r in result) r.timestamp: [r]
-  });
+          for (var r in result) r.timestamp: [r]
+        });
   return map;
 }
 
 Future<void> createAppointment(Appointment request) async {
-  await FirebaseFirestore.instance.collection('Appointment').add(request.toJson());
+  await FirebaseFirestore.instance
+      .collection('Appointment')
+      .add(request.toJson());
+}
+
+Future<void> deleteAppointment(String id) async {
+  await FirebaseFirestore.instance
+      .collection('Appointment')
+      .where('id', isEqualTo: id)
+      .get()
+      .then((value) => value.docs.forEach((element) {
+            print(element.id);
+            FirebaseFirestore.instance
+                .collection('Appointment')
+                .doc(element.id)
+                .delete();
+          }));
 }

@@ -6,6 +6,7 @@ import 'package:tb_e_health/models/appointment.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 
 import 'package:tb_e_health/utils.dart';
+import 'package:uuid/uuid.dart';
 
 const int _INTERVAL = 30;
 
@@ -32,11 +33,15 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
       return;
     }
     var user = await myActiveUser();
+
+    Uuid uuid = Uuid();
+
     Appointment request = Appointment(
       appointmentDate: Appointment.toDate(dateTime!),
       appointmentEndTime: Appointment.toTime(dateTime!.add(Duration(minutes: 30))),
       appointmentStartTime: Appointment.toTime(dateTime!),
       appointmentStatus: AppointmentStatus.pending,
+      id: uuid.v4().toString(),
       userId: user.userId,
       userName: user.name,
     );

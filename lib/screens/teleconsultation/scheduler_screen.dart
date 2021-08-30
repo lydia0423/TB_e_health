@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/appointment.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
@@ -143,6 +144,12 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: ListTile(
+                      trailing: IconButton(
+                        onPressed: () {
+                          cancelAppointmentDialog(context, value[0]);
+                        },
+                        icon: Icon(Icons.remove_circle_outlined),
+                      ),
                       onTap: () => print('${value[index]}'),
                       title: Text('${value[index]}'),
                     ),
