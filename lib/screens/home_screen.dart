@@ -18,8 +18,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Widget _uploadWidget() => SizedBox(
-      height: 300,
-      width: 300,
+      height: 200,
+      width: 200,
       child: GestureDetector(
           onTap: () => pushNewScreen(
                 context,
@@ -84,33 +84,41 @@ class _HomeScreenState extends State<HomeScreen> {
           future: myActiveUser(),
           builder: (BuildContext context, AsyncSnapshot<ActiveUser> user) {
             if (user.hasData) {
-              return ListView(
-                // crossAxisAlignment: CrossAxisAlignment.center,
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 100,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Text('Hello!',
-                            style: TextStyle(
-                                fontSize: 45.0, fontWeight: FontWeight.bold)),
+                  Expanded(
+                    child: SizedBox(
+                      height: 80,
+                      child: Center(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 8.0),
+                          child: Text('Hello!',
+                              style: TextStyle(
+                                  fontSize: 45.0, fontWeight: FontWeight.bold)),
+                        ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(12),
+                  Center(
                     child: Text(
                       user.data!.name,
-                      style: TextStyle(fontSize: 30.0),
+                      style: TextStyle(
+                        fontSize: 30.0,
+                      ),
                     ),
                   ),
                   SizedBox(
-                    height: 36,
+                    height: 15,
                   ),
-                  _uploadWidget(),
                   Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 90.0),
+                    child: _uploadWidget(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 8.0),
                     child: Text(
                       'Upload Video',
                       style: Theme.of(context).textTheme.headline6,
