@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tb_e_health/models/active_user.dart';
-import 'package:tb_e_health/services/auth_service.dart';
 import 'package:tb_e_health/services/video_service.dart';
 
 class UserService {
@@ -38,15 +37,23 @@ class UserService {
           .get();
 
       final ActiveUser activeUser =
-          ActiveUser.fromJson(activeUserDetails.data()!);
+      ActiveUser.fromJson(activeUserDetails.data()!);
       return activeUser;
     }
-    return ActiveUser('', '', '', '', '', '', false, '', '');
+    return ActiveUser(
+        '',
+        '',
+        '',
+        '',
+        '',
+        '',
+        false,
+        '',
+        '');
   }
 
   // check user uploaded video
   Future<bool> videoUploaded() async {
-    AuthService _auth = AuthService();
     VideoService _video = VideoService();
 
     User? currentUser = FirebaseAuth.instance.currentUser;
@@ -58,7 +65,7 @@ class UserService {
           .get();
 
       final ActiveUser activeUser =
-          ActiveUser.fromJson(activeUserDetails.data()!);
+      ActiveUser.fromJson(activeUserDetails.data()!);
 
       print('videoUploaded: checking ' +
           activeUser.userId +

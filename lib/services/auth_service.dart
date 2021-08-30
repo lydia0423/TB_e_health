@@ -82,7 +82,7 @@ class AuthService {
     }
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      UserCredential userCredential = await _auth
           .signInWithEmailAndPassword(email: email.trim(), password: password);
       return _activeUserFromFirebaseUser(userCredential.user);
     } on FirebaseAuthException catch (e) {
@@ -110,10 +110,15 @@ class AuthService {
 
 // reset password
   Future<void> resetPassword(BuildContext context, String email) async {
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    await _auth.sendPasswordResetEmail(email: email);
     return customAlertDialog(context,
         title: 'Email has been sent out',
         content: 'Please check your mail box to reset password');
+  }
+
+  createUser(String userEmail, String defaultPassword) async {
+    UserCredential user =  await _auth.createUserWithEmailAndPassword(
+        email: userEmail, password: defaultPassword);
   }
 
 }

@@ -14,6 +14,7 @@ class Wrapper extends StatelessWidget {
     // listen to changes, return home or authenticate widget
     if (user == null) {
       print('Widget -> Authenticate: ');
+      // open this to create dummy user record...
       return Authenticate();
     } else {
       print('Widget -> Home: ' + user.uid);
