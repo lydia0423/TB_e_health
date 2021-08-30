@@ -8,6 +8,8 @@ import 'package:tb_e_health/Models/active_user.dart';
 import 'package:tb_e_health/Screens/teleconsultation/scheduler_screen.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 
+import 'gen/assets.gen.dart';
+
 /// This is the stateful widget that the main application instantiates.
 class SideEffect extends StatefulWidget {
   const SideEffect({Key? key}) : super(key: key);
@@ -74,7 +76,7 @@ class _SideEffectState extends State<SideEffect> {
               child: (Padding(
                 padding: const EdgeInsets.fromLTRB(30.0, 30.0, 20.0, 10.0),
                 child: Text(
-                  'What symptoms are you experiencing?',
+                  'What side effects are you experiencing?',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
@@ -284,7 +286,7 @@ class _SideEffectState extends State<SideEffect> {
               child: (Padding(
                 padding: const EdgeInsets.fromLTRB(30.0, 30.0, 20.0, 0),
                 child: Text(
-                  'When did these symptoms start?',
+                  'When did these side effects start?',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
@@ -348,15 +350,15 @@ class _SideEffectState extends State<SideEffect> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 70, //height of button
-                  width: 200, //width of button
+                  height: 50, //height of button
+                  width: 170, //width of button
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.grey[850], //background color of button
                       shape: RoundedRectangleBorder(
                           //to set border radius to button
                           borderRadius: BorderRadius.circular(30)),
-                      padding: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(10),
                     ),
                     onPressed: () {
                       submitForm(context);
@@ -364,7 +366,7 @@ class _SideEffectState extends State<SideEffect> {
                     child: Text(
                       'Submit',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.normal,
                         color: Colors.white,
                       ),
@@ -389,7 +391,7 @@ class _SideEffectState extends State<SideEffect> {
               child: (Padding(
                 padding: const EdgeInsets.fromLTRB(30.0, 30.0, 20.0, 10.0),
                 child: Text(
-                  'Tap to book a appointment with our staff',
+                  'Tap to book a teleconsultation',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
@@ -401,25 +403,34 @@ class _SideEffectState extends State<SideEffect> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FloatingActionButton(
-                    onPressed: () {
-                      pushNewScreen(
-                        context,
-                        screen: SchedulerScreen(),
-                        withNavBar: true, // OPTIONAL VALUE. True by default.
-                      );
-                    },
-                    child: Icon(
-                      Icons.wifi_calling_3,
-                      size: 30,
-                    ),
-                    tooltip: 'Click to Call',
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
-                    hoverColor: Colors.white,
-                    splashColor: Colors.white,
-                    highlightElevation: 20,
-                    mini: false,
+                  Column(
+                    children: [
+                      FloatingActionButton(
+                        onPressed: () {
+                          pushNewScreen(
+                            context,
+                            screen: SchedulerScreen(),
+                            withNavBar:
+                                true, // OPTIONAL VALUE. True by default.
+                          );
+                        },
+                        child: Assets.images.iconSupport.svg(height: 30),
+                        tooltip: 'Click to Call',
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.white,
+                        hoverColor: Colors.white,
+                        splashColor: Colors.white,
+                        highlightElevation: 20,
+                        mini: false,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          'Teleconsultation',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
