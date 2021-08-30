@@ -64,21 +64,6 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
     // TODO: get state on appointment
     return Scaffold(
       appBar: CommonAppBar(title: 'Book Appointment'),
-      // appBar: AppBar(
-      //   elevation: 0.0,
-      //   backgroundColor: Colors.transparent,
-      //   leading: Padding(
-      //     padding: const EdgeInsets.only(left: 30.0),
-      //     child: IconButton(
-      //       icon: new Icon(
-      //         Icons.arrow_back_ios,
-      //         color: Colors.black,
-      //         size: 35.0,
-      //       ),
-      //       onPressed: () => Navigator.pop(context),
-      //     ),
-      //   ),
-      // ),
       body: ListView(
         children: [
           HelloCalendarSelection(

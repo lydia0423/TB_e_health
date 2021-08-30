@@ -48,14 +48,6 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
     var today = DateTime.now().getToday();
     return Scaffold(
       appBar: CommonAppBar(title: 'My DOTS Therapy Progress'),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () =>
-      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //     return LiveChat();
-      //   })),
-      //   child: Icon(Icons.live_help_outlined),
-      //   backgroundColor: Colors.black,
-      // ),
       body: ListView(
         children: [
           HelloCalendar(
@@ -113,27 +105,27 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 50.0,
-                        height: 50.0,
-                        decoration: new BoxDecoration(
-                          color: HelloYellow,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text('Pending'),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: [
+                //       Container(
+                //         width: 50.0,
+                //         height: 50.0,
+                //         decoration: new BoxDecoration(
+                //           color: HelloYellow,
+                //           shape: BoxShape.circle,
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         width: 10.0,
+                //       ),
+                //       Text('Pending'),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   height: 30.0,
                 ),

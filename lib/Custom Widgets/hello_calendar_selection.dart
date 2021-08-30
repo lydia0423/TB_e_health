@@ -5,11 +5,13 @@ import 'hello_calendar.dart';
 
 class HelloCalendarSelection extends StatefulWidget {
   final int year;
-  final int month;
+  int month;
+
   // config data
 
   /// the day start TB treatment
   final DateTime from;
+
   /// the day complete TB treatment
   final DateTime to;
 
@@ -27,17 +29,16 @@ class HelloCalendarSelection extends StatefulWidget {
     required this.onSelect,
     this.appointment,
     this.awaiting = true,
-  }): assert(month <= DateTime.december && month >= DateTime.january);
+  }) : assert(month <= DateTime.december && month >= DateTime.january);
 
   _HelloCalendarSelection createState() => _HelloCalendarSelection();
 }
 
 class _HelloCalendarSelection extends State<HelloCalendarSelection> {
-
   DateTime? selected;
 
   String get _monthToString {
-    switch(widget.month) {
+    switch (widget.month) {
       case DateTime.january:
         return 'january';
       case DateTime.february:
@@ -121,26 +122,28 @@ class _HelloCalendarSelection extends State<HelloCalendarSelection> {
   Color? _computeColor(DateTime date) {
     if (widget.appointment == null) {
       return null;
-    } 
+    }
     var a = widget.appointment!.getToday();
     if (a.day == date.day && a.month == date.month && a.year == date.year) {
-      return widget.awaiting? HelloYellow : HelloGreen;
+      return widget.awaiting ? HelloYellow : HelloGreen;
     }
     return null;
   }
 
   Widget _dayWidget(
-    BuildContext context, 
+    BuildContext context,
     DateTime date,
   ) {
     bool isSelectable = date.isAfter(widget.from) && date.isBefore(widget.to);
     var child = GestureDetector(
-      onTap: isSelectable? () {
-        setState(() {
-          selected = date;
-        });
-        widget.onSelect(date);
-      } : null,
+      onTap: isSelectable
+          ? () {
+              setState(() {
+                selected = date;
+              });
+              widget.onSelect(date);
+            }
+          : null,
       child: SelectableDayBox(
         size: MediaQuery.of(context).size.width / 7 - 8,
         day: date.day,
@@ -150,7 +153,8 @@ class _HelloCalendarSelection extends State<HelloCalendarSelection> {
       ),
     );
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 7, height: MediaQuery.of(context).size.width / 7,
+      width: MediaQuery.of(context).size.width / 7,
+      height: MediaQuery.of(context).size.width / 7,
       child: selected == date
           ? Card(
               child: child,
@@ -161,18 +165,15 @@ class _HelloCalendarSelection extends State<HelloCalendarSelection> {
 
   _weekBuilder(BuildContext context, List<DateTime> week) {
     return Row(
-      mainAxisAlignment: week[0].day == 1
-          ? MainAxisAlignment.end
-          : MainAxisAlignment.start,
+      mainAxisAlignment:
+          week[0].day == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: week.map((day) {
         return _dayWidget(context, day);
       }).toList(),
     );
   }
 
-  Widget _calendarBuilder(
-    BuildContext context
-  ) {
+  Widget _calendarBuilder(BuildContext context) {
     List<List<DateTime>> weeks = [];
     var dayDate = DateTime(widget.year, widget.month);
     while (dayDate.month == widget.month) {
@@ -180,7 +181,8 @@ class _HelloCalendarSelection extends State<HelloCalendarSelection> {
       do {
         weeks[weeks.length - 1].add(dayDate);
         dayDate = dayDate.add(const Duration(days: 1));
-      } while(dayDate.weekday != DateTime.sunday && dayDate.month == widget.month);
+      } while (
+          dayDate.weekday != DateTime.sunday && dayDate.month == widget.month);
     }
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -199,12 +201,46 @@ class _HelloCalendarSelection extends State<HelloCalendarSelection> {
         // month year
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Text(
-            '${_monthToString.toUpperCase()} ${widget.year}',
-            style: TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios_sharp),
+                tooltip: 'Previous month',
+                onPressed: () {
+                  setState(() {
+                    int newMonth = (widget.month-1);
+                    if (newMonth < 1) {
+                      newMonth = 12;
+                    }
+                    print('previous month: ${widget.month} to $newMonth');
+                    widget.month=newMonth;
+                  });
+                },
+              ),
+              Text(
+                '${_monthToString.toUpperCase()} ${widget.year}',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.arrow_forward_ios_sharp),
+                tooltip: 'Next month',
+                onPressed: () {
+                  setState(() {
+                    int newMonth = (widget.month+1);
+                    if (newMonth > 12) {
+                      newMonth = 1;
+                    }
+                    print('previous month: ${widget.month} to $newMonth');
+                    widget.month=newMonth;
+                  });
+                },
+              ),
+            ],
           ),
         ),
         SizedBox(height: 12),
@@ -227,19 +263,19 @@ class SelectableDayBox extends DayBox {
     Color? color,
     bool border = false,
   }) : super(
-    size: size?? 60,
-    day: day,
-    color: color,
-    border: border,
-  );
+          size: size ?? 60,
+          day: day,
+          color: color,
+          border: border,
+        );
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: DefaultTextStyle(
         style: TextStyle(
-          color: selectable? Colors.black : Colors.grey,
-        ), 
+          color: selectable ? Colors.black : Colors.grey,
+        ),
         child: super.build(context),
       ),
     );

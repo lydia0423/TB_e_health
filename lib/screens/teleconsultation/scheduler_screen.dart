@@ -25,7 +25,6 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     pushNewScreen(
       context,
       screen: RequestApointmentScreen(),
-      // screen: DateTimePicker(),
       withNavBar: false,
     );
   }
@@ -36,21 +35,6 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     // TODO: get state on appointment
     return Scaffold(
       appBar: CommonAppBar(title: 'Tele Consultation Session'),
-      // appBar: AppBar(
-      //   elevation: 0.0,
-      //   backgroundColor: Colors.transparent,
-      //   leading: Padding(
-      //     padding: const EdgeInsets.only(left: 30.0),
-      //     child: IconButton(
-      //       icon: new Icon(
-      //         Icons.arrow_back_ios,
-      //         color: Colors.black,
-      //         size: 35.0,
-      //       ),
-      //       onPressed: () => Navigator.pop(context),
-      //     ),
-      //   ),
-      // ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 15.0),
         child: Row(
@@ -58,32 +42,17 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 24),
-              child: FloatingActionButton(
+              child: FloatingActionButton.extended(
                 key: Key('add'),
                 heroTag: Key('add'),
                 onPressed: _requestAppointment,
-                child: Icon(Icons.add),
+                label: Text('Book Appointment'),
+                icon: Icon(Icons.add),
               ),
             ),
-            // FloatingActionButton(
-            //   onPressed: () =>
-            //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //     return LiveChat();
-            //   })),
-            //   child: Icon(Icons.live_help_outlined),
-            //   backgroundColor: Colors.black,
-            // ),
           ],
         ),
       ),
-      // FloatingActionButton(
-      //   onPressed: () =>
-      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //     return LiveChat();
-      //   })),
-      //   child: Icon(Icons.live_help_outlined),
-      //   backgroundColor: Colors.black,
-      // ),
       body: FutureBuilder<LinkedHashMap<DateTime, List<Appointment>>>(
         future: findAppointOfActiveUserAsMapping(myActiveUser()),
         builder: (context, snapshot) {
@@ -139,6 +108,13 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
           eventLoader: (dateTime) {
             return widget.content[dateTime] ?? [];
           },
+          // holidayPredicate: (date) {
+          //   // If not Sunday or Saturday return day as clicable
+          //   if (date.weekday != 6 && date.weekday != 7) {
+          //     return true;
+          //   }
+          //   return false;
+          // },
           selectedDayPredicate: (day) {
             return isSameDay(focusDateTime, day);
           },

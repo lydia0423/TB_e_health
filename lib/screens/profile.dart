@@ -15,20 +15,11 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
         future: myActiveUser(),
         builder: (BuildContext context, AsyncSnapshot<ActiveUser> user) {
           if (user.hasData) {
             return Scaffold(
-              // floatingActionButton: FloatingActionButton(
-              //   onPressed: () => Navigator.push(context,
-              //       MaterialPageRoute(builder: (context) {
-              //     return LiveChat();
-              //   })),
-              //   child: Icon(Icons.live_help_outlined),
-              //   backgroundColor: Colors.black,
-              // ),
               body: ListView(
                 children: [
                   Padding(
@@ -39,56 +30,57 @@ class _ProfileState extends State<Profile> {
                         Text(
                           'MY PERSONAL PROFILE',
                           style: TextStyle(
-                              fontSize: 25.0, fontWeight: FontWeight.w500),
+                              fontSize: 22.0, fontWeight: FontWeight.w500),
                         ),
                         InkWell(
-                          child: Icon(
-                            Icons.logout,
-                            size: 30.0,
+                          child: IconButton(
+                            icon: const Icon(Icons.logout),
+                            tooltip: 'Logout',
+                            onPressed: () {
+                              _auth.signOut();
+                            },
                           ),
                           onTap: () => _auth.signOut(),
-                        )
+                        ),
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(30.0, 20.0, 10.0, 10.0),
-                          child: (user.data!.avatar.isNotEmpty)
-                              ? CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(user.data!.avatar),
-                                  radius: 70.0,
-                                )
-                              : CircleAvatar(
-                                  backgroundImage: AssetImage(
-                                      "assets/Images/user_profile.png"),
-                                  radius: 70.0,
-                                ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Name: ${user.data!.name}",
-                                style: TextStyle(fontSize: 18.0)),
-                            SizedBox(height: 10.0),
-                            Text(
-                              "Age: ${user.data!.age}",
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                            SizedBox(height: 10.0),
-                            Text(
-                              "Gender: ${user.data!.gender}",
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(30.0, 20.0, 10.0, 10.0),
+                        child: (user.data!.avatar.isNotEmpty)
+                            ? CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(user.data!.avatar),
+                                radius: 70.0,
+                              )
+                            : CircleAvatar(
+                                backgroundImage: AssetImage(
+                                    "assets/Images/user_profile.png"),
+                                radius: 70.0,
+                              ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Name: ${user.data!.name}",
+                              style: TextStyle(fontSize: 18.0)),
+                          SizedBox(height: 10.0),
+                          Text(
+                            "Age: ${user.data!.age}",
+                            style: TextStyle(fontSize: 18.0),
+                          ),
+                          SizedBox(height: 10.0),
+                          Text(
+                            "Gender: ${user.data!.gender}",
+                            style: TextStyle(fontSize: 18.0),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   SizedBox(height: 30.0),
                   // Padding(
