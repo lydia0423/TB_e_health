@@ -3,7 +3,6 @@ import 'package:tb_e_health/services/local_alert.dart';
 import 'package:tb_e_health/services/user_service.dart';
 
 class ReminderCallService {
-
   // 10pm
   static void firstReminder() async {
     final DateTime now = DateTime.now();
@@ -30,7 +29,7 @@ class ReminderCallService {
       print('[$now] firstReminder: call notification');
       LocalAlert.initializeSetting();
       LocalAlert.displayNotification('Reminder',
-          'Reminder: You have yet to upload your video, please do so by 12pm.');
+          'Reminder: You have yet to upload your video, please do so before 12am.');
     }
   }
 
