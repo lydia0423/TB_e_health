@@ -6,6 +6,7 @@ import 'package:tb_e_health/screens/teleconsultation/scheduler_screen.dart';
 import 'package:tb_e_health/screens/video_upload.dart';
 import 'package:tb_e_health/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:tb_e_health/side_effect.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'HomeScreen';
@@ -145,7 +146,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         _featureButton(
                           child: Assets.images.iconNote.svg(height: 30),
-                          onTap: () {},
+                          onTap: () {
+                            pushNewScreen(
+                              context,
+                              screen: SideEffect(),
+                              withNavBar:
+                                  true, // OPTIONAL VALUE. True by default.
+                            );
+                          },
                           title: 'Side Effects',
                         ),
                         _featureButton(
