@@ -3,6 +3,7 @@ import 'package:tb_e_health/Custom%20Widgets/hello_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 
 import 'package:tb_e_health/utils.dart';
 
@@ -36,9 +37,7 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
     // TODO: get state
     return Scaffold(
       // TODO: primary color
-      appBar: AppBar(
-        elevation: 0,
-      ),
+      appBar: CommonAppBar(title: ''),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -47,7 +46,7 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
         child: Icon(Icons.live_help_outlined),
         backgroundColor: Colors.black,
       ),
-      body: Column(
+      body: ListView(
         children: [
           HelloCalendar(
             year: today.year,
@@ -58,42 +57,6 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
             until: DateTime(2021, 8, 26),
             dates: dates,
           ),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100.0),
-            ),
-            child: SizedBox(
-              height: 200,
-              width: 200,
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    dates[today] ?? false
-                        // today taken medication
-                        ? 'YOU HAVE COMPLETED YOUR MEDICATION TODAY!'
-                        : 'HAVE YOU TAKE YOUR MEDICATION?',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                'Keep up the good work!',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          )
         ],
       ),
     );
