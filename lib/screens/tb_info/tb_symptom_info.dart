@@ -7,14 +7,14 @@ class SymptomsInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CommonAppBar(title: 'Symptoms of Tuberculosis'),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () =>
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return LiveChat();
-          })),
-          child: Icon(Icons.live_help_outlined),
-          backgroundColor: Colors.black,
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () =>
+        //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //     return LiveChat();
+        //   })),
+        //   child: Icon(Icons.live_help_outlined),
+        //   backgroundColor: Colors.black,
+        // ),
         body: Column(
           children: [
             Container(

@@ -72,14 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return LiveChat();
-        })),
-        child: Icon(Icons.live_help_outlined),
-        backgroundColor: Colors.black,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () =>
+      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //     return LiveChat();
+      //   })),
+      //   child: Icon(Icons.live_help_outlined),
+      //   backgroundColor: Colors.black,
+      // ),
       body: FutureBuilder(
           future: myActiveUser(),
           builder: (BuildContext context, AsyncSnapshot<ActiveUser> user) {

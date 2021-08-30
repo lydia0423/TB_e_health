@@ -169,14 +169,14 @@ class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
               onPressed: () => _requestNewDrugDelivery(context),
               child: Icon(Icons.add),
             ),
-            FloatingActionButton(
-              onPressed: () =>
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return LiveChat();
-              })),
-              child: Icon(Icons.live_help_outlined),
-              backgroundColor: Colors.black,
-            ),
+            // FloatingActionButton(
+            //   onPressed: () =>
+            //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //     return LiveChat();
+            //   })),
+            //   child: Icon(Icons.live_help_outlined),
+            //   backgroundColor: Colors.black,
+            // ),
           ],
         ),
       ),

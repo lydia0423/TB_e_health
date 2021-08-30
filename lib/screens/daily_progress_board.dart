@@ -48,14 +48,14 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
     var today = DateTime.now().getToday();
     return Scaffold(
       appBar: CommonAppBar(title: 'My DOTS Therapy Progress'),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return LiveChat();
-        })),
-        child: Icon(Icons.live_help_outlined),
-        backgroundColor: Colors.black,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () =>
+      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //     return LiveChat();
+      //   })),
+      //   child: Icon(Icons.live_help_outlined),
+      //   backgroundColor: Colors.black,
+      // ),
       body: ListView(
         children: [
           HelloCalendar(

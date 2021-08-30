@@ -15,21 +15,20 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    double c_width = MediaQuery.of(context).size.width * 0.8;
 
     return FutureBuilder(
         future: myActiveUser(),
         builder: (BuildContext context, AsyncSnapshot<ActiveUser> user) {
           if (user.hasData) {
             return Scaffold(
-              floatingActionButton: FloatingActionButton(
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
-                  return LiveChat();
-                })),
-                child: Icon(Icons.live_help_outlined),
-                backgroundColor: Colors.black,
-              ),
+              // floatingActionButton: FloatingActionButton(
+              //   onPressed: () => Navigator.push(context,
+              //       MaterialPageRoute(builder: (context) {
+              //     return LiveChat();
+              //   })),
+              //   child: Icon(Icons.live_help_outlined),
+              //   backgroundColor: Colors.black,
+              // ),
               body: ListView(
                 children: [
                   Padding(
