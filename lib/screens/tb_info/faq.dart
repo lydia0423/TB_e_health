@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/models/faq_data.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/screens/shared/info_card.dart';
+import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 
 class Faq extends StatelessWidget {
   final List<dynamic> items;
@@ -15,12 +12,7 @@ class Faq extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'FAQ',
-        ),
-      ),
+      appBar: CommonAppBar(title: 'FAQ'),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -30,7 +22,7 @@ class Faq extends StatelessWidget {
         backgroundColor: Colors.black,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(25),
+        padding: const EdgeInsets.fromLTRB(25.0, 8.0, 25.0, 15.0),
         child: Column(
           children: [
             // Display the data loaded from sample.json
@@ -48,8 +40,7 @@ class Faq extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              items[index].title + '\n'
-                              + items[index].text,
+                              items[index].title + '\n' + items[index].text,
                               style: TextStyle(fontSize: 18),
                             ),
                           ),

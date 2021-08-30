@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/screens/ques_ans.dart';
+import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 
 class SymptomsInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(centerTitle: true,
-          title: Text(
-            'Symptoms of Tuberculosis',
-          ),
-        ),
+        appBar: CommonAppBar(title: 'Symptoms of Tuberculosis'),
         floatingActionButton: FloatingActionButton(
           onPressed: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -23,7 +18,7 @@ class SymptomsInfo extends StatelessWidget {
         body: Column(
           children: [
             Container(
-                margin: EdgeInsets.all(20.0),
+                margin: const EdgeInsets.fromLTRB(25.0, 8.0, 25.0, 15.0),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.grey[100],

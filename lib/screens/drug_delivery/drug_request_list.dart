@@ -6,6 +6,7 @@ import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/drug_delivery/request_display_card.dart';
 import 'package:get/get.dart';
+import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 
 import 'drug_request_screen.dart';
 
@@ -29,35 +30,37 @@ class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
     print('HERE');
     print(FirebaseAuth.instance.currentUser!.uid);
     return Scaffold(
+      appBar: CommonAppBar(title: 'Drug Delivery Service'),
       body: DefaultTabController(
         length: 2,
         child: Column(
           children: [
             Container(
-              height: 196,
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(50)),
-              ),
+              color: Colors.black,
+              // height: 196,
+              // decoration: BoxDecoration(
+              //   color: Theme.of(context).primaryColor,
+              //   borderRadius:
+              //       BorderRadius.only(bottomLeft: Radius.circular(50)),
+              // ),
               child: Column(
                 children: [
-                  Expanded(
-                    child: Row(children: [
-                      IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: Icon(Icons.arrow_back, color: Colors.white),
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        'Drug Delivery Service',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ]),
-                  ),
+                  // Expanded(
+                  //   child: Row(children: [
+                  //     IconButton(
+                  //       onPressed: () => Navigator.of(context).pop(),
+                  //       icon: Icon(Icons.arrow_back, color: Colors.white),
+                  //     ),
+                  //     SizedBox(width: 10),
+                  //     Text(
+                  //       'Drug Delivery Service',
+                  //       style: TextStyle(
+                  //         fontSize: 24,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ]),
+                  // ),
                   TabBar(
                     tabs: [
                       Tab(

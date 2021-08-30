@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/models/delivery_request.dart';
+import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 import 'package:tb_e_health/utils.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,22 +19,23 @@ class DrugRequestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        toolbarHeight: 80,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(top: 20.0, left: 30.0),
-          child: IconButton(
-            icon: new Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 35.0,
-            ),
-            onPressed: () => Get.back(),
-          ),
-        ),
-      ),
+      appBar: CommonAppBar(title: ''),
+      // appBar: AppBar(
+      //   elevation: 0.0,
+      //   toolbarHeight: 80,
+      //   backgroundColor: Colors.transparent,
+      //   leading: Padding(
+      //     padding: const EdgeInsets.only(top: 20.0, left: 30.0),
+      //     child: IconButton(
+      //       icon: new Icon(
+      //         Icons.arrow_back_ios,
+      //         color: Colors.black,
+      //         size: 35.0,
+      //       ),
+      //       onPressed: () => Get.back(),
+      //     ),
+      //   ),
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () =>
             Navigator.push(context, MaterialPageRoute(builder: (context) {
