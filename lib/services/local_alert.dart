@@ -16,24 +16,27 @@ class LocalAlert {
     flutterLocalNotificationsPlugin.initialize(initializationsSettings);
   }
 
-  static Future<void> displayDailyNotification(String title, String message) async {
+  static Future<void> displayDailyNotification(
+      String title, String message) async {
     var androidSettings = AndroidNotificationDetails(
         'chn id', 'chn name', 'chn description',
         importance: Importance.high, priority: Priority.max);
 
-    flutterLocalNotificationsPlugin.periodicallyShow(
-        1,
-        title,
-        message,
-        RepeatInterval.daily,
-        NotificationDetails(android: androidSettings),
+    flutterLocalNotificationsPlugin.periodicallyShow(1, title, message,
+        RepeatInterval.daily, NotificationDetails(android: androidSettings),
         androidAllowWhileIdle: true);
   }
 
   static Future<void> displayNotification(String title, String message) async {
     var androidSettings = AndroidNotificationDetails(
-        'chn id', 'chn name', 'chn description',
-        importance: Importance.high, priority: Priority.max);
+      'chn id',
+      'chn name',
+      'chn description',
+      importance: Importance.high,
+      priority: Priority.max,
+      ongoing: true,
+      styleInformation: BigTextStyleInformation(''),
+    );
 
     flutterLocalNotificationsPlugin.zonedSchedule(
         1,
