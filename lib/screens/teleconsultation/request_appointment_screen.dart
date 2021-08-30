@@ -4,7 +4,6 @@ import 'package:tb_e_health/Custom Widgets/hello_calendar_selection.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/appointment.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
-
 import 'package:tb_e_health/utils.dart';
 import 'package:uuid/uuid.dart';
 
@@ -73,7 +72,7 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
         children: [
           HelloCalendarSelection(
             year: today.year,
-            month: today.month,
+            month: dateTime != null ? dateTime!.month:today.month,
             // TODO: get from state
             from: DateTime.now().subtract(Duration(hours: 24)), 
             to: DateTime.now().add(Duration(days: 90)),

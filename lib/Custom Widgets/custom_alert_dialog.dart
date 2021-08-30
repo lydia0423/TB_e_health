@@ -22,7 +22,7 @@ customAlertDialog(BuildContext context,
       });
 }
 
-cancelAppointmentDialog(BuildContext context, Appointment value) {
+Future<void> cancelAppointmentDialog(BuildContext context, Appointment value) async {
   return showDialog(
       context: context,
       barrierDismissible: true,
@@ -40,7 +40,7 @@ cancelAppointmentDialog(BuildContext context, Appointment value) {
               onPressed: () async {
                 print('cancelAppointmentDialog: ${value.id}');
                 await deleteAppointment(value.id);
-                Navigator.pop(context);
+                Navigator.pop(context, "Bar");
               },
             ),
           ],

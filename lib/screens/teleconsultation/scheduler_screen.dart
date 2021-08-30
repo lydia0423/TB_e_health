@@ -22,12 +22,17 @@ class SchedulerScreen extends StatefulWidget {
 class _SchedulerScreenState extends State<SchedulerScreen> {
   DateTime focusDateTime = DateTime.now();
 
-  void _requestAppointment() {
-    pushNewScreen(
-      context,
-      screen: RequestApointmentScreen(),
-      withNavBar: false,
-    );
+  void _requestAppointment() async {
+    String received = await Navigator.push(
+        context, MaterialPageRoute(builder: (_) => RequestApointmentScreen()));
+    setState(() {
+      // so that the page refresh, and show the newly added record.
+    });
+    // pushNewScreen(
+    //   context,
+    //   screen: RequestApointmentScreen(),
+    //   withNavBar: false,
+    // );
   }
 
   @override
@@ -89,11 +94,13 @@ class SchedulerScreenContent extends StatefulWidget {
 }
 
 class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
+  bool updateFlag = false;
   DateTime focusDateTime = DateTime.now();
   late final ValueNotifier<List<Appointment>> _selectedEvents;
 
   @override
   void initState() {
+    updateFlag = false;
     super.initState();
     _selectedEvents = ValueNotifier(widget.content[focusDateTime] ?? []);
   }
@@ -109,20 +116,12 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
           eventLoader: (dateTime) {
             return widget.content[dateTime] ?? [];
           },
-          // holidayPredicate: (date) {
-          //   // If not Sunday or Saturday return day as clicable
-          //   if (date.weekday != 6 && date.weekday != 7) {
-          //     return true;
-          //   }
-          //   return false;
-          // },
           selectedDayPredicate: (day) {
             return isSameDay(focusDateTime, day);
           },
           onDaySelected: (selectedDay, focusedDay) {
             _selectedEvents.value = widget.content[focusedDay] ?? [];
             setState(() {
-              // focusDateTime = selectedDay;
               focusDateTime = focusedDay; // update `_focusedDay` here as well
             });
           },
@@ -145,8 +144,12 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
                     ),
                     child: ListTile(
                       trailing: IconButton(
-                        onPressed: () {
-                          cancelAppointmentDialog(context, value[0]);
+                        onPressed: () async {
+                          await cancelAppointmentDialog(context, value[0]);
+                          setState(() {
+                            print('hope refresh the page');
+                            updateFlag=true;
+                          });
                         },
                         icon: Icon(Icons.remove_circle_outlined),
                       ),
