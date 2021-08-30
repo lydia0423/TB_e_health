@@ -94,13 +94,11 @@ class SchedulerScreenContent extends StatefulWidget {
 }
 
 class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
-  bool updateFlag = false;
   DateTime focusDateTime = DateTime.now();
   late final ValueNotifier<List<Appointment>> _selectedEvents;
 
   @override
   void initState() {
-    updateFlag = false;
     super.initState();
     _selectedEvents = ValueNotifier(widget.content[focusDateTime] ?? []);
   }
@@ -147,13 +145,18 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
                         onPressed: () async {
                           await cancelAppointmentDialog(context, value[0]);
                           setState(() {
-                            print('hope refresh the page');
-                            updateFlag=true;
+                            print('refresh the page');
+                            _selectedEvents.value.removeAt(index);
                           });
                         },
                         icon: Icon(Icons.remove_circle_outlined),
                       ),
-                      onTap: () => print('${value[index]}'),
+                      onTap: () {
+                      print('${value[index]}');
+                      setState(() {
+
+                      });
+                    },
                       title: Text('${value[index]}'),
                     ),
                   );
