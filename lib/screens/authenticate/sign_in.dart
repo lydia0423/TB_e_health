@@ -42,10 +42,10 @@ class _SignInState extends State<SignIn> {
     //^ Determines error type and the appropriate message to return
     switch (errorType) {
       case "invalidUser":
-        errorMsg = "No user with this email has been found";
+        errorMsg = "User not found";
         break;
       case "invalidPassword":
-        errorMsg = "Sorry, your password was incorrect";
+        errorMsg = "Incorrect password";
         break;
       case "invalidEmail":
         errorMsg = "Please ensure that your email has been entered correctly";
@@ -255,6 +255,7 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                 ),
+                SizedBox(height: 20.0),
               ],
             ),
           ],

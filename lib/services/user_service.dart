@@ -1,24 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/services/video_service.dart';
 
 class UserService {
   Future<String> getUserEmailByUserId(String userId) async {
     try {
+      print('getUserEmailByUserId: currentUser = $userId');
       QuerySnapshot userSnapshot = await FirebaseFirestore.instance
           .collection("User")
           .where("UserId", isEqualTo: userId)
           .limit(1)
           .get();
-
+      dynamic result = await FirebaseFirestore.instance
+          .collection("User").get();
       dynamic json = userSnapshot.docs.first.data();
       final ActiveUser activeUser = ActiveUser.fromJson(json);
       String email = activeUser.email;
       print('getUserEmailByUserId: userId = ' + userId + ' , email = ' + email);
       return email;
     } catch (e) {
-      print(e);
+      print('getUserEmailByUserId: $e');
       return '';
     }
   }
