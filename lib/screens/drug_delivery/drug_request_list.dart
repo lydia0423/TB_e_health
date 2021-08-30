@@ -16,13 +16,14 @@ class DrugRequestListScreen extends StatefulWidget {
 }
 
 class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
-  // TabController tabController = TabController();
-
-  _requestNewDrugDelivery(BuildContext context) {
-    Get.to(() => DrugRequestScreen(
-          dateFrom: DateTime(2021, 9, 1),
-          dateUntil: DateTime(2021, 9, 15),
-        ));
+  _requestNewDrugDelivery(BuildContext context) async {
+    String received = await Navigator.push(context, MaterialPageRoute(builder: (_) => DrugRequestScreen(
+      dateFrom: DateTime(2021, 9, 1),
+      dateUntil: DateTime(2021, 9, 15),
+    )));
+    setState(() {
+      // so that the page refresh, and show the newly added record.
+    });
   }
 
   @override
@@ -37,30 +38,8 @@ class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
           children: [
             Container(
               color: Colors.black,
-              // height: 196,
-              // decoration: BoxDecoration(
-              //   color: Theme.of(context).primaryColor,
-              //   borderRadius:
-              //       BorderRadius.only(bottomLeft: Radius.circular(50)),
-              // ),
               child: Column(
                 children: [
-                  // Expanded(
-                  //   child: Row(children: [
-                  //     IconButton(
-                  //       onPressed: () => Navigator.of(context).pop(),
-                  //       icon: Icon(Icons.arrow_back, color: Colors.white),
-                  //     ),
-                  //     SizedBox(width: 10),
-                  //     Text(
-                  //       'Drug Delivery Service',
-                  //       style: TextStyle(
-                  //         fontSize: 24,
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //   ]),
-                  // ),
                   TabBar(
                     tabs: [
                       Tab(
@@ -99,14 +78,16 @@ class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
                                   child: Text('No request found'),
                                 ),
                               );
+                            } else {
+                              print('im here!');
+                              return ListView.builder(
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    return RequestDisplayCard(
+                                      snapshot.data![index],
+                                    );
+                                  });
                             }
-                            return ListView.builder(
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
-                                  return RequestDisplayCard(
-                                    snapshot.data![index],
-                                  );
-                                });
                           }
                         }
                         return Center(
@@ -165,18 +146,11 @@ class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            FloatingActionButton(
+            FloatingActionButton.extended(
               onPressed: () => _requestNewDrugDelivery(context),
-              child: Icon(Icons.add),
+              label: Text('Create Order'),
+              icon: Icon(Icons.add),
             ),
-            // FloatingActionButton(
-            //   onPressed: () =>
-            //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //     return LiveChat();
-            //   })),
-            //   child: Icon(Icons.live_help_outlined),
-            //   backgroundColor: Colors.black,
-            // ),
           ],
         ),
       ),
