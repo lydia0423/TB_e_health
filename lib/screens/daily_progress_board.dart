@@ -47,7 +47,7 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
   Widget build(BuildContext context) {
     var today = DateTime.now().getToday();
     return Scaffold(
-      appBar: CommonAppBar(title: 'My DOTS Therapy Progress'),
+      appBar: CommonAppBar(title: 'My VOTS Therapy Progress'),
       body: ListView(
         children: [
           HelloCalendar(
