@@ -52,84 +52,87 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(30.0, 20.0, 10.0, 10.0),
-                        child: (user.data!.avatar.isNotEmpty)
-                            ? CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage(user.data!.avatar),
-                                radius: 70.0,
-                              )
-                            : CircleAvatar(
-                                backgroundImage: AssetImage(
-                                    "assets/Images/user_profile.png"),
-                                radius: 70.0,
-                              ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Name: ${user.data!.name}",
-                              style: TextStyle(fontSize: 18.0)),
-                          SizedBox(height: 10.0),
-                          Text(
-                            "Age: ${user.data!.age}",
-                            style: TextStyle(fontSize: 18.0),
-                          ),
-                          SizedBox(height: 10.0),
-                          Text(
-                            "Gender: ${user.data!.gender}",
-                            style: TextStyle(fontSize: 18.0),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
-                    child: Container(
-                      height: 250.0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text("Health Information: ${user.data!.healthInfo}",
-                              style: TextStyle(fontSize: 18.0)),
-                          Text("Address: ${user.data!.address}",
-                              style: TextStyle(
-                                fontSize: 18.0,
-                              )),
-                          Container(
-                            width: 320,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Do you wish to turn on reminders for VDOTS treatment?",
-                                  style: TextStyle(fontSize: 18.0),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(30.0, 20.0, 10.0, 10.0),
+                          child: (user.data!.avatar.isNotEmpty)
+                              ? CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(user.data!.avatar),
+                                  radius: 70.0,
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: AssetImage(
+                                      "assets/Images/user_profile.png"),
+                                  radius: 70.0,
                                 ),
-                                Switch(
-                                  value: user.data!.notificationPreference,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      user.data!.notificationPreference = value;
-                                    });
-                                  },
-                                  activeTrackColor: Colors.black,
-                                  activeColor: Colors.white,
-                                ),
-                              ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Name: ${user.data!.name}",
+                                style: TextStyle(fontSize: 18.0)),
+                            SizedBox(height: 10.0),
+                            Text(
+                              "Age: ${user.data!.age}",
+                              style: TextStyle(fontSize: 18.0),
                             ),
-                          ),
-                        ],
-                      ),
+                            SizedBox(height: 10.0),
+                            Text(
+                              "Gender: ${user.data!.gender}",
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
+                  SizedBox(height: 30.0),
+                  // Padding(
+                  //   padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                  //   child: Container(
+                  //     height: 250.0,
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //       children: [
+                  //         Text("Health Information: ${user.data!.healthInfo}",
+                  //             style: TextStyle(fontSize: 18.0)),
+                  //         Text("Address: ${user.data!.address}",
+                  //             style: TextStyle(
+                  //               fontSize: 18.0,
+                  //             )),
+                  //         Container(
+                  //           width: 320,
+                  //           child: Column(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: [
+                  //               Text(
+                  //                 "Do you wish to turn on reminders for VDOTS treatment?",
+                  //                 style: TextStyle(fontSize: 18.0),
+                  //               ),
+                  //               Switch(
+                  //                 value: user.data!.notificationPreference,
+                  //                 onChanged: (value) {
+                  //                   setState(() {
+                  //                     user.data!.notificationPreference = value;
+                  //                   });
+                  //                 },
+                  //                 activeTrackColor: Colors.black,
+                  //                 activeColor: Colors.white,
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 130.0),
                     child: OutlinedButton(

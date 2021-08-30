@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/services/auth_service.dart';
+import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 
 class FirstTimeLogin extends StatefulWidget {
   const FirstTimeLogin({Key? key}) : super(key: key);
@@ -15,15 +16,19 @@ class _FirstTimeLoginState extends State<FirstTimeLogin> {
 
   final userIdCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
+  final confirmPasswordCtrl = TextEditingController();
 
   String userId = '';
   String password = '';
+  String confirmPassword = '';
   bool passwordHidden = true;
+  bool confirmPasswordHidden = true;
 
   @override
   void initState() {
     userId = '';
     passwordHidden = true;
+    confirmPasswordHidden = true;
     super.initState();
   }
 
@@ -101,6 +106,37 @@ class _FirstTimeLoginState extends State<FirstTimeLogin> {
                           ),
                         ),
                       ),
+
+
+                      SizedBox(height: 20.0),
+                      TextFormField(
+                        validator: (v) => v!=password
+                            ? 'Password mismatch'
+                            : null,
+                        onChanged: (v) {
+                          setState(() {
+                            confirmPassword = v;
+                          });
+                        },
+                        controller: confirmPasswordCtrl,
+                        obscureText: confirmPasswordHidden,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                          labelText: 'Confirm Password',
+                          suffixIcon: IconButton(
+                            icon: Icon(confirmPasswordHidden
+                                ? Icons.visibility_off_rounded
+                                : Icons.visibility_rounded),
+                            color: Colors.black,
+                            onPressed: () {
+                              setState(() {
+                                confirmPasswordHidden = !confirmPasswordHidden;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -119,6 +155,8 @@ class _FirstTimeLoginState extends State<FirstTimeLogin> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         changePassword(userIdCtrl.text, passwordCtrl.text);
+                        customAlertDialog(context, title: "Success", content: 'Password Updated');
+                        // Navigator.of(context).pop(true);
                       }
                     },
                     child: Padding(
@@ -138,6 +176,35 @@ class _FirstTimeLoginState extends State<FirstTimeLogin> {
                 ),
               ],
             ),
+
+            // DUMMY USER BUTTON
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Padding(
+            //       padding: const EdgeInsets.only(left: 15.0),
+            //       child: OutlinedButton(
+            //         onPressed: () async {
+            //           generateUser(userIdCtrl.text);
+            //           customAlertDialog(context, title: "Success", content: 'User created');
+            //         },
+            //         child: Padding(
+            //           padding: const EdgeInsets.only(
+            //               top: 8.0, left: 45.0, right: 45.0, bottom: 8.0),
+            //           child: Text(
+            //             'Generate user',
+            //             style: TextStyle(color: Colors.white, fontSize: 18),
+            //           ),
+            //         ),
+            //         style: OutlinedButton.styleFrom(
+            //           shape: RoundedRectangleBorder(
+            //               borderRadius: BorderRadius.circular(30)),
+            //           backgroundColor: Colors.black,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),
@@ -164,4 +231,37 @@ void changePassword(String userId, String password) async {
   });
 
   await FirebaseAuth.instance.signOut();
+
 }
+
+
+void generateUser(String userId) async {
+  // get the user email by userId, the email is just userId+@email.com now!
+  String email = userId + "@email.com";
+  // the default password is password.
+  String defaultPassword = "password";
+
+  UserCredential userCredential = await FirebaseAuth.instance
+      .createUserWithEmailAndPassword(email: email, password: defaultPassword);
+
+  await FirebaseFirestore.instance
+      .collection("User")
+      .doc(userCredential.user!.uid)
+      .set({
+    "UserId": userId,
+    "UserEmail": email,
+    "UserGender": "Female",
+    "UserAddress": "No. 25, Taman University, 46300, Selangor DM",
+    "TherapyStartDate": "2021-08-20",
+    "TherapyEndDate": "2021-10-30",
+    "UserHealthInfo": "Diabetes",
+    "UserName": "Melissa Tee",
+    "UserNotificationPreferences": true,
+    "UserAvatar": "https://www.nicepng.com/png/full/52-521023_download-free-icon-female-vectors-blank-facebook-profile.png",
+    "UserAge": "58"
+  });
+
+  await FirebaseAuth.instance.signOut();
+
+}
+
