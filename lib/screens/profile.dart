@@ -46,12 +46,19 @@ class _ProfileState extends State<Profile> {
                               fontSize: 22.0, fontWeight: FontWeight.w500),
                         ),
                         InkWell(
-                          child: IconButton(
-                            icon: const Icon(Icons.logout),
-                            tooltip: 'Logout',
-                            onPressed: () {
-                              _auth.signOut();
-                            },
+                          child: Container(
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.logout),
+                                  tooltip: 'Logout',
+                                  onPressed: () {
+                                    _auth.signOut();
+                                  },
+                                ),
+                                Text('Logout'),
+                              ],
+                            ),
                           ),
                           onTap: () => _auth.signOut(),
                         ),

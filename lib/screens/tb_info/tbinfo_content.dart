@@ -131,7 +131,7 @@ class TbInfo extends StatelessWidget {
                     );
                   },
                   child: Text(
-                    'Dots Therapy',
+                    'VOTS Therapy',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
