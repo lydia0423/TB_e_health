@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class FAQ extends StatefulWidget {
   @override
@@ -40,7 +39,7 @@ class _FAQState extends State<FAQ> {
           builder: (_, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                child: SpinKitWave(),
+                child: LinearProgressIndicator(),
               );
             } else {
               return Column(

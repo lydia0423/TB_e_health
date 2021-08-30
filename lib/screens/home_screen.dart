@@ -24,12 +24,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 screen: UploadVideo(),
                 withNavBar: true, // OPTIONAL VALUE. True by default.
               ),
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
-            ),
-            child: Center(
-              child: Assets.images.iconCloud.svg(),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Center(
+                child: Assets.images.iconCloud.svg(),
+              ),
             ),
           )));
 
@@ -83,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (BuildContext context, AsyncSnapshot<ActiveUser> user) {
             if (user.hasData) {
               return ListView(
-                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 100,
@@ -98,9 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12),
-                    child: Text(
-                      user.data!.name,
-                      style: TextStyle(fontSize: 30.0),
+                    child: Center(
+                      child: Text(
+                        user.data!.name,
+                        style: TextStyle(fontSize: 30.0),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -109,9 +113,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   _uploadWidget(),
                   Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Text(
-                      'Upload Video',
-                      style: Theme.of(context).textTheme.headline6,
+                    child: Center(
+                      child: Text(
+                        'Upload Video',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                     ),
                   ),
                   const SizedBox(
