@@ -115,4 +115,5 @@ class AuthService {
         title: 'Email has been sent out',
         content: 'Please check your mail box to reset password');
   }
+
 }

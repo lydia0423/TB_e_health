@@ -154,7 +154,7 @@ class _ProfileState extends State<Profile> {
                     height: 15.0,
                   ),
                   Text(
-                    "See Daily Progress",
+                    "My DOTS Therapy Progress",
                     textAlign: TextAlign.center,
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),

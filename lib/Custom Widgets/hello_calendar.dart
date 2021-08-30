@@ -25,7 +25,7 @@ class HelloCalendar extends StatelessWidget {
     required this.from,
     required this.to,
     required this.until,
-    this.dates = const {},
+    required this.dates,
   }) : assert(month <= DateTime.december && month >= DateTime.january);
 
   String get _monthToString {
@@ -111,6 +111,7 @@ class HelloCalendar extends StatelessWidget {
   }
 
   Color? _computeColor(DateTime date) {
+    print('_computeColor: date : $date');
     var b = dates[date];
     if (dates[date] ?? false) {
       return HelloGreen;

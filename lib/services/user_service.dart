@@ -5,10 +5,6 @@ import 'package:tb_e_health/services/auth_service.dart';
 import 'package:tb_e_health/services/video_service.dart';
 
 class UserService {
-  bool userLoggedIn(String uid) {
-    return true;
-  }
-
   Future<String> getUserEmailByUserId(String userId) async {
     try {
       QuerySnapshot userSnapshot = await FirebaseFirestore.instance
@@ -30,6 +26,22 @@ class UserService {
 
   String getUserIdByUserEmail() {
     return '';
+  }
+
+  Future<ActiveUser> getCurrentUser() async {
+    User? currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null || currentUser?.uid != null) {
+      var activeUserDetails = await FirebaseFirestore.instance
+          .collection("User")
+          .doc(currentUser!.uid)
+          .get();
+
+      final ActiveUser activeUser =
+          ActiveUser.fromJson(activeUserDetails.data()!);
+      return activeUser;
+    }
+    return ActiveUser('', '', '', '', '', '', false, '', '');
   }
 
   // check user uploaded video

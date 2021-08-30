@@ -7,6 +7,7 @@ class VideoUploaded {
   String userId;
   String videoUrl;
   DateTime dateTime;
+
   // String timestamp;
   // String videoId;
 
@@ -21,7 +22,7 @@ class VideoUploaded {
         // videoId = snapshot.id,
         videoUrl = snapshot['VideoUrl'],
         dateTime = snapshot['VideoDateTime']
-        // timestamp = snapshot['VideoTimestamp']
+  // timestamp = snapshot['VideoTimestamp']
   ;
 }
 
@@ -31,7 +32,7 @@ VideoUploaded videoUploadedFromJson(Map<dynamic, dynamic> json) {
     json["UserId"] as String,
     // json["VideoId"] as String,
     json["VideoUrl"] as String,
-    json["VideoDateTime"] as DateTime,
+    json["VideoDateTime"].toDate() as DateTime,
     // json["videoTimestamp"] as String,
   );
 }
@@ -60,15 +61,20 @@ Future<String?> uploadVideo(VideoUploaded video) async {
 }
 
 Future<List<VideoUploaded>> findVideoUploadedOfUser(String userId) async {
+  print('findVideoUploadedOfUser: ' + userId);
   List<VideoUploaded> result = [];
   try {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection("VideoUploaded")
         .where("UserId", isEqualTo: userId)
         .get();
+    print('findVideoUploadedOfUser: result.size ${snapshot.size}');
     for (var doc in snapshot.docs) {
-      var submission = videoUploadedFromJson(doc.data() as Map<String, dynamic>);
-      result.add(submission);
+      var v = videoUploadedFromJson(doc.data() as Map<String, dynamic>);
+      print('findVideoUploadedOfUser: ' + v.userId);
+      print('findVideoUploadedOfUser: ' + v.videoUrl);
+      print('findVideoUploadedOfUser: ' + v.dateTime.toString());
+      result.add(v);
     }
     return result;
   } catch (e) {

@@ -7,6 +7,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/appointment.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
+import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 import 'package:tb_e_health/screens/teleconsultation/datetime_picker.dart';
 import 'package:tb_e_health/screens/teleconsultation/request_appointment_screen.dart';
 
@@ -34,22 +35,22 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
     var today = DateTime.now().getToday();
     // TODO: get state on appointment
     return Scaffold(
-      // TODO: primary color
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 30.0),
-          child: IconButton(
-            icon: new Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 35.0,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-      ),
+      appBar: CommonAppBar(title: 'Tele Consultation Session'),
+      // appBar: AppBar(
+      //   elevation: 0.0,
+      //   backgroundColor: Colors.transparent,
+      //   leading: Padding(
+      //     padding: const EdgeInsets.only(left: 30.0),
+      //     child: IconButton(
+      //       icon: new Icon(
+      //         Icons.arrow_back_ios,
+      //         color: Colors.black,
+      //         size: 35.0,
+      //       ),
+      //       onPressed: () => Navigator.pop(context),
+      //     ),
+      //   ),
+      // ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 15.0),
         child: Row(
