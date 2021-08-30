@@ -21,7 +21,7 @@ class VideoUploaded {
         // videoId = snapshot.id,
         videoUrl = snapshot['VideoUrl'],
         dateTime = snapshot['VideoDateTime']
-        // timestamp = snapshot['VideoTimestamp']
+  // timestamp = snapshot['VideoTimestamp']
   ;
 }
 
@@ -32,7 +32,6 @@ VideoUploaded videoUploadedFromJson(Map<dynamic, dynamic> json) {
     // json["VideoId"] as String,
     json["VideoUrl"] as String,
     json["VideoDateTime"] as DateTime,
-    // json["videoTimestamp"] as String,
   );
 }
 
@@ -57,7 +56,7 @@ Future<String?> uploadVideo(VideoUploaded video) async {
       .catchError((onError) => print("An error was encountered: $onError"));
 
   return docId;
-}
+} // json["videoTimestamp"] as String,
 
 Future<List<VideoUploaded>> findVideoUploadedOfUser(String userId) async {
   List<VideoUploaded> result = [];
@@ -67,7 +66,8 @@ Future<List<VideoUploaded>> findVideoUploadedOfUser(String userId) async {
         .where("UserId", isEqualTo: userId)
         .get();
     for (var doc in snapshot.docs) {
-      var submission = videoUploadedFromJson(doc.data() as Map<String, dynamic>);
+      var submission =
+          videoUploadedFromJson(doc.data() as Map<String, dynamic>);
       result.add(submission);
     }
     return result;
