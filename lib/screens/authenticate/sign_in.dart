@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
-import 'package:tb_e_health/screens/authenticate/reset_password.dart';
+import 'package:tb_e_health/screens/authenticate/first_time_login.dart';
 import 'package:tb_e_health/services/auth_service.dart';
 
 class SignIn extends StatefulWidget {
@@ -207,7 +207,7 @@ class _SignInState extends State<SignIn> {
                     onPressed: () async {
                       Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => ResetPassword()
+                              builder: (context) => FirstTimeLogin()
                           )
                       );
                     },

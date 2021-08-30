@@ -2,14 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/services/auth_service.dart';
 
-class ResetPassword extends StatefulWidget {
-  const ResetPassword({Key? key}) : super(key: key);
+class FirstTimeLogin extends StatefulWidget {
+  const FirstTimeLogin({Key? key}) : super(key: key);
 
   @override
-  _ResetPasswordState createState() => _ResetPasswordState();
+  _FirstTimeLoginState createState() => _FirstTimeLoginState();
 }
 
-class _ResetPasswordState extends State<ResetPassword> {
+class _FirstTimeLoginState extends State<FirstTimeLogin> {
 
   final _formKey = GlobalKey<FormState>();
 
