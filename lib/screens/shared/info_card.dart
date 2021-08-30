@@ -14,10 +14,10 @@ class InfoCardWidget extends StatelessWidget {
     return ListTile(
       title: Text(primaryText),
       subtitle: Text(secondaryText),
-      leading: Icon(
-        Icons.label,
-        color: Colors.grey[400],
-      ),
+      // leading: Icon(
+      //   Icons.label,
+      //   color: Colors.grey[400],
+      // ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
+import 'package:tb_e_health/screens/shared/info_card.dart';
 
 class Faq extends StatelessWidget {
   final List<dynamic> items;
@@ -39,10 +40,14 @@ class Faq extends StatelessWidget {
                               border: Border.all(color: Colors.grey)),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              items[index].title + '\n' + items[index].text,
-                              style: TextStyle(fontSize: 18),
+                            child: InfoCardWidget(
+                              primaryText: '${index+1}) '+items[index].title,
+                              secondaryText: items[index].text,
                             ),
+                            // child: Text(
+                            //   items[index].title + '\n' + items[index].text,
+                            //   style: TextStyle(fontSize: 18),
+                            // ),
                           ),
                         );
                       },
