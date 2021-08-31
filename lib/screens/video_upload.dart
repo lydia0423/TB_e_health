@@ -165,26 +165,8 @@ class _UploadVideoState extends State<UploadVideo> {
   Future<void> upload(context) async {
     if (fileMedia != null) {
       uploadFile();
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Reminder'),
-              content: Text('Upload video successfully'),
-              actions: [
-                TextButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    pushNewScreen(context,
-                        screen: DailyProgressBoardScreen(), withNavBar: true);
-                  },
-                ),
-                TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text('Cancel')),
-              ],
-            );
-          });
+      customAlertDialog(context,
+          title: 'Reminder', content: 'Upload video successfully');
     } else {
       customAlertDialog(context,
           title: 'Warning', content: 'No video is recorded');
