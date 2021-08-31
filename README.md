@@ -23,6 +23,8 @@ flutter run --no-sound-null-safety
 
 ### Generate Dummy User
 - go to 'first_time_login.dart', find the "// DUMMY USER BUTTON", uncomment it, enter user name followed the structure 'RNxxxx', and click 'Create User'.
+- a user will be given a default password = "password", you can actually login with this password.
+- during the "first time login" page, the new password enter will be updated after user login with the default "password".
 
 ### Generate APK
 - https://crello.com/ to generate icon
