@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tb_e_health/Custom%20Widgets/hello_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
+import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 
 import 'package:tb_e_health/utils.dart';
@@ -30,6 +31,11 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
     setState(() {});
   }
 
+  Future<ActiveUser> _loadUserData() async {
+    final ActiveUser user = await myActiveUser();
+    return user;
+  }
+
   @override
   Widget build(BuildContext context) {
     var today = DateTime.now().getToday();
@@ -47,54 +53,65 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
         child: Icon(Icons.live_help_outlined),
         backgroundColor: Colors.black,
       ),
-      body: Column(
-        children: [
-          HelloCalendar(
-            year: today.year,
-            month: today.month,
-            // TODO: get from state
-            from: DateTime(2021, 8, 5),
-            to: DateTime(2021, 8, 30),
-            until: DateTime(2021, 8, 26),
-            dates: dates,
-          ),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100.0),
-            ),
-            child: SizedBox(
-              height: 200,
-              width: 200,
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    dates[today] ?? false
-                        // today taken medication
-                        ? 'YOU HAVE COMPLETED YOUR MEDICATION TODAY!'
-                        : 'HAVE YOU TAKE YOUR MEDICATION?',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+      body: FutureBuilder<ActiveUser>(
+        future: _loadUserData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error on loading user data');
+          } else if (snapshot.hasData) {
+            return Column(
+              children: [
+                HelloCalendar(
+                  year: today.year,
+                  month: today.month,
+                  // TODO: get from state
+                  from: DateTime.parse(snapshot.data!.therapyStartDate),
+                  to: DateTime.parse(snapshot.data!.therapyEndDate),
+                  until: DateTime(2021, 9, 20), // hardcode
+                  dates: dates,
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100.0),
+                  ),
+                  child: SizedBox(
+                    height: 200,
+                    width: 200,
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Text(
+                          dates[today] ?? false
+                              // today taken medication
+                              ? 'YOU HAVE COMPLETED YOUR MEDICATION TODAY!'
+                              : 'HAVE YOU TAKE YOUR MEDICATION?',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Center(
-              child: Text(
-                'Keep up the good work!',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          )
-        ],
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      'Keep up the good work!',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            );
+          } else {
+            return LinearProgressIndicator();;
+          }
+        },
       ),
     );
   }
