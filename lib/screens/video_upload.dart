@@ -125,7 +125,7 @@ class _UploadVideoState extends State<UploadVideo> {
     if (media == null) {
       return;
     } else {
-      final file = File(media!.path);
+      final file = File(media.path);
       return file;
     }
   }

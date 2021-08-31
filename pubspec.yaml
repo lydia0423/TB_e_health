@@ -35,6 +35,7 @@ dependencies:
   persistent_bottom_nav_bar: ^4.0.2
   intl: ^0.17.0
   table_calendar: ^3.0.2
+  youtube_player_flutter: ^8.0.0
   
   # record and upload video
   image_picker: ^0.8.3+2
@@ -88,17 +89,17 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/Images/app_logo.png
-    - assets/Images/uni_logo.png
-    - assets/Images/user_profile.png
-    - assets/Images/drug_delivery.png
-    - assets/Images/faq.png
-    - assets/Images/speak_to_nurse.png
-    - assets/images/
-    - assets/json/faq_data.json
-    - assets/json/
-    - assets/icon/
+  # assets:
+  #   - assets/Images/app_logo.png
+  #   - assets/Images/uni_logo.png
+  #   - assets/Images/user_profile.png
+  #   - assets/Images/drug_delivery.png
+  #   - assets/Images/faq.png
+  #   - assets/Images/speak_to_nurse.png
+  #   - assets/images/
+  #   - assets/json/faq_data.json
+  #   - assets/json/
+  #   - assets/icon/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
