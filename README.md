@@ -21,6 +21,21 @@ flutter pub get
 flutter run --no-sound-null-safety
 ```
 
+### Generate Dummy User
+- go to 'first_time_login.dart', find the "// DUMMY USER BUTTON", uncomment it, enter user name followed the structure 'RNxxxx', and click 'Create User'.
+
+### Generate APK
+- https://crello.com/ to generate icon
+- place the new icon as assets/icon/icon.png
+- run below command to update icon file
+```yaml
+flutter pub run flutter_launcher_icons:main
+```
+- build apk, run
+```yaml
+flutter build apk
+```
+
 ## Layout
 
 Login page

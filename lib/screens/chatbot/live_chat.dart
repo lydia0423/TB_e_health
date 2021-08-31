@@ -1,9 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tb_e_health/screens/ques_ans.dart';
 import 'package:http/http.dart' as http;
 
 class LiveChat extends StatefulWidget {
@@ -15,6 +15,8 @@ class _LiveChatState extends State<LiveChat> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
   List<String> _data = [];
 
+  ScrollController _controller = ScrollController();
+
   //in flask app we defined the route for our query -> bot
   static const String BOT_URL = 'https://tb-e-health-chatbot.herokuapp.com/bot';
   TextEditingController queryController = TextEditingController();
@@ -22,65 +24,62 @@ class _LiveChatState extends State<LiveChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(top: 20.0, left: 30.0),
-          child: IconButton(
-            icon: new Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 35.0,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-      ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            height: 680,
-            child: AnimatedList(
-              key: _listKey,
-              initialItemCount: _data.length,
-              itemBuilder: (BuildContext context, int index,
-                  Animation<double> animation) {
-                return buildItem(_data[index], animation, index);
-              },
-            ),
-          ),
-          SizedBox(height: 60.0),
-          // text field and icon field
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: ColorFiltered(
-              colorFilter: ColorFilter.linearToSrgbGamma(),
-              child: Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 10.0),
-                  child: TextField(
-                    style: TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.send,
-                        color: Colors.black,
-                      ),
-                      hintText: 'Type your message here ...',
-                      fillColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 25.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    child: AnimatedList(
+                      reverse: false,
+                      key: _listKey,
+                      controller: _controller,
+                      initialItemCount: _data.length,
+                      itemBuilder: (BuildContext context, int index,
+                          Animation<double> animation) {
+                        return buildItem(_data[index], animation, index);
+                      },
                     ),
-                    controller: queryController,
-                    textInputAction: TextInputAction.send,
-                    onSubmitted: (msg) {
-                      this.getResponse();
-                    },
+                  ),
+                ],
+              ),
+            ),
+
+            // text field and icon field
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ColorFiltered(
+                colorFilter: ColorFilter.linearToSrgbGamma(),
+                child: Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 10.0),
+                    child: TextField(
+                      onEditingComplete:
+                          (_controller.hasClients) ? jumper(_controller) : null,
+                      style: TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.send,
+                          color: Colors.black,
+                        ),
+                        hintText: 'Type your message here ...',
+                        fillColor: Colors.white,
+                      ),
+                      controller: queryController,
+                      textInputAction: TextInputAction.send,
+                      onSubmitted: (msg) {
+                        getResponse();
+                      },
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -98,6 +97,7 @@ class _LiveChatState extends State<LiveChat> {
             print(response.body);
             Map<String, dynamic> data = jsonDecode(response.body);
             insertSingleItem(data['response'] + "<bot>");
+            Timer(Duration(milliseconds: 300), () => jumper(_controller));
           });
       } catch (e) {
         print("Failed -> $e");
@@ -124,6 +124,7 @@ Widget buildItem(String item, Animation<double> animation, int index) {
   bool mine = item.endsWith("<bot>");
   return SizeTransition(
     sizeFactor: animation,
+    axis: Axis.vertical,
     child: Padding(
       padding: EdgeInsets.only(
         top: 10.0,
@@ -144,4 +145,11 @@ Widget buildItem(String item, Animation<double> animation, int index) {
       ),
     ),
   );
+}
+
+jumper(ScrollController _controller) {
+  print('onTap: jump ?');
+  print('jumpTo: ${_controller.position.maxScrollExtent}');
+  Timer(Duration(milliseconds: 300),
+      () => _controller.jumpTo(_controller.position.maxScrollExtent));
 }

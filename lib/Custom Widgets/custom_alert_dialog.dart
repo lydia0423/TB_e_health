@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tb_e_health/models/appointment.dart';
 
 customAlertDialog(BuildContext context,
     {String title = "", String content = "", navigateHome = false}) {
@@ -21,28 +22,28 @@ customAlertDialog(BuildContext context,
       });
 }
 
-customUploadVideoDialog(BuildContext context,
-    {String title = "", String content = "", VoidCallback? onPressed}) {
+Future<void> cancelAppointmentDialog(
+    BuildContext context, Appointment value) async {
   return showDialog(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(title),
-          content: Text(content),
+          title: Text("Cancel Appointment"),
+          content: Text("Would you like to cancel selected appointment?"),
           actions: [
             TextButton(
-                onPressed: () => onPressed,
-                child: Text(
-                  'Confirm',
-                  style: TextStyle(color: Colors.black),
-                )),
+              child: Text("Not Now"),
+              onPressed: () => Navigator.pop(context),
+            ),
             TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(color: Colors.black),
-                )),
+              child: Text("Confirm"),
+              onPressed: () async {
+                print('cancelAppointmentDialog: ${value.id}');
+                await deleteAppointment(value.id);
+                Navigator.pop(context, "Bar");
+              },
+            ),
           ],
         );
       });

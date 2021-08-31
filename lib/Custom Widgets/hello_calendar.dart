@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../utils.dart';
 
-class HelloCalendar extends StatelessWidget {
+class HelloCalendar extends StatefulWidget {
   final int year;
-  final int month;
+  int month;
   // config data
 
   /// the day start TB treatment
@@ -25,11 +25,16 @@ class HelloCalendar extends StatelessWidget {
     required this.from,
     required this.to,
     required this.until,
-    this.dates = const {},
+    required this.dates,
   }) : assert(month <= DateTime.december && month >= DateTime.january);
 
+  @override
+  _HelloCalendarState createState() => _HelloCalendarState();
+}
+
+class _HelloCalendarState extends State<HelloCalendar> {
   String get _monthToString {
-    switch (month) {
+    switch (widget.month) {
       case DateTime.january:
         return 'january';
       case DateTime.february:
@@ -111,20 +116,21 @@ class HelloCalendar extends StatelessWidget {
   }
 
   Color? _computeColor(DateTime date) {
-    var b = dates[date];
-    if (dates[date] ?? false) {
+    print('_computeColor: date : $date');
+    var b = widget.dates[date];
+    if (widget.dates[date] ?? false) {
       return HelloGreen;
     }
     // today or after that
     if (date.isAfter(DateTime.now().subtract(const Duration(days: 1)))) {
-      if (date.isBefore(until)) {
+      if (date.isBefore(widget.until)) {
         // still have supply
-        return HelloYellow;
-      } else if (date.isBefore(to)) {
+        return Colors.transparent;
+      } else if (date.isBefore(widget.to)) {
         // need resupply
         return HelloGrey;
       }
-    } else if (date.isAfter(from)) {
+    } else if (date.isAfter(widget.from)) {
       // already pass but didnt take video
       return HelloRed;
     }
@@ -155,13 +161,13 @@ class HelloCalendar extends StatelessWidget {
 
   Widget _calendarBuilder(BuildContext context) {
     List<List<DateTime>> weeks = [];
-    var dayDate = DateTime(year, month);
-    while (dayDate.month == month) {
+    var dayDate = DateTime(widget.year, widget.month);
+    while (dayDate.month == widget.month) {
       weeks.add([]);
       do {
         weeks[weeks.length - 1].add(dayDate);
         dayDate = dayDate.add(const Duration(days: 1));
-      } while (dayDate.weekday != DateTime.sunday && dayDate.month == month);
+      } while (dayDate.weekday != DateTime.sunday && dayDate.month == widget.month);
     }
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -180,12 +186,46 @@ class HelloCalendar extends StatelessWidget {
         // month year
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 12),
-          child: Text(
-            '${_monthToString.toUpperCase()} $year',
-            style: TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back_ios_sharp),
+                tooltip: 'Previous month',
+                onPressed: () {
+                  setState(() {
+                    int newMonth = (widget.month-1);
+                    if (newMonth < 1) {
+                      newMonth = 12;
+                    }
+                    print('previous month: ${widget.month} to $newMonth');
+                    widget.month=newMonth;
+                  });
+                },
+              ),
+              Text(
+                '${_monthToString.toUpperCase()} ${widget.year}',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.arrow_forward_ios_sharp),
+                tooltip: 'Next month',
+                onPressed: () {
+                  setState(() {
+                    int newMonth = (widget.month+1);
+                    if (newMonth > 12) {
+                      newMonth = 1;
+                    }
+                    print('previous month: ${widget.month} to $newMonth');
+                    widget.month=newMonth;
+                  });
+                },
+              ),
+            ],
           ),
         ),
         SizedBox(height: 12),
