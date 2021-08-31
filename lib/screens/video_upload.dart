@@ -11,7 +11,6 @@ import 'package:tb_e_health/Custom%20Widgets/video_widget.dart';
 import 'package:tb_e_health/Models/active_user.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
 import 'package:tb_e_health/Screens/daily_progress_board.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 
 // ignore: must_be_immutable
@@ -178,9 +177,11 @@ class _UploadVideoState extends State<UploadVideo> {
                   onPressed: () {
                     pushNewScreen(context,
                         screen: DailyProgressBoardScreen(), withNavBar: true);
-                    Navigator.of(context).pop();
                   },
-                )
+                ),
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text('Cancel')),
               ],
             );
           });
