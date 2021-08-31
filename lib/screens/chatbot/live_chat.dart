@@ -57,7 +57,8 @@ class _LiveChatState extends State<LiveChat> {
                   child: Padding(
                     padding: EdgeInsets.only(left: 20, right: 20, bottom: 10.0),
                     child: TextField(
-                      onEditingComplete: jumper(_controller),
+                      onEditingComplete:
+                          (_controller.hasClients) ? jumper(_controller) : null,
                       style: TextStyle(color: Colors.black),
                       decoration: InputDecoration(
                         icon: Icon(
