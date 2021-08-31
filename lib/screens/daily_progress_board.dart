@@ -42,75 +42,91 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
     print('_loadSubmission: $dates');
   }
 
+  Future<ActiveUser> _loadUserData() async {
+    final ActiveUser user = await myActiveUser();
+    return user;
+  }
+
   @override
   Widget build(BuildContext context) {
     var today = DateTime.now().getToday();
     return Scaffold(
       appBar: CommonAppBar(title: 'My VOTS Therapy Progress'),
-      body: ListView(
-        children: [
-          HelloCalendar(
-            year: today.year,
-            month: today.month,
-            // TODO: get from state
-            from: DateTime(2021, 8, 5),
-            to: DateTime(2021, 8, 25),
-            until: DateTime(2021, 12, 31),
-            dates: dates,
-          ),
-          SizedBox(height: 20.0),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: FutureBuilder<ActiveUser>(
+        future: _loadUserData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error on loading user data');
+          } else if (snapshot.hasData) {
+            return ListView(
               children: [
-                Text('Legend',
-                    style: TextStyle(
-                      fontSize: 18,
-                    )),
+                HelloCalendar(
+                  year: today.year,
+                  month: today.month,
+                  // TODO: get from state
+                  from: DateTime.parse(snapshot.data!.therapyStartDate),
+                  to: DateTime.parse(snapshot.data!.therapyEndDate),
+                  until: DateTime(2021, 9, 22),
+                  dates: dates,
+                ),
+                SizedBox(height: 20.0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 50.0,
-                        height: 50.0,
-                        decoration: new BoxDecoration(
-                          color: HelloGreen,
-                          shape: BoxShape.circle,
+                      Text('Legend',
+                          style: TextStyle(
+                            fontSize: 18,
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 50.0,
+                              height: 50.0,
+                              decoration: new BoxDecoration(
+                                color: HelloGreen,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text('Video Submitted'),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Container(
+                              width: 50.0,
+                              height: 50.0,
+                              decoration: new BoxDecoration(
+                                color: HelloRed,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            Text('Video Not Submitted'),
+                          ],
                         ),
                       ),
                       SizedBox(
-                        width: 10.0,
+                        height: 30.0,
                       ),
-                      Text('Video Submitted'),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Container(
-                        width: 50.0,
-                        height: 50.0,
-                        decoration: new BoxDecoration(
-                          color: HelloRed,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text('Video Not Submitted'),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 30.0,
-                ),
               ],
-            ),
-          ),
-        ],
+            );
+          } else {
+            return LinearProgressIndicator();
+          }
+        },
       ),
     );
   }
