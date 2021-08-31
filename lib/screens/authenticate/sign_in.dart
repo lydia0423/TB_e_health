@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
+import 'package:tb_e_health/screens/authenticate/first_time_login.dart';
 import 'package:tb_e_health/services/auth_service.dart';
 
 class SignIn extends StatefulWidget {
@@ -18,6 +19,7 @@ class _SignInState extends State<SignIn> {
 
   final AuthService _auth = AuthService();
 
+  String userId = '';
   String email = '';
   String password = '';
 
@@ -40,10 +42,10 @@ class _SignInState extends State<SignIn> {
     //^ Determines error type and the appropriate message to return
     switch (errorType) {
       case "invalidUser":
-        errorMsg = "No user with this email has been found";
+        errorMsg = "User not found";
         break;
       case "invalidPassword":
-        errorMsg = "Sorry, your password was incorrect";
+        errorMsg = "Incorrect password";
         break;
       case "invalidEmail":
         errorMsg = "Please ensure that your email has been entered correctly";
@@ -97,7 +99,7 @@ class _SignInState extends State<SignIn> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        validator: (v) => v!.isEmpty ? 'Enter an email' : null,
+                        validator: (v) => v!.isEmpty ? 'Enter an valid user id (e.g. RN1234)' : null,
                         onChanged: (v) {
                           setState(() {
                             email = v;
@@ -107,12 +109,13 @@ class _SignInState extends State<SignIn> {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30.0)),
-                          labelText: 'Email',
+                          labelText: 'User Id (e.g. RN1234)',
                         ),
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
-                        validator: (v) => v!.length < 6
+                        validator: (v) =>
+                        v!.length < 6
                             ? 'Password at least 6 characters'
                             : null,
                         onChanged: (v) {
@@ -162,7 +165,7 @@ class _SignInState extends State<SignIn> {
                             content: TextField(
                               controller: resetPasswordCtrl,
                               decoration:
-                                  InputDecoration(hintText: 'Enter your email'),
+                              InputDecoration(hintText: 'Enter your email'),
                               onChanged: (value) {
                                 setState(() {
                                   email = value;
@@ -174,9 +177,9 @@ class _SignInState extends State<SignIn> {
                                   onPressed: () {
                                     (email.isEmpty)
                                         ? customAlertDialog(context,
-                                            title: 'Email cannot be empty',
-                                            content:
-                                                'Please enter your registered email')
+                                        title: 'Email cannot be empty',
+                                        content:
+                                        'Please enter your registered email')
                                         : _auth.resetPassword(context, email);
                                   },
                                   child: Text(
@@ -201,35 +204,61 @@ class _SignInState extends State<SignIn> {
                 Padding(
                   padding: const EdgeInsets.only(left: 15.0),
                   child: OutlinedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          dynamic result =
-                              await _auth.signInWithEmailAndPassword(
-                                  emailCtrl.text, passwordCtrl.text);
-                          if (result is String) {
-                            print('SignIn: error!!! ' + result);
-                            loginError(context, result);
-                          } else {
-                            print('SignIn: ' + (result as ActiveUser).userId);
-                          }
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 8.0, left: 45.0, right: 45.0, bottom: 8.0),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
+                    onPressed: () async {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => FirstTimeLogin()
+                          )
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'First Time Login',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        backgroundColor: Colors.black,
-                      )),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      backgroundColor: Colors.black,
+                    ),
+                  ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: OutlinedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        dynamic result = await _auth.signInWithUserIdAndPassword(
+                            emailCtrl.text, passwordCtrl.text);
+                        if (result is String) {
+                          print('SignIn: error!!! ' + result);
+                          loginError(context, result);
+                        } else {
+                          print('SignIn: ' + (result as ActiveUser).userId);
+                        }
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 8.0, left: 45.0, right: 45.0, bottom: 8.0),
+                      child: Text(
+                        'Login',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      backgroundColor: Colors.black,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.0),
               ],
             ),
+            SizedBox(height: 150.0),
           ],
         ),
       ),

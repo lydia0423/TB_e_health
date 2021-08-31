@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/instance_manager.dart';
 import 'package:tb_e_health/Custom Widgets/hello_calendar_selection.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/appointment.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
-import 'package:get/get.dart';
-
+import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 import 'package:tb_e_health/utils.dart';
+import 'package:uuid/uuid.dart';
 
 const int _INTERVAL = 30;
 
@@ -34,11 +32,15 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
       return;
     }
     var user = await myActiveUser();
+
+    Uuid uuid = Uuid();
+
     Appointment request = Appointment(
       appointmentDate: Appointment.toDate(dateTime!),
       appointmentEndTime: Appointment.toTime(dateTime!.add(Duration(minutes: 30))),
       appointmentStartTime: Appointment.toTime(dateTime!),
       appointmentStatus: AppointmentStatus.pending,
+      id: uuid.v4().toString(),
       userId: user.userId,
       userName: user.name,
     );
@@ -65,27 +67,12 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
     var today = DateTime.now().getToday();
     // TODO: get state on appointment
     return Scaffold(
-      // TODO: primary color
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 30.0),
-          child: IconButton(
-            icon: new Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 35.0,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-      ),
-      body: Column(
+      appBar: CommonAppBar(title: 'Book Appointment'),
+      body: ListView(
         children: [
           HelloCalendarSelection(
             year: today.year,
-            month: today.month,
+            month: dateTime != null ? dateTime!.month:today.month,
             // TODO: get from state
             from: DateTime.now().subtract(Duration(hours: 24)), 
             to: DateTime.now().add(Duration(days: 90)),
@@ -131,6 +118,7 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
                 ),
               ),
             ),
+          SizedBox(height: 30.0),
         ],
       ),
     );

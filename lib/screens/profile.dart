@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/services/auth_service.dart';
@@ -11,6 +13,17 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final _formKey = GlobalKey<FormState>();
+  final oldPasswordCtrl = TextEditingController();
+  final newPasswordCtrl = TextEditingController();
+  final confirmPasswordCtrl = TextEditingController();
+  String oldPassword = '';
+  String newPassword = '';
+  String confirmPassword = '';
+  bool oldPasswordHidden = true;
+  bool newPasswordHidden = true;
+  bool confirmPasswordHidden = true;
+
   AuthService _auth = AuthService();
 
   @override
@@ -20,37 +33,40 @@ class _ProfileState extends State<Profile> {
         builder: (BuildContext context, AsyncSnapshot<ActiveUser> user) {
           if (user.hasData) {
             return Scaffold(
-              floatingActionButton: FloatingActionButton(
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) {
-                  return LiveChat();
-                })),
-                child: Icon(Icons.live_help_outlined),
-                backgroundColor: Colors.black,
-              ),
-              body: Column(
+              body: ListView(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(30.0, 70.0, 20.0, 10.0),
+                    padding: const EdgeInsets.fromLTRB(30.0, 20.0, 20.0, 10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'MY PERSONAL PROFILE',
                           style: TextStyle(
-                              fontSize: 25.0, fontWeight: FontWeight.w500),
+                              fontSize: 22.0, fontWeight: FontWeight.w500),
                         ),
                         InkWell(
-                          child: Icon(
-                            Icons.logout,
-                            size: 30.0,
+                          child: Container(
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.logout),
+                                  tooltip: 'Logout',
+                                  onPressed: () {
+                                    _auth.signOut();
+                                  },
+                                ),
+                                Text('Logout'),
+                              ],
+                            ),
                           ),
                           onTap: () => _auth.signOut(),
-                        )
+                        ),
                       ],
                     ),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
                         padding:
@@ -68,153 +84,206 @@ class _ProfileState extends State<Profile> {
                               ),
                       ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(8.0, 8.0, 29.0, 8.0),
-                            child: Row(
-                              children: [
-                                Text("Name: ",
-                                    style: TextStyle(fontSize: 18.0)),
-                                Text(
-                                  user.data!.name,
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                              ],
-                            ),
+                          Text("Name: ${user.data!.name}",
+                              style: TextStyle(fontSize: 18.0)),
+                          SizedBox(height: 10.0),
+                          Text(
+                            "Age: ${user.data!.age}",
+                            style: TextStyle(fontSize: 18.0),
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.fromLTRB(0, 8.0, 63.0, 8.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Age: ",
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                                Text(
-                                  user.data!.age,
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                              ],
-                            ),
+                          SizedBox(height: 10.0),
+                          Text(
+                            "Gender: ${user.data!.gender}",
+                            style: TextStyle(fontSize: 18.0),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Gender: ",
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                                Text(
-                                  user.data!.gender,
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                              ],
-                            ),
-                          )
                         ],
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizedBox(height: 30.0),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(35.0, 10.0, 10.0, 10.0),
-                    child: Row(
-                      children: [
-                        Text("Health Information: ",
-                            style: TextStyle(fontSize: 18.0)),
-                        Text(user.data!.healthInfo,
-                            style: TextStyle(fontSize: 18.0)),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(35.0, 10.0, 10.0, 10.0),
-                    child: Row(
-                      children: [
-                        Text("Address: ", style: TextStyle(fontSize: 18.0)),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 18.0),
-                          child: Container(
-                            width: 300,
-                            child: Text(user.data!.address,
-                                style: TextStyle(fontSize: 18.0)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(35.0, 10.0, 0.0, 10.0),
-                        child: Container(
-                          width: 320,
-                          child: Text(
-                            "Do you wish to turn on reminders for VDOTS treatment?",
-                            style: TextStyle(fontSize: 18.0),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(28.0, 0.0, 10.0, 10.0),
-                        child: Switch(
-                          value: user.data!.notificationPreference,
-                          onChanged: (value) {
-                            setState(() {
-                              user.data!.notificationPreference = value;
-                            });
-                          },
-                          activeTrackColor: Colors.black,
-                          activeColor: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  OutlinedButton(
-                      onPressed: () => Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return DailyProgressBoardScreen();
-                          })),
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 40.0),
+                    padding: EdgeInsets.symmetric(horizontal: 130.0),
+                    child: OutlinedButton(
+                        onPressed: () => Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return DailyProgressBoardScreen();
+                            })),
                         child: Icon(
                           Icons.analytics_rounded,
                           size: 50.0,
                           color: Colors.black,
                         ),
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)),
-                        backgroundColor: Colors.white,
-                        elevation: 1.5,
-                      )),
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                          backgroundColor: Colors.white,
+                          padding: EdgeInsets.all(30.0),
+                          elevation: 1.5,
+                        )),
+                  ),
                   SizedBox(
                     height: 15.0,
                   ),
                   Text(
-                    "See Daily Progress",
+                    "My VOTS Therapy Progress",
+                    textAlign: TextAlign.center,
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                  )
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      "Change Password",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 20.0, bottom: 0.0, left: 30.0, right: 30.0),
+                    child: Container(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: <Widget>[
+                            TextFormField(
+                              onChanged: (v) {
+                                setState(() {
+                                  oldPassword = v;
+                                });
+                              },
+                              controller: oldPasswordCtrl,
+                              obscureText: oldPasswordHidden,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                labelText: 'Current Password',
+                                suffixIcon: IconButton(
+                                  icon: Icon(oldPasswordHidden
+                                      ? Icons.visibility_off_rounded
+                                      : Icons.visibility_rounded),
+                                  color: Colors.black,
+                                  onPressed: () {
+                                    setState(() {
+                                      oldPasswordHidden = !oldPasswordHidden;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20.0),
+                            TextFormField(
+                              validator: (v) => v!.length < 6
+                                  ? 'Password at least 6 characters'
+                                  : v == oldPassword
+                                      ? 'Cannot Reset Password to a Previous Password'
+                                      : null,
+                              onChanged: (v) {
+                                setState(() {
+                                  newPassword = v;
+                                });
+                              },
+                              controller: newPasswordCtrl,
+                              obscureText: newPasswordHidden,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                labelText: 'New Password',
+                                suffixIcon: IconButton(
+                                  icon: Icon(newPasswordHidden
+                                      ? Icons.visibility_off_rounded
+                                      : Icons.visibility_rounded),
+                                  color: Colors.black,
+                                  onPressed: () {
+                                    setState(() {
+                                      newPasswordHidden = !newPasswordHidden;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20.0),
+                            TextFormField(
+                              validator: (v) =>
+                                  v != newPassword ? 'Password mismatch' : null,
+                              onChanged: (v) {
+                                setState(() {
+                                  confirmPassword = v;
+                                });
+                              },
+                              controller: confirmPasswordCtrl,
+                              obscureText: confirmPasswordHidden,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30.0)),
+                                labelText: 'Confirm Password',
+                                suffixIcon: IconButton(
+                                  icon: Icon(confirmPasswordHidden
+                                      ? Icons.visibility_off_rounded
+                                      : Icons.visibility_rounded),
+                                  color: Colors.black,
+                                  onPressed: () {
+                                    setState(() {
+                                      confirmPasswordHidden =
+                                          !confirmPasswordHidden;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child: OutlinedButton(
+                                    onPressed: () async {
+                                      if (_formKey.currentState!.validate()) {
+                                        changePassword(
+                                            user.data!.email,
+                                            oldPasswordCtrl.text,
+                                            newPasswordCtrl.text);
+                                        customAlertDialog(context,
+                                            title: "Success",
+                                            content:
+                                                'Password Updated. Kindly login using new password.');
+                                      }
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8.0,
+                                          left: 45.0,
+                                          right: 45.0,
+                                          bottom: 8.0),
+                                      child: Text(
+                                        'Change Password',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(30)),
+                                      backgroundColor: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 100.0),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );
@@ -223,4 +292,20 @@ class _ProfileState extends State<Profile> {
           }
         });
   }
+}
+
+void changePassword(
+    String email, String oldPassword, String newPassword) async {
+  UserCredential userCredential = await FirebaseAuth.instance
+      .signInWithEmailAndPassword(email: email.trim(), password: oldPassword);
+
+  //Pass in the password to updatePassword.
+  userCredential.user!.updatePassword(newPassword).then((_) {
+    print("Successfully changed password. Kindly login using new password.");
+  }).catchError((error) {
+    print("Password can't be changed" + error.toString());
+    //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
+  });
+
+  await FirebaseAuth.instance.signOut();
 }

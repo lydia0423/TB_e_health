@@ -4,6 +4,8 @@ import 'package:tb_e_health/screens/ques_ans.dart';
 import 'package:tb_e_health/screens/home_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
+import 'chatbot/live_chat.dart';
+
 class Navigations extends StatefulWidget {
   @override
   _NavigationsState createState() => _NavigationsState();
@@ -11,7 +13,7 @@ class Navigations extends StatefulWidget {
 
 class _NavigationsState extends State<Navigations> {
   PersistentTabController _controller =
-      PersistentTabController(initialIndex: 1);
+      PersistentTabController(initialIndex: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +51,9 @@ class _NavigationsState extends State<Navigations> {
 
   List<Widget> _buildScreens() {
     return [
-      QnA(),
       HomeScreen(),
+      QnA(),
+      LiveChat(),
       Profile(),
     ];
   }
@@ -59,19 +62,29 @@ class _NavigationsState extends State<Navigations> {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(
-          Icons.question_answer_rounded,
+          Icons.home,
           size: 30,
         ),
-        title: ("TB Info"),
+        title: ("Home"),
         activeColorPrimary: Colors.black,
         inactiveColorPrimary: Colors.grey[400],
       ),
       PersistentBottomNavBarItem(
         icon: Icon(
-          Icons.home,
+          Icons.question_answer_rounded,
           size: 30,
         ),
-        title: ("Home"),
+        title: ("Useful Information"),
+        activeColorPrimary: Colors.black,
+        inactiveColorPrimary: Colors.grey[400],
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(
+          // Icons.chat, Icons.comment_rounded, Icons.contact_phone_outlined,
+          Icons.child_care_sharp,
+          size: 30,
+        ),
+        title: ("Live Chat"),
         activeColorPrimary: Colors.black,
         inactiveColorPrimary: Colors.grey[400],
       ),

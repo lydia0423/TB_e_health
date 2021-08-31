@@ -8,6 +8,8 @@ import 'package:tb_e_health/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/side_effect.dart';
 
+import 'drug_delivery/drug_request_list.dart';
+
 class HomeScreen extends StatefulWidget {
   static String id = 'HomeScreen';
 
@@ -17,23 +19,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Widget _uploadWidget() => SizedBox(
-      height: 300,
-      width: 300,
+      height: 200,
+      width: 200,
       child: GestureDetector(
           onTap: () => pushNewScreen(
                 context,
                 screen: UploadVideo(),
                 withNavBar: true, // OPTIONAL VALUE. True by default.
               ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Center(
-                child: Assets.images.iconCloud.svg(),
-              ),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            child: Center(
+              child: Assets.images.iconCloud.svg(),
             ),
           )));
 
@@ -74,51 +73,56 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return LiveChat();
-        })),
-        child: Icon(Icons.live_help_outlined),
-        backgroundColor: Colors.black,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () =>
+      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //     return LiveChat();
+      //   })),
+      //   child: Icon(Icons.live_help_outlined),
+      //   backgroundColor: Colors.black,
+      // ),
       body: FutureBuilder(
           future: myActiveUser(),
           builder: (BuildContext context, AsyncSnapshot<ActiveUser> user) {
             if (user.hasData) {
-              return ListView(
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 100,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: Text('Hello!',
-                            style: TextStyle(
-                                fontSize: 45.0, fontWeight: FontWeight.bold)),
+                  Expanded(
+                    child: SizedBox(
+                      height: 80,
+                      child: Center(
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 8.0),
+                          child: Text('Hello!',
+                              style: TextStyle(
+                                  fontSize: 45.0, fontWeight: FontWeight.bold)),
+                        ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Center(
-                      child: Text(
-                        user.data!.name,
-                        style: TextStyle(fontSize: 30.0),
+                  Center(
+                    child: Text(
+                      user.data!.name,
+                      style: TextStyle(
+                        fontSize: 30.0,
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 36,
+                    height: 15,
                   ),
-                  _uploadWidget(),
                   Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Center(
-                      child: Text(
-                        'Upload Video',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 90.0),
+                    child: _uploadWidget(),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 8.0),
+                    child: Text(
+                      'Upload Video',
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
                   const SizedBox(
@@ -137,7 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             pushNewScreen(
                               context,
-                              screen: DrugDeliveryScreen(),
+                              screen: DrugRequestListScreen(),
+                              // screen: DrugDeliveryScreen(),
                               withNavBar:
                                   true, // OPTIONAL VALUE. True by default.
                             );
@@ -151,9 +156,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               screen: SideEffect(),
                               withNavBar:
-                                  true, // OPTIONAL VALUE. True by default.
-                            );
-                          },
+                              true, // OPTIONAL VALUE. True by default.
+                            );},
                           title: 'Side Effects',
                         ),
                         _featureButton(

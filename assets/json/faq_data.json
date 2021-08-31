@@ -1,0 +1,68 @@
+{
+  "faq_items": [
+    {
+      "title": "Where do I get my user ID?",
+      "text": "Your user ID will be provided to you by your Healthcare Officer."
+    },
+    {
+      "title": "How do I upload the VOTS Therapy video?",
+      "text": "1. Select VOTS Therapy\n2. Select Video, record yourself\n3. Select Upload\n4. You will receive a confirmation message"
+    },
+    {
+      "title": "Can I cancel my teleconsultation appointment?",
+      "text": "Yes, you may use the Teleconsultation tab for this."
+    },
+    {
+      "title": "What happens if I forget to upload my video?",
+      "text": "Your information will be sent to the Healthcare for further actions."
+    },
+    {
+      "title": "How do I order medications?",
+      "text": "1. Select Drug Delivery\n2. Select Confirm Order."
+    },
+    {
+      "title": "How do I report side effects?",
+      "text": "1. Select Side-effect\n2. Check the side-effects that apply to you\n3. Select the day when these symptoms start\n4. Select Submit\nOur healthcare staff will get in touch with you."
+    },
+    {
+      "title": "Where can I find useful information regarding tuberculosis?",
+      "text": "Select Useful Information button on the home screen."
+    },
+    {
+      "title": "How can I check my track record of uploading the videos?",
+      "text": "Please check My DOTS Therapy progress in your user profile."
+    },
+    {
+      "title": "Where can I find useful information regarding the use of the app?",
+      "text": "Select Useful Information button on the home screen. You will find information on DOTS Therapy and FAQ."
+    },
+    {
+      "title": "How can I check my track record of uploading the videos?",
+      "text": "Please check My DOTS Therapy progress in your user profile."
+    },
+    {
+      "title": "Why is my urine orange in colour?",
+      "text": "It is a known side effect from taking Rifampin.  It can be found in other bodily fluids such as saliva, tears, or sweat.  This is normal and the colour would fade away over time."
+    },
+    {
+      "title": "How should I take the medications?",
+      "text": "1. Ensure an empty stomach an hour before taking medication\n2. Do not eat anything 2 hours after taking the medication\n3. If you have a gastric problem, wait an hour before taking the medication after you have your breakfast.\n4. An identified treatment supporter by the DOTS clinic should supervise you while you are taking medication and you need to record the video everyday in this application as evidence of you taking the medications."
+    },
+    {
+      "title": "How should I get about my day after being discharged from hospital?",
+      "text": "1. You should wear a mask everyday for the next 2 weeks to prevent the TB infection to others. Masks should be changed regularly.\n2. Make sure your house and room is well ventilated by opening up windows and curtains.\n3. There is no need to separate the dishes\n4. Get enough rest and avoid crowded places"
+    },
+    {
+      "title": "Do I need a referral to the eye clinic?",
+      "text": "You will receive a referral letter to the eye clinic to monitor your vision while taking the TB medications. Please ask for the referral letter from the DOTS clinic if you have not received it yet."
+    },
+    {
+      "title": "Should any of my household close contact get screened for TB?",
+      "text": "Yes. Anyone who is staying within the same household or has been in contact with the TB patient you MUST do TB screening be screened for possible TB infection at our Rawatan Utama Kesihatan Awam (RUKA) or nearest Klinik Kesihatan."
+    },
+    {
+      "title": "Who can I contact if I encounter a problem with the app?",
+      "text": "You may call us at 03-79492389 during office hours or email us at tb@ummc.edu.my"
+    }
+  ]
+}
