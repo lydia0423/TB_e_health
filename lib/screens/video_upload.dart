@@ -4,11 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:tb_e_health/Api/firebase_api.dart';
 import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/Custom%20Widgets/video_widget.dart';
 import 'package:tb_e_health/Models/active_user.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
+import 'package:tb_e_health/Screens/daily_progress_board.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 
@@ -30,21 +32,13 @@ class _UploadVideoState extends State<UploadVideo> {
     print("prepare to upload video...");
     return Scaffold(
       appBar: CommonAppBar(title: 'Capture Video'),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () =>
-      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //     return LiveChat();
-      //   })),
-      //   child: Icon(Icons.live_help_outlined),
-      //   backgroundColor: Colors.black,
-      // ),
       body: ListView(
         children: [
           (fileMedia == null)
               ? Expanded(
-                child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 20.0, left: 34.0, right: 30.0),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 20.0, left: 34.0, right: 30.0),
                     child: Container(
                       height: 480,
                       width: 340,
@@ -53,11 +47,11 @@ class _UploadVideoState extends State<UploadVideo> {
                           color: Colors.grey),
                     ),
                   ),
-              )
+                )
               : Expanded(
-                child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 20.0, left: 34.0, right: 30.0),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 20.0, left: 34.0, right: 30.0),
                     child: Container(
                       height: 480,
                       width: 340,
@@ -66,7 +60,7 @@ class _UploadVideoState extends State<UploadVideo> {
                       child: VideoWidget(fileMedia!),
                     ),
                   ),
-              ),
+                ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -128,9 +122,12 @@ class _UploadVideoState extends State<UploadVideo> {
     final getMedia = ImagePicker().pickVideo;
 
     final media = await getMedia(source: ImageSource.camera);
-    final file = File(media!.path);
-
-    return file;
+    if (media == null) {
+      return;
+    } else {
+      final file = File(media!.path);
+      return file;
+    }
   }
 
   Future uploadFile() async {
@@ -169,8 +166,24 @@ class _UploadVideoState extends State<UploadVideo> {
   Future<void> upload(context) async {
     if (fileMedia != null) {
       uploadFile();
-      customAlertDialog(context,
-          title: 'Reminder', content: 'Upload video successfully');
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Reminder'),
+              content: Text('Upload video successfully'),
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    pushNewScreen(context,
+                        screen: DailyProgressBoardScreen(), withNavBar: true);
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
     } else {
       customAlertDialog(context,
           title: 'Warning', content: 'No video is recorded');

@@ -1,7 +1,5 @@
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:tb_e_health/Models/active_user.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/screens/drug_delivery/drug_delivery_screen.dart';
 import 'package:tb_e_health/screens/teleconsultation/scheduler_screen.dart';
 import 'package:tb_e_health/screens/video_upload.dart';
 import 'package:tb_e_health/gen/assets.gen.dart';
@@ -73,14 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () =>
-      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //     return LiveChat();
-      //   })),
-      //   child: Icon(Icons.live_help_outlined),
-      //   backgroundColor: Colors.black,
-      // ),
       body: FutureBuilder(
           future: myActiveUser(),
           builder: (BuildContext context, AsyncSnapshot<ActiveUser> user) {
@@ -126,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 12,
+                    height: 25,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
@@ -150,14 +140,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           title: 'Drug Delivery',
                         ),
                         _featureButton(
-                          child: Assets.images.iconNote.svg(height: 30),
+                          child: Assets.images.iconNote.svg(height: 80),
                           onTap: () {
                             pushNewScreen(
                               context,
                               screen: SideEffect(),
                               withNavBar:
-                              true, // OPTIONAL VALUE. True by default.
-                            );},
+                                  true, // OPTIONAL VALUE. True by default.
+                            );
+                          },
                           title: 'Side Effects',
                         ),
                         _featureButton(
@@ -175,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 30.0)
+                  SizedBox(height: 80.0)
                 ],
               );
             } else {

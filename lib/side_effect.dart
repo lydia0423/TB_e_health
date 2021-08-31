@@ -5,8 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/Models/active_user.dart';
+import 'package:tb_e_health/Screens/shared/common_app_bar.dart';
 import 'package:tb_e_health/Screens/teleconsultation/scheduler_screen.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 
 import 'gen/assets.gen.dart';
 
@@ -43,29 +43,7 @@ class _SideEffectState extends State<SideEffect> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(top: 20.0, left: 30.0),
-          child: IconButton(
-            icon: new Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 35.0,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return LiveChat();
-        })),
-        child: Icon(Icons.live_help_outlined),
-        backgroundColor: Colors.black,
-      ),
+      appBar: CommonAppBar(title: 'Side Effects'),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

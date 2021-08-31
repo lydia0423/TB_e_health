@@ -49,18 +49,37 @@ class _ProfileState extends State<Profile> {
                           child: Container(
                             child: Row(
                               children: [
-                                IconButton(
-                                  icon: const Icon(Icons.logout),
-                                  tooltip: 'Logout',
-                                  onPressed: () {
-                                    _auth.signOut();
-                                  },
+                                Icon(Icons.logout),
+                                SizedBox(
+                                  width: 5,
                                 ),
                                 Text('Logout'),
                               ],
                             ),
                           ),
-                          onTap: () => _auth.signOut(),
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Logout'),
+                                    content: Text(
+                                        'Are you sure you want to logout?'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            _auth.signOut();
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('Confirm')),
+                                      TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text('Not Now')),
+                                    ],
+                                  );
+                                });
+                          },
                         ),
                       ],
                     ),
@@ -104,7 +123,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   SizedBox(height: 30.0),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 130.0),
+                    padding: EdgeInsets.symmetric(horizontal: 150.0),
                     child: OutlinedButton(
                         onPressed: () => Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {

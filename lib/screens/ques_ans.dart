@@ -23,14 +23,6 @@ class _QnAState extends State<QnA> {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () =>
-      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //     return LiveChat();
-      //   })),
-      //   child: Icon(Icons.live_help_outlined),
-      //   backgroundColor: Colors.black,
-      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -139,8 +131,9 @@ class _QnAState extends State<QnA> {
                   print(data);
                   pushNewScreen(
                     context,
-                    screen: Faq(items: data,),
-                    // screen: DotsTherapyInfo(),
+                    screen: Faq(
+                      items: data,
+                    ),
                     withNavBar: true, // OPTIONAL VALUE. True by default.
                   );
                 },

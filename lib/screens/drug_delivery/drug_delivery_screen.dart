@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/drug_delivery/drug_request_list.dart';
 import 'package:tb_e_health/screens/drug_delivery/faq_screen.dart';
 
@@ -53,14 +52,6 @@ class DrugDeliveryScreen extends StatelessWidget {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () =>
-      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //     return LiveChat();
-      //   })),
-      //   child: Icon(Icons.live_help_outlined),
-      //   backgroundColor: Colors.black,
-      // ),
       body: Column(
         children: [
           SizedBox(

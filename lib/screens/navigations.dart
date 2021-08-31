@@ -71,7 +71,7 @@ class _NavigationsState extends State<Navigations> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(
-          Icons.question_answer_rounded,
+          Icons.book,
           size: 30,
         ),
         title: ("Useful Information"),
@@ -80,8 +80,7 @@ class _NavigationsState extends State<Navigations> {
       ),
       PersistentBottomNavBarItem(
         icon: Icon(
-          // Icons.chat, Icons.comment_rounded, Icons.contact_phone_outlined,
-          Icons.child_care_sharp,
+          Icons.comment_rounded,
           size: 30,
         ),
         title: ("Live Chat"),

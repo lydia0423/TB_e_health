@@ -14,14 +14,6 @@ class Faq extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CommonAppBar(title: 'FAQ'),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () =>
-      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //     return LiveChat();
-      //   })),
-      //   child: Icon(Icons.live_help_outlined),
-      //   backgroundColor: Colors.black,
-      // ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(25.0, 8.0, 25.0, 15.0),
         child: Column(
@@ -41,13 +33,10 @@ class Faq extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InfoCardWidget(
-                              primaryText: '${index+1}) '+items[index].title,
+                              primaryText:
+                                  '${index + 1}) ' + items[index].title,
                               secondaryText: items[index].text,
                             ),
-                            // child: Text(
-                            //   items[index].title + '\n' + items[index].text,
-                            //   style: TextStyle(fontSize: 18),
-                            // ),
                           ),
                         );
                       },

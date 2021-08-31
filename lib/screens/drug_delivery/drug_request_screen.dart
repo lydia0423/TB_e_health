@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tb_e_health/models/active_user.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/models/delivery_request.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
-import 'package:tb_e_health/utils.dart';
 import 'package:uuid/uuid.dart';
 
 class DrugRequestScreen extends StatelessWidget {
@@ -24,30 +21,6 @@ class DrugRequestScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: CommonAppBar(title: 'Confirm Order'),
-      // appBar: AppBar(
-      //   elevation: 0.0,
-      //   toolbarHeight: 80,
-      //   backgroundColor: Colors.transparent,
-      //   leading: Padding(
-      //     padding: const EdgeInsets.only(top: 20.0, left: 30.0),
-      //     child: IconButton(
-      //       icon: new Icon(
-      //         Icons.arrow_back_ios,
-      //         color: Colors.black,
-      //         size: 35.0,
-      //       ),
-      //       onPressed: () => Get.back(),
-      //     ),
-      //   ),
-      // ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () =>
-      //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //     return LiveChat();
-      //   })),
-      //   child: Icon(Icons.live_help_outlined),
-      //   backgroundColor: Colors.black,
-      // ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +66,7 @@ class DrugRequestScreen extends StatelessWidget {
             height: 12,
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(30.0, 10.0, 0.0, 10.0),
+            padding: const EdgeInsets.fromLTRB(110.0, 10.0, 0.0, 10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,16 +75,20 @@ class DrugRequestScreen extends StatelessWidget {
                   'Confirm Use of Service By',
                   style: TextStyle(fontSize: 18),
                 ),
-                SizedBox(height:20.0),
-                Row(
-                  children: [
-                    Icon(Icons.calendar_today),
-                    SizedBox(width: 10.0,),
-                    Text('$formattedDate'),
-                  ],
+                SizedBox(height: 20.0),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.calendar_today),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Text('$formattedDate'),
+                    ],
+                  ),
                 ),
-
-                SizedBox(height:20.0),
+                SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () async {
                     var now = DateTime.now();
@@ -132,13 +109,11 @@ class DrugRequestScreen extends StatelessWidget {
                   },
                   child: SizedBox(
                     height: 40,
-                    width: 240,
+                    width: 180,
                     child: Center(child: Text('Confirm Order')),
                   ),
                 ),
-
-                SizedBox(height:20.0),
-
+                SizedBox(height: 20.0),
                 TextButton(
                   onPressed: () async {
                     var now = DateTime.now();
@@ -157,20 +132,22 @@ class DrugRequestScreen extends StatelessWidget {
                     // Get.back();
                     Navigator.pop(context, "Bar");
                   },
-                  child: SizedBox(
-                    height: 40,
-                    width: 240,
-                    child: Center(
-                        child: Text(
-                          'I’ll Come To Clinic For Next Prescription',
-                          textAlign: TextAlign.center,
-                        )),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 110.0),
+                    child: SizedBox(
+                      height: 40,
+                      width: 240,
+                      child: Center(
+                          child: Text(
+                        'I’ll Come To Clinic For Next Prescription',
+                        textAlign: TextAlign.center,
+                      )),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-
         ],
       ),
     );

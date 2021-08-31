@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 
 class SymptomsInfo extends StatelessWidget {
@@ -7,14 +6,6 @@ class SymptomsInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CommonAppBar(title: 'Symptoms of Tuberculosis'),
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: () =>
-        //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //     return LiveChat();
-        //   })),
-        //   child: Icon(Icons.live_help_outlined),
-        //   backgroundColor: Colors.black,
-        // ),
         body: Column(
           children: [
             Container(

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:tb_e_health/Custom%20Widgets/hello_calendar.dart';
 import 'package:tb_e_health/Models/video_uploaded.dart';
 import 'package:tb_e_health/models/active_user.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 import 'package:tb_e_health/utils.dart';
 
@@ -105,27 +104,6 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
                     ],
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: Row(
-                //     crossAxisAlignment: CrossAxisAlignment.center,
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: [
-                //       Container(
-                //         width: 50.0,
-                //         height: 50.0,
-                //         decoration: new BoxDecoration(
-                //           color: HelloYellow,
-                //           shape: BoxShape.circle,
-                //         ),
-                //       ),
-                //       SizedBox(
-                //         width: 10.0,
-                //       ),
-                //       Text('Pending'),
-                //     ],
-                //   ),
-                // ),
                 SizedBox(
                   height: 30.0,
                 ),

@@ -24,58 +24,61 @@ class _LiveChatState extends State<LiveChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  child: AnimatedList(
-                    reverse: false,
-                    key: _listKey,
-                    controller: _controller,
-                    initialItemCount: _data.length,
-                    itemBuilder: (BuildContext context, int index,
-                        Animation<double> animation) {
-                      return buildItem(_data[index], animation, index);
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // text field and icon field
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: ColorFiltered(
-              colorFilter: ColorFilter.linearToSrgbGamma(),
-              child: Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 10.0),
-                  child: TextField(
-                    onEditingComplete: jumper(_controller),
-                    style: TextStyle(color: Colors.black),
-                    decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.send,
-                        color: Colors.black,
-                      ),
-                      hintText: 'Type your message here ...',
-                      fillColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.only(top: 25.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    child: AnimatedList(
+                      reverse: false,
+                      key: _listKey,
+                      controller: _controller,
+                      initialItemCount: _data.length,
+                      itemBuilder: (BuildContext context, int index,
+                          Animation<double> animation) {
+                        return buildItem(_data[index], animation, index);
+                      },
                     ),
-                    controller: queryController,
-                    textInputAction: TextInputAction.send,
-                    onSubmitted: (msg) {
-                      getResponse();
-                    },
+                  ),
+                ],
+              ),
+            ),
+
+            // text field and icon field
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: ColorFiltered(
+                colorFilter: ColorFilter.linearToSrgbGamma(),
+                child: Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20, right: 20, bottom: 10.0),
+                    child: TextField(
+                      onEditingComplete: jumper(_controller),
+                      style: TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.send,
+                          color: Colors.black,
+                        ),
+                        hintText: 'Type your message here ...',
+                        fillColor: Colors.white,
+                      ),
+                      controller: queryController,
+                      textInputAction: TextInputAction.send,
+                      onSubmitted: (msg) {
+                        getResponse();
+                      },
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

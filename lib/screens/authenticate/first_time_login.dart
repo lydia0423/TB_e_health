@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/Screens/shared/common_app_bar.dart';
 
 class FirstTimeLogin extends StatefulWidget {
   const FirstTimeLogin({Key? key}) : super(key: key);
@@ -11,7 +12,6 @@ class FirstTimeLogin extends StatefulWidget {
 }
 
 class _FirstTimeLoginState extends State<FirstTimeLogin> {
-
   final _formKey = GlobalKey<FormState>();
 
   final userIdCtrl = TextEditingController();
@@ -35,25 +35,10 @@ class _FirstTimeLoginState extends State<FirstTimeLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 30.0),
-          child: IconButton(
-            icon: new Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 35.0,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-        ),
-      ),
+      appBar: CommonAppBar(title: 'First Time Login'),
       body: SingleChildScrollView(
         child: Column(
           children: [
-
             // LOGIN FORM
             Padding(
               padding: const EdgeInsets.only(
@@ -64,7 +49,8 @@ class _FirstTimeLoginState extends State<FirstTimeLogin> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        validator: (v) => v!.isEmpty ? 'Enter userId (e.g. RN1234)' : null,
+                        validator: (v) =>
+                            v!.isEmpty ? 'Enter userId (e.g. RN1234)' : null,
                         onChanged: (v) {
                           setState(() {
                             userId = v;
@@ -106,13 +92,10 @@ class _FirstTimeLoginState extends State<FirstTimeLogin> {
                           ),
                         ),
                       ),
-
-
                       SizedBox(height: 20.0),
                       TextFormField(
-                        validator: (v) => v!=password
-                            ? 'Password mismatch'
-                            : null,
+                        validator: (v) =>
+                            v != password ? 'Password mismatch' : null,
                         onChanged: (v) {
                           setState(() {
                             confirmPassword = v;
@@ -155,7 +138,8 @@ class _FirstTimeLoginState extends State<FirstTimeLogin> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         changePassword(userIdCtrl.text, passwordCtrl.text);
-                        customAlertDialog(context, title: "Success", content: 'Password Updated');
+                        customAlertDialog(context,
+                            title: "Success", content: 'Password Updated');
                         // Navigator.of(context).pop(true);
                       }
                     },
@@ -209,7 +193,6 @@ class _FirstTimeLoginState extends State<FirstTimeLogin> {
         ),
       ),
     );
-
   }
 }
 
@@ -220,7 +203,8 @@ void changePassword(String userId, String password) async {
   String defaultPassword = "password";
 
   UserCredential userCredential = await FirebaseAuth.instance
-      .signInWithEmailAndPassword(email: email.trim(), password: defaultPassword);
+      .signInWithEmailAndPassword(
+          email: email.trim(), password: defaultPassword);
 
   //Pass in the password to updatePassword.
   userCredential.user!.updatePassword(password).then((_) {
@@ -231,9 +215,7 @@ void changePassword(String userId, String password) async {
   });
 
   await FirebaseAuth.instance.signOut();
-
 }
-
 
 void generateUser(String userId) async {
   // get the user email by userId, the email is just userId+@email.com now!
@@ -257,11 +239,10 @@ void generateUser(String userId) async {
     "UserHealthInfo": "Diabetes",
     "UserName": "Melissa Tee",
     "UserNotificationPreferences": true,
-    "UserAvatar": "https://www.nicepng.com/png/full/52-521023_download-free-icon-female-vectors-blank-facebook-profile.png",
+    "UserAvatar":
+        "https://www.nicepng.com/png/full/52-521023_download-free-icon-female-vectors-blank-facebook-profile.png",
     "UserAge": "58"
   });
 
   await FirebaseAuth.instance.signOut();
-
 }
-
