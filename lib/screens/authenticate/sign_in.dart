@@ -258,13 +258,13 @@ class _SignInState extends State<SignIn> {
                                 if (result is String) {
                                   print('SignIn: error!!! ' + result);
                                   loginError(context, result);
-                                  setState(() {
-                                    loading = false;
-                                  });
                                 } else {
                                   print('SignIn: ' +
                                       (result as ActiveUser).userId);
                                 }
+                                setState(() {
+                                  loading = false;
+                                });
                               }
                             },
                             child: Padding(
