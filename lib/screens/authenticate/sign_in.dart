@@ -255,9 +255,6 @@ class _SignInState extends State<SignIn> {
                                 dynamic result =
                                     await _auth.signInWithUserIdAndPassword(
                                         emailCtrl.text, passwordCtrl.text);
-                                setState(() {
-                                  loading = false;
-                                });
                                 if (result is String) {
                                   print('SignIn: error!!! ' + result);
                                   loginError(context, result);
