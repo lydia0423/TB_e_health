@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/delivery_request.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
@@ -57,7 +58,7 @@ class DrugRequestScreen extends StatelessWidget {
                     ),
                     TextSpan(
                       text:
-                          ' to be delivered directly to your house instead of coming to UMMC to collect your medication. Please confirm your order at least 1 week before your medications finish.',
+                          ' to be delivered directly to your house instead of coming to UMMC to collect your medication.',
                     ),
                   ]),
             ),
@@ -89,6 +90,7 @@ class DrugRequestScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.0),
+                //TODO: If the user click on the 'Pick Up Themselves', the confirm button should be disable and show the pick up date. The confirm button will be enable when they already collect their medication
                 ElevatedButton(
                   onPressed: () async {
                     var now = DateTime.now();
@@ -115,6 +117,7 @@ class DrugRequestScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.0),
                 TextButton(
+                  //change button style same with the confirm button
                   onPressed: () async {
                     var now = DateTime.now();
                     ActiveUser user = await myActiveUser();
@@ -130,7 +133,11 @@ class DrugRequestScreen extends StatelessWidget {
                       therapyStartDate: user.therapyStartDate,
                     ));
                     // Get.back();
-                    Navigator.pop(context, "Bar");
+                    //Navigator.pop(context, "Bar");
+                    customAlertDialog(context,
+                        title: 'Self Pickup Confirmed',
+                        content:
+                            'Please come to hospital on 2021-09-10 to collect your medication.');
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(right: 110.0),
