@@ -84,6 +84,7 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
   }
 }
 
+//TODO: The user should only book the appointment within 8am - 5 pm (only show this), if the user already book an appoinntment on certain day and time, the time should not be appear in the selection
 class SchedulerScreenContent extends StatefulWidget {
   final LinkedHashMap<DateTime, List<Appointment>> content;
 
@@ -152,11 +153,9 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
                         icon: Icon(Icons.remove_circle_outlined),
                       ),
                       onTap: () {
-                      print('${value[index]}');
-                      setState(() {
-
-                      });
-                    },
+                        print('${value[index]}');
+                        setState(() {});
+                      },
                       title: Text('${value[index]}'),
                     ),
                   );

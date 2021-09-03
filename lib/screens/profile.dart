@@ -123,7 +123,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   SizedBox(height: 30.0),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 150.0),
+                    padding: EdgeInsets.symmetric(horizontal: 110.0),
                     child: OutlinedButton(
                         onPressed: () => Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {

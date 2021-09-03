@@ -147,7 +147,7 @@ class _FirstTimeLoginState extends State<FirstTimeLogin> {
                       padding: const EdgeInsets.only(
                           top: 8.0, left: 45.0, right: 45.0, bottom: 8.0),
                       child: Text(
-                        'Change Password',
+                        'Confirm Registration',
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),

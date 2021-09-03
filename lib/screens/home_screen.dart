@@ -71,6 +71,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        child: const Icon(Icons.phone),
+        backgroundColor: Colors.green,
+      ),
       body: FutureBuilder(
           future: myActiveUser(),
           builder: (BuildContext context, AsyncSnapshot<ActiveUser> user) {
