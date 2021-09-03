@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/custom_widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/common/constants.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/authenticate/first_time_login.dart';

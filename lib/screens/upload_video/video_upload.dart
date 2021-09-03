@@ -1,16 +1,15 @@
 import 'dart:io';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:tb_e_health/Api/firebase_api.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
-import 'package:tb_e_health/Custom%20Widgets/video_widget.dart';
-import 'package:tb_e_health/Models/active_user.dart';
-import 'package:tb_e_health/Models/video_uploaded.dart';
-import 'package:tb_e_health/Screens/daily_progress_board.dart';
+import 'package:tb_e_health/services/upload_video_service.dart';
+import 'package:tb_e_health/custom_widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/custom_widgets/video_widget.dart';
+import 'package:tb_e_health/models/active_user.dart';
+import 'package:tb_e_health/models/video_uploaded.dart';
 import 'package:tb_e_health/common/constants.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 

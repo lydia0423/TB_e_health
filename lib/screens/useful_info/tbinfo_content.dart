@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/screens/tb_info/tb_overview.dart';
-import 'package:tb_e_health/screens/tb_info/tb_side_effect_info.dart';
-import 'package:tb_e_health/screens/tb_info/tb_dots.dart';
-import 'package:tb_e_health/screens/tb_info/tb_symptom_info.dart';
+import 'package:tb_e_health/screens/useful_info/tb_overview.dart';
+import 'package:tb_e_health/screens/useful_info/tb_side_effect_info.dart';
+import 'package:tb_e_health/screens/useful_info/tb_dots.dart';
+import 'package:tb_e_health/screens/useful_info/tb_symptom_info.dart';
 
 class TbInfo extends StatelessWidget {
   const TbInfo({Key? key}) : super(key: key);

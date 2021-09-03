@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/common/constants.dart';
-import 'package:tb_e_health/screens/profile.dart';
-import 'package:tb_e_health/screens/ques_ans.dart';
-import 'package:tb_e_health/screens/home_screen.dart';
+import 'package:tb_e_health/screens/profile/profile.dart';
+import 'package:tb_e_health/screens/navigation_bar/qna.dart';
+import 'package:tb_e_health/screens/upload_video/hello_screen.dart';
 import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 

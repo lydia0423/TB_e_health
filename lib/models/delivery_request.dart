@@ -1,17 +1,6 @@
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tb_e_health/models/active_user.dart';
-
-// enum OrderStatus{Pending,Arriving,Received,Unknown}
-
-// OrderStatus? visibilityFromString(String value){
-//   return OrderStatus.values.firstWhere(
-//     (e)=>e.toString().split('.')[1]
-//         .toUpperCase()==value.toUpperCase(),
-//     orElse: () => OrderStatus.Unknown,
-//   );
-// }
 
 // enum
 class OrderStatus {

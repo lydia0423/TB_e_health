@@ -14,7 +14,7 @@ class DrugRequestListScreen extends StatefulWidget {
 
 class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
   _requestNewDrugDelivery(BuildContext context) async {
-    String received = await Navigator.push(
+    String? received = await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (_) => DrugRequestScreen(

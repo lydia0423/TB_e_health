@@ -1,13 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Custom%20Widgets/hello_calendar.dart';
-import 'package:tb_e_health/Models/video_uploaded.dart';
+import 'package:tb_e_health/custom_widgets/hello_calendar.dart';
+import 'package:tb_e_health/models/video_uploaded.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
-import 'package:tb_e_health/utils.dart';
-
-import '../utils.dart';
+import 'package:tb_e_health/screens/shared/utils.dart';
 
 class DailyProgressBoardScreen extends StatefulWidget {
   @override

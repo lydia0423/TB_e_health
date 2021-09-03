@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/custom_widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/services/auth_service.dart';
-
-import 'daily_progress_board.dart';
+import 'package:tb_e_health/screens/profile/daily_progress_board.dart';
 
 class Profile extends StatefulWidget {
   @override
