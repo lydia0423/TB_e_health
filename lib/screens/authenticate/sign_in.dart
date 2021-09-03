@@ -259,8 +259,8 @@ class _SignInState extends State<SignIn> {
                                 print('SignIn: error!!! ' + result);
                                 loginError(context, result);
                               } else {
-                                print('SignIn: ' +
-                                    (result as ActiveUser).userId);
+                                print(
+                                    'SignIn: ' + (result as ActiveUser).userId);
                               }
                             }
                           },
