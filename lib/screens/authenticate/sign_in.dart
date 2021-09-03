@@ -109,6 +109,7 @@ class _SignInState extends State<SignIn> {
                         child: Column(
                           children: <Widget>[
                             TextFormField(
+                              textInputAction: TextInputAction.next,
                               validator: (v) => v!.isEmpty
                                   ? 'Enter an valid user id (e.g. RN1234)'
                                   : null,
@@ -126,6 +127,7 @@ class _SignInState extends State<SignIn> {
                             ),
                             SizedBox(height: 20.0),
                             TextFormField(
+                              textInputAction: TextInputAction.done,
                               validator: (v) => v!.length < 6
                                   ? 'Password at least 6 characters'
                                   : null,
