@@ -81,8 +81,6 @@ Future<DocumentSnapshot> getActiveUser() async {
 
 //? Retrieves data from Firestore and stores in an ActiveUser object
 Future<ActiveUser> myActiveUser({String? docId}) async {
-  Timer(Duration(seconds: 5), () {});
-
   String currentId;
   User? currentUser = FirebaseAuth.instance.currentUser;
   (docId == null) ? currentId = currentUser!.uid : currentId = docId;

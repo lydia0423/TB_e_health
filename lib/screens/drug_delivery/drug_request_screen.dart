@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tb_e_health/common/constants.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/delivery_request.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
@@ -22,8 +23,8 @@ class DrugRequestScreen extends StatelessWidget {
     return Scaffold(
       appBar: CommonAppBar(title: 'Confirm Order'),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             margin: const EdgeInsets.fromLTRB(25.0, 8.0, 25.0, 15.0),
@@ -62,91 +63,67 @@ class DrugRequestScreen extends StatelessWidget {
                   ]),
             ),
           ),
-          SizedBox(
-            height: 12,
+          Text(
+            'Confirm Use of Service By',
+            style: TextStyle(fontSize: 18),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(110.0, 10.0, 0.0, 10.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Confirm Use of Service By',
-                  style: TextStyle(fontSize: 18),
-                ),
-                SizedBox(height: 20.0),
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.calendar_today),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Text('$formattedDate'),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: () async {
-                    var now = DateTime.now();
-                    ActiveUser user = await myActiveUser();
-                    await createDrugDeliveryRequest(DrugDeliveryRequest(
-                      type: OrderType.Delivery,
-                      id: Uuid().v4(),
-                      requestDate: '${now.year}-${now.month}-${now.day}',
-                      // TODO: get user start and end
-                      userId: user.userId,
-                      userName: user.name,
-                      userAddress: user.address,
-                      therapyEndDate: user.therapyEndDate,
-                      therapyStartDate: user.therapyStartDate,
-                    ));
-                    // Get.back();
-                    Navigator.pop(context, "Bar");
-                  },
-                  child: SizedBox(
-                    height: 40,
-                    width: 180,
-                    child: Center(child: Text('Confirm Order')),
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                TextButton(
-                  onPressed: () async {
-                    var now = DateTime.now();
-                    ActiveUser user = await myActiveUser();
-                    await createDrugDeliveryRequest(DrugDeliveryRequest(
-                      type: OrderType.Pickup,
-                      id: Uuid().v4(),
-                      requestDate: '${now.year}-${now.month}-${now.day}',
-                      // TODO: get user start and end
-                      userId: user.userId,
-                      userName: user.name,
-                      userAddress: user.address,
-                      therapyEndDate: user.therapyEndDate,
-                      therapyStartDate: user.therapyStartDate,
-                    ));
-                    // Get.back();
-                    Navigator.pop(context, "Bar");
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 110.0),
-                    child: SizedBox(
-                      height: 40,
-                      width: 240,
-                      child: Center(
-                          child: Text(
-                        'I’ll Come To Clinic For Next Prescription',
-                        textAlign: TextAlign.center,
-                      )),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(Icons.calendar_today),
+              SizedBox(
+                width: 10.0,
+              ),
+              Text('$formattedDate'),
+            ],
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              var now = DateTime.now();
+              ActiveUser user = await myActiveUser();
+              await createDrugDeliveryRequest(DrugDeliveryRequest(
+                type: OrderType.Delivery,
+                id: Uuid().v4(),
+                requestDate: '${now.year}-${now.month}-${now.day}',
+                // TODO: get user start and end
+                userId: user.userId,
+                userName: user.name,
+                userAddress: user.address,
+                therapyEndDate: user.therapyEndDate,
+                therapyStartDate: user.therapyStartDate,
+              ));
+              // Get.back();
+              Navigator.pop(context, "Bar");
+            },
+            child: Container(
+                child: Text('Confirm Order',
+                    style: TextStyle(fontSize: Constants.buttonFs))),
+          ),
+          TextButton(
+            onPressed: () async {
+              var now = DateTime.now();
+              ActiveUser user = await myActiveUser();
+              await createDrugDeliveryRequest(DrugDeliveryRequest(
+                type: OrderType.Pickup,
+                id: Uuid().v4(),
+                requestDate: '${now.year}-${now.month}-${now.day}',
+                // TODO: get user start and end
+                userId: user.userId,
+                userName: user.name,
+                userAddress: user.address,
+                therapyEndDate: user.therapyEndDate,
+                therapyStartDate: user.therapyStartDate,
+              ));
+              // Get.back();
+              Navigator.pop(context, "Bar");
+            },
+            child: Container(
+                child: Text(
+              'I’ll Come To Clinic For Next Prescription',
+              style: TextStyle(fontSize: Constants.buttonFs),
+              textAlign: TextAlign.center,
+            )),
           ),
         ],
       ),

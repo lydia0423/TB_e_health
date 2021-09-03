@@ -113,7 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           pushNewScreen(
                             context,
                             screen: DrugRequestListScreen(),
-                            // screen: DrugDeliveryScreen(),
                             withNavBar:
                                 true, // OPTIONAL VALUE. True by default.
                           );
