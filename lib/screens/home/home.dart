@@ -5,12 +5,9 @@ import 'package:tb_e_health/screens/daily_progress_board.dart';
 import 'package:tb_e_health/screens/navigations.dart';
 import 'package:tb_e_health/screens/teleconsultation/scheduler_screen.dart';
 import 'package:tb_e_health/screens/teleconsultation/session_screen.dart';
-import 'package:tb_e_health/services/auth_service.dart';
 import 'package:tb_e_health/theme.dart';
 
 class Home extends StatelessWidget {
-
-  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +16,7 @@ class Home extends StatelessWidget {
         builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
         title: "TB e-health",
-        theme: helloTheme,
+        theme: helloTheme(context),
         //^ named Navigator routes
         initialRoute: "/home",
         routes: {
