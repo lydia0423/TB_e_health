@@ -16,6 +16,7 @@ class RequestApointmentScreen extends StatefulWidget {
 
 class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
   DateTime? dateTime;
+  final futureData = findAppointOfActiveUserAsMapping(myActiveUser());
 
   Future<void> _createAppointment() async {
     if (dateTime!.isBefore(DateTime.now())) {
@@ -31,6 +32,39 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
       );
       return;
     }
+    // 8am - 5pm
+    if (dateTime!.hour < 8 || dateTime!.hour >= 17) {
+      showDialog(
+        barrierDismissible: true,
+        context: context, 
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Cant choose before 8am or after 5pm'),
+          );
+        },
+      );
+      return;
+    }
+    // check if booked
+    final data = await futureData;
+    final appointments = data[dateTime!.getToday()]?? [];
+    for (var appointment in appointments) {
+      if (appointment.timestamp.isAtSameMomentAs(dateTime!)) {
+        showDialog(
+          barrierDismissible: true,
+          context: context, 
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('You have booked on this timeslot'),
+            );
+          },
+        );
+        return;
+      }
+    }
+
     var user = await myActiveUser();
 
     Uuid uuid = Uuid();
