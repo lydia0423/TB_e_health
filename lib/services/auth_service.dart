@@ -70,7 +70,9 @@ class AuthService {
     print('signInWithUserIdAndPassword: userId = ' + userId);
     String email = '';
     try {
-      email = await _user.getUserEmailByUserId(userId.trim());
+      // email = await _user.getUserEmailByUserId(userId.trim());
+      // email always append with the userID now.
+      email = (userId+'@email.com').toLowerCase();
       print('signInWithUserIdAndPassword: email is ' + email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

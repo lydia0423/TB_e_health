@@ -313,8 +313,13 @@ class _ProfileState extends State<Profile> {
               ),
             );
           } else {
-            return CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+            return SizedBox(
+              width: 30.0,
+              height: 30.0,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+
+              ),
             );
           }
         });

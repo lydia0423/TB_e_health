@@ -24,10 +24,10 @@ dependencies:
   flutter:
     sdk: flutter
   # firebase dependencies
-  cloud_firestore: ^2.4.0
-  firebase_auth: ^3.0.1
-  firebase_core: ^1.4.0
-  firebase_storage: ^10.0.1
+  cloud_firestore: 2.5.1
+  firebase_auth: 3.1.0
+  firebase_core: 1.6.0
+  firebase_storage: 10.0.3
   uuid: ^3.0.4
   provider: ^5.0.0
 
