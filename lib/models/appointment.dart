@@ -107,7 +107,11 @@ Future<LinkedHashMap<DateTime, List<Appointment>>>
     equals: isSameDay,
     hashCode: _getHashCode,
   )..addAll(<DateTime, List<Appointment>>{
-          for (var r in result) r.timestamp: [r]
+          for (var r in result) r.timestamp: 
+              // block 8am - 5pm
+              (r.timestamp.hour >= 8 && r.timestamp.hour < 17)
+                  ? [r]
+                  : []
         });
   return map;
 }
