@@ -1,17 +1,5 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tb_e_health/models/active_user.dart';
-
-// enum OrderStatus{Pending,Arriving,Received,Unknown}
-
-// OrderStatus? visibilityFromString(String value){
-//   return OrderStatus.values.firstWhere(
-//     (e)=>e.toString().split('.')[1]
-//         .toUpperCase()==value.toUpperCase(),
-//     orElse: () => OrderStatus.Unknown,
-//   );
-// }
 
 // enum
 class OrderStatus {
@@ -54,17 +42,19 @@ class DrugDeliveryRequest {
 
   factory DrugDeliveryRequest.fromJson(Map<String, dynamic> json) {
     return DrugDeliveryRequest(
-      type: json["OrderType"]?? '',
-      approvedBy: json["OrderApprovedBy"]?? '',
-      id: json["OrderId"]?? '',
-      item: ((json["OrderItem"]?? []) as List<dynamic>).map<String>((e) => e).toList(),
-      status: json["OrderStatus"]?? '',
-      requestDate: json["RequestDate"]?? '',
-      therapyEndDate: json["OrderTherapyEndDate"]?? '',
-      therapyStartDate: json["OrderTherapyStartDate"]?? '',
-      userAddress: json["UserAddress"]?? '',
-      userId: json["UserId"]?? '',
-      userName: json["UserName"]?? '',
+      type: json["OrderType"] ?? '',
+      approvedBy: json["OrderApprovedBy"] ?? '',
+      id: json["OrderId"] ?? '',
+      item: ((json["OrderItem"] ?? []) as List<dynamic>)
+          .map<String>((e) => e)
+          .toList(),
+      status: json["OrderStatus"] ?? '',
+      requestDate: json["RequestDate"] ?? '',
+      therapyEndDate: json["OrderTherapyEndDate"] ?? '',
+      therapyStartDate: json["OrderTherapyStartDate"] ?? '',
+      userAddress: json["UserAddress"] ?? '',
+      userId: json["UserId"] ?? '',
+      userName: json["UserName"] ?? '',
     );
   }
 
@@ -85,7 +75,8 @@ class DrugDeliveryRequest {
   }
 }
 
-Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId, {bool history = false}) async {
+Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId,
+    {bool history = false}) async {
   List<DrugDeliveryRequest> result = [];
   try {
     Query<Map<String, dynamic>> query = FirebaseFirestore.instance
@@ -99,7 +90,8 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId, {
     QuerySnapshot snapshot = await query.get();
     for (var doc in snapshot.docs) {
       print(doc.data());
-      var submission = DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
+      var submission =
+          DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
       result.add(submission);
     }
     print(result.length);
@@ -111,31 +103,59 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId, {
 }
 
 Future<void> createDrugDeliveryRequest(DrugDeliveryRequest request) async {
-  await FirebaseFirestore.instance.collection('DrugDeliveryRequest').add(request.toJson());
+  await FirebaseFirestore.instance
+      .collection('DrugDeliveryRequest')
+      .add(request.toJson());
 }
 
-Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfActiveUser(Future<ActiveUser> userFuture, {bool history = false}) async {
+Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfActiveUser(
+    Future<ActiveUser> userFuture,
+    {bool history = false}) async {
   String userId = (await userFuture).userId;
   List<DrugDeliveryRequest> result = [];
   try {
     Query<Map<String, dynamic>> query = FirebaseFirestore.instance
         .collection("DrugDeliveryRequest")
         .where("UserId", isEqualTo: userId);
+
     if (history) {
       query = query.where("OrderStatus", isEqualTo: OrderStatus.Received);
     } else {
       query = query.where("OrderStatus", isNotEqualTo: OrderStatus.Received);
     }
+
     QuerySnapshot snapshot = await query.get();
     for (var doc in snapshot.docs) {
       print(doc.data());
-      var submission = DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
+      var submission =
+          DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
       result.add(submission);
     }
+
+    result.sort((a, b) {
+      DateTime aDate = parseStringToDate(a.requestDate);
+      DateTime bDate = parseStringToDate(b.requestDate);
+      return bDate.compareTo(aDate);
+    });
+
     print('findDrugDeliveryRequestOfActiveUser: ${result.length}');
     return result;
   } catch (e) {
     print(e);
     return result;
   }
+}
+
+//? Takes the date String and converts it to DateTime
+DateTime parseStringToDate(String date) {
+  DateTime parsedDate;
+  List<String> newDate = date.split("-");
+  String day, month, year, displayDate;
+
+  (int.parse(newDate[0]) < 10) ? day = "0${newDate[0]}" : day = newDate[0];
+  (int.parse(newDate[1]) < 10) ? month = "0${newDate[1]}" : month = newDate[1];
+  year = newDate[2];
+  displayDate = year + month + day;
+  parsedDate = DateTime.parse(displayDate);
+  return parsedDate;
 }

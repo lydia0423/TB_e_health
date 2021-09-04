@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tb_e_health/screens/drug_delivery/drug_request_list.dart';
-import 'package:tb_e_health/screens/drug_delivery/faq_screen.dart';
 
 class DrugDeliveryScreen extends StatelessWidget {
   Widget _rowSelection(String logo, String title, void Function() onTap) {
@@ -64,11 +63,11 @@ class DrugDeliveryScreen extends StatelessWidget {
           }),
           _rowSelection(
               'assets/Images/speak_to_nurse.png', 'Speak to a Nurse', () {}),
-          _rowSelection('assets/Images/faq.png', 'FAQs', () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => FAQ(),
-                settings: RouteSettings(name: 'FQA')));
-          }),
+          // _rowSelection('assets/Images/faq.png', 'FAQs', () {
+          //   Navigator.of(context).push(MaterialPageRoute(
+          //       builder: (context) => FAQ(),
+          //       settings: RouteSettings(name: 'FQA')));
+          // }),
         ],
       ),
     );
