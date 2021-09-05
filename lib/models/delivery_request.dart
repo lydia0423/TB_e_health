@@ -54,17 +54,19 @@ class DrugDeliveryRequest {
 
   factory DrugDeliveryRequest.fromJson(Map<String, dynamic> json) {
     return DrugDeliveryRequest(
-      type: json["OrderType"]?? '',
-      approvedBy: json["OrderApprovedBy"]?? '',
-      id: json["OrderId"]?? '',
-      item: ((json["OrderItem"]?? []) as List<dynamic>).map<String>((e) => e).toList(),
-      status: json["OrderStatus"]?? '',
-      requestDate: json["RequestDate"]?? '',
-      therapyEndDate: json["OrderTherapyEndDate"]?? '',
-      therapyStartDate: json["OrderTherapyStartDate"]?? '',
-      userAddress: json["UserAddress"]?? '',
-      userId: json["UserId"]?? '',
-      userName: json["UserName"]?? '',
+      type: json["OrderType"] ?? '',
+      approvedBy: json["OrderApprovedBy"] ?? '',
+      id: json["OrderId"] ?? '',
+      item: ((json["OrderItem"] ?? []) as List<dynamic>)
+          .map<String>((e) => e)
+          .toList(),
+      status: json["OrderStatus"] ?? '',
+      requestDate: json["RequestDate"] ?? '',
+      therapyEndDate: json["OrderTherapyEndDate"] ?? '',
+      therapyStartDate: json["OrderTherapyStartDate"] ?? '',
+      userAddress: json["UserAddress"] ?? '',
+      userId: json["UserId"] ?? '',
+      userName: json["UserName"] ?? '',
     );
   }
 
@@ -85,7 +87,8 @@ class DrugDeliveryRequest {
   }
 }
 
-Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId, {bool history = false}) async {
+Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId,
+    {bool history = false}) async {
   List<DrugDeliveryRequest> result = [];
   try {
     Query<Map<String, dynamic>> query = FirebaseFirestore.instance
@@ -99,7 +102,8 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId, {
     QuerySnapshot snapshot = await query.get();
     for (var doc in snapshot.docs) {
       print(doc.data());
-      var submission = DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
+      var submission =
+          DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
       result.add(submission);
     }
     print(result.length);
@@ -111,10 +115,14 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfUser(String userId, {
 }
 
 Future<void> createDrugDeliveryRequest(DrugDeliveryRequest request) async {
-  await FirebaseFirestore.instance.collection('DrugDeliveryRequest').add(request.toJson());
+  await FirebaseFirestore.instance
+      .collection('DrugDeliveryRequest')
+      .add(request.toJson());
 }
 
-Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfActiveUser(Future<ActiveUser> userFuture, {bool history = false}) async {
+Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfActiveUser(
+    Future<ActiveUser> userFuture,
+    {bool history = false}) async {
   String userId = (await userFuture).userId;
   List<DrugDeliveryRequest> result = [];
   try {
@@ -129,9 +137,13 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfActiveUser(Future<Act
     QuerySnapshot snapshot = await query.get();
     for (var doc in snapshot.docs) {
       print(doc.data());
-      var submission = DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
+      var submission =
+          DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
       result.add(submission);
     }
+    result.sort((a, b) {
+      return b.requestDate.compareTo(a.requestDate);
+    });
     print('findDrugDeliveryRequestOfActiveUser: ${result.length}');
     return result;
   } catch (e) {
