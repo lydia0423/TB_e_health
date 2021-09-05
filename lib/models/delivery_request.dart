@@ -133,9 +133,7 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfActiveUser(
     }
 
     result.sort((a, b) {
-      DateTime aDate = parseStringToDate(a.requestDate);
-      DateTime bDate = parseStringToDate(b.requestDate);
-      return bDate.compareTo(aDate);
+      return b.requestDate.compareTo(a.requestDate);
     });
 
     print('findDrugDeliveryRequestOfActiveUser: ${result.length}');
