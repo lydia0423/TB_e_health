@@ -66,7 +66,7 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
                   // TODO: get from state
                   from: DateTime.parse(snapshot.data!.therapyStartDate),
                   to: DateTime.parse(snapshot.data!.therapyEndDate),
-                  until: DateTime(2021, 9, 22),
+                  until: DateTime.parse(snapshot.data!.therapyUntilDate),
                   dates: dates,
                 ),
                 SizedBox(height: 20.0),
