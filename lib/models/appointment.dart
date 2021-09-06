@@ -74,9 +74,8 @@ class Appointment {
   }
 }
 
-Future<List<Appointment>> findAppointOfActiveUser(
-    Future<ActiveUser> userFuture) async {
-  String userId = (await userFuture).userId;
+Future<List<Appointment>> findAppointOfActiveUser(ActiveUser user) async {
+  String userId = user.userId;
   List<Appointment> result = [];
   try {
     Query<Map<String, dynamic>> query = FirebaseFirestore.instance
@@ -100,14 +99,36 @@ int _getHashCode(DateTime key) {
 }
 
 Future<LinkedHashMap<DateTime, List<Appointment>>>
-    findAppointOfActiveUserAsMapping(Future<ActiveUser> userFuture) async {
+    findAppointOfActiveUserAsMappingFuture(Future<ActiveUser> userFuture) async {
+  var user = await userFuture;
+  final List<Appointment> result = await findAppointOfActiveUser(user);
+  final LinkedHashMap<DateTime, List<Appointment>> map =
+      LinkedHashMap<DateTime, List<Appointment>>(
+    equals: isSameDay,
+    hashCode: _getHashCode,
+  )..addAll(<DateTime, List<Appointment>>{
+          for (var r in result) r.timestamp: 
+              // block 8am - 5pm
+              (r.timestamp.hour >= 8 && r.timestamp.hour < 17)
+                  ? [r]
+                  : []
+        });
+  return map;
+}
+
+Future<LinkedHashMap<DateTime, List<Appointment>>>
+    findAppointOfActiveUserAsMapping(ActiveUser userFuture) async {
   final List<Appointment> result = await findAppointOfActiveUser(userFuture);
   final LinkedHashMap<DateTime, List<Appointment>> map =
       LinkedHashMap<DateTime, List<Appointment>>(
     equals: isSameDay,
     hashCode: _getHashCode,
   )..addAll(<DateTime, List<Appointment>>{
-          for (var r in result) r.timestamp: [r]
+          for (var r in result) r.timestamp: 
+              // block 8am - 5pm
+              (r.timestamp.hour >= 8 && r.timestamp.hour < 17)
+                  ? [r]
+                  : []
         });
   return map;
 }

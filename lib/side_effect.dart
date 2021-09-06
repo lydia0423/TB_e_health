@@ -54,7 +54,7 @@ class _SideEffectState extends State<SideEffect> {
               child: (Padding(
                 padding: const EdgeInsets.fromLTRB(30.0, 30.0, 20.0, 10.0),
                 child: Text(
-                  'What side effects are you experiencing?',
+                  'Select all side effects that apply to you',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
@@ -455,6 +455,8 @@ class _SideEffectState extends State<SideEffect> {
       print(onError);
     });
     customAlertDialog(context,
-        title: 'Reminder', content: 'Sucessfully submit the form!');
+        title: 'Submission Successful',
+        content:
+            'Thank you for updating us. Our staff will schedule a teleconsultation with you if deemed necessary.');
   }
 }

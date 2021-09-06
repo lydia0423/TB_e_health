@@ -164,7 +164,7 @@ class _UploadVideoState extends State<UploadVideo> {
     if (fileMedia != null) {
       uploadFile();
       customAlertDialog(context,
-          title: 'Reminder', content: 'Upload video successfully');
+          title: 'Success', content: 'Video Uploaded successfully');
     } else {
       customAlertDialog(context,
           title: 'Warning', content: 'No video is recorded');

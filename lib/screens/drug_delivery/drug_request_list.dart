@@ -14,12 +14,20 @@ class DrugRequestListScreen extends StatefulWidget {
 
 class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
   _requestNewDrugDelivery(BuildContext context) async {
-    String? received = await Navigator.push(
+    var user = await myActiveUser();
+    var ongoingRequests = await findDrugDeliveryRequestOfActiveUser(
+      myActiveUser(),
+      history: false,
+    );
+    await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (_) => DrugRequestScreen(
-                  dateFrom: DateTime(2021, 9, 1),
-                  dateUntil: DateTime(2021, 9, 15),
+                  ongoingRequests: ongoingRequests,
+                  dateFrom: DateTime.parse(user.therapyUntilDate)
+                      .add(Duration(days: 1)),
+                  dateUntil: DateTime.parse(user.therapyUntilDate)
+                      .add(Duration(days: 14)),
                 )));
     setState(() {
       // so that the page refresh, and show the newly added record.
