@@ -83,7 +83,7 @@ class _NavigationsState extends State<Navigations> {
           Icons.comment_rounded,
           size: 30,
         ),
-        title: ("Live Chat"),
+        title: ("Umi Live Chat"),
         activeColorPrimary: Colors.black,
         inactiveColorPrimary: Colors.grey[400],
       ),
