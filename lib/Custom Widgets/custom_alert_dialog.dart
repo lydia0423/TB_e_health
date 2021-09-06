@@ -22,9 +22,9 @@ customAlertDialog(BuildContext context,
       });
 }
 
-Future<void> cancelAppointmentDialog(
+Future<bool?> cancelAppointmentDialog(
     BuildContext context, Appointment value) async {
-  return showDialog(
+  return showDialog<bool>(
       context: context,
       barrierDismissible: true,
       builder: (BuildContext context) {
@@ -34,14 +34,14 @@ Future<void> cancelAppointmentDialog(
           actions: [
             TextButton(
               child: Text("Not Now"),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pop(context, false),
             ),
             TextButton(
               child: Text("Confirm"),
               onPressed: () async {
                 print('cancelAppointmentDialog: ${value.id}');
                 await deleteAppointment(value.id);
-                Navigator.pop(context, "Bar");
+                Navigator.pop(context, true);
               },
             ),
           ],
