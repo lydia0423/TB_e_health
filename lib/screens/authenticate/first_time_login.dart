@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/custom_widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/Screens/shared/common_app_bar.dart';
 
 class FirstTimeLogin extends StatefulWidget {
@@ -240,7 +240,7 @@ void generateUser(String userId) async {
     "UserName": "Melissa Tee",
     "UserNotificationPreferences": true,
     "UserAvatar":
-        "https://www.nicepng.com/png/full/52-521023_download-free-icon-female-vectors-blank-facebook-profile.png",
+    "https://www.nicepng.com/png/full/52-521023_download-free-icon-female-vectors-blank-facebook-profile.png",
     "UserAge": "58"
   });
 

@@ -2,17 +2,13 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/custom_widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/appointment.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
-import 'package:tb_e_health/screens/teleconsultation/datetime_picker.dart';
 import 'package:tb_e_health/screens/teleconsultation/request_appointment_screen.dart';
-
-import 'package:tb_e_health/utils.dart';
+import 'package:tb_e_health/screens/shared/utils.dart';
 
 class SchedulerScreen extends StatefulWidget {
   @override
@@ -40,11 +36,6 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
       // so that the page refresh, and show the newly added record.
     });
     print('Done');
-    // pushNewScreen(
-    //   context,
-    //   screen: RequestApointmentScreen(),
-    //   withNavBar: false,
-    // );
   }
 
   @override
@@ -78,26 +69,26 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
               ),
             )
           : FutureBuilder<LinkedHashMap<DateTime, List<Appointment>>>(
-            future: findAppointOfActiveUserAsMapping(user!),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return Center(
-                    child: SizedBox(
-                      child: Text('Facing Error'),
-                    ),
-                  );
-                } else if (snapshot.hasData) {
-                  return SchedulerScreenContent(snapshot.data!);
+              future: findAppointOfActiveUserAsMapping(user!),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: SizedBox(
+                        child: Text('Facing Error'),
+                      ),
+                    );
+                  } else if (snapshot.hasData) {
+                    return SchedulerScreenContent(snapshot.data!);
+                  }
                 }
-              }
-              return Center(
-                child: SizedBox(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            },
-          ),
+                return Center(
+                  child: SizedBox(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
+            ),
     );
   }
 }
@@ -162,7 +153,9 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
                     child: ListTile(
                       trailing: IconButton(
                         onPressed: () async {
-                          bool result = (await cancelAppointmentDialog(context, value[0]))?? false;
+                          bool result = (await cancelAppointmentDialog(
+                                  context, value[0])) ??
+                              false;
                           if (result) {
                             setState(() {
                               print('refresh the page');

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/services/video_service.dart';
 

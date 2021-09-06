@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Custom%20Widgets/hello_calendar.dart';
-import 'package:tb_e_health/Models/video_uploaded.dart';
+import 'package:tb_e_health/common/constants.dart';
+import 'package:tb_e_health/custom_widgets/hello_calendar.dart';
+import 'package:tb_e_health/models/video_uploaded.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
-import 'package:tb_e_health/utils.dart';
-
-import '../utils.dart';
+import 'package:tb_e_health/screens/shared/utils.dart';
 
 class DailyProgressBoardScreen extends StatefulWidget {
   @override
@@ -81,37 +80,44 @@ class _DailyProgressBoardScreenState extends State<DailyProgressBoardScreen> {
                           )),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        child: Wrap(
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          // mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          runSpacing: 10.0,
                           children: [
-                            Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: new BoxDecoration(
-                                color: HelloGreen,
-                                shape: BoxShape.circle,
-                              ),
+                            Row(
+                              children: [
+                                Container(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  decoration: new BoxDecoration(
+                                    color: HelloGreen,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                SizedBox(width: 10.0),
+                                Text('Video Submitted',
+                                    style:
+                                        TextStyle(fontSize: Constants.textFs)),
+                              ],
                             ),
-                            SizedBox(
-                              width: 10.0,
+                            Row(
+                              children: [
+                                Container(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  decoration: new BoxDecoration(
+                                    color: HelloRed,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                                SizedBox(width: 10.0),
+                                Text('Video Not Submitted',
+                                    style:
+                                        TextStyle(fontSize: Constants.textFs)),
+                              ],
                             ),
-                            Text('Video Submitted'),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Container(
-                              width: 50.0,
-                              height: 50.0,
-                              decoration: new BoxDecoration(
-                                color: HelloRed,
-                                shape: BoxShape.circle,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text('Video Not Submitted'),
                           ],
                         ),
                       ),

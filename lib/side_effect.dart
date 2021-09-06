@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
-import 'package:tb_e_health/Models/active_user.dart';
-import 'package:tb_e_health/Screens/shared/common_app_bar.dart';
-import 'package:tb_e_health/Screens/teleconsultation/scheduler_screen.dart';
+import 'package:tb_e_health/custom_widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/models/active_user.dart';
+import 'package:tb_e_health/screens/shared/common_app_bar.dart';
+import 'package:tb_e_health/screens/teleconsultation/scheduler_screen.dart';
 
 import 'gen/assets.gen.dart';
 

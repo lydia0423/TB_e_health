@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/custom_widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/delivery_request.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
@@ -117,21 +117,21 @@ class DrugRequestScreen extends StatelessWidget {
   _infoOnRequest(BuildContext context) {
     var request = ongoingRequests[0];
 
-    var oneDayAfter = DateTime.parse(request.requestDate).add(Duration(days: 1));
+    var oneDayAfter =
+        DateTime.parse(request.requestDate).add(Duration(days: 1));
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            request.type == OrderType.Delivery
-                ? 'Delivery will be sent on\n${DateFormat('yyyy-MM-dd').format(oneDayAfter)}'
-                : 'Please pick up on\n${DateFormat('yyyy-MM-dd').format(oneDayAfter)}',
-            textAlign: TextAlign.center,
-          )
-        ],
-      )
-    );
+        padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              request.type == OrderType.Delivery
+                  ? 'Delivery will be sent on\n${DateFormat('yyyy-MM-dd').format(oneDayAfter)}'
+                  : 'Please pick up on\n${DateFormat('yyyy-MM-dd').format(oneDayAfter)}',
+              textAlign: TextAlign.center,
+            )
+          ],
+        ));
   }
 
   @override
@@ -139,7 +139,7 @@ class DrugRequestScreen extends StatelessWidget {
     return Scaffold(
       appBar: CommonAppBar(title: 'Confirm Order'),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
@@ -179,13 +179,14 @@ class DrugRequestScreen extends StatelessWidget {
                   ]),
             ),
           ),
-          SizedBox(
-            height: 12,
+          Text(
+            'Confirm Use of Service By',
+            style: TextStyle(fontSize: 18),
           ),
           // If the user click on the 'Pick Up Themselves', the confirm button should be disable and show the pick up date. The confirm button will be enable when they already collect their medication
-          if (ongoingRequests.length == 0) 
+          if (ongoingRequests.length == 0)
             _choiceButtons(context)
-          else 
+          else
             _infoOnRequest(context),
         ],
       ),

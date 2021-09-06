@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/screens/profile.dart';
-import 'package:tb_e_health/screens/ques_ans.dart';
-import 'package:tb_e_health/screens/home_screen.dart';
+import 'package:tb_e_health/common/constants.dart';
+import 'package:tb_e_health/screens/profile/profile.dart';
+import 'package:tb_e_health/screens/navigation_bar/qna.dart';
+import 'package:tb_e_health/screens/upload_video/hello_screen.dart';
+import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-
-import 'chatbot/live_chat.dart';
 
 class Navigations extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class Navigations extends StatefulWidget {
 
 class _NavigationsState extends State<Navigations> {
   PersistentTabController _controller =
-      PersistentTabController(initialIndex: 0);
+      PersistentTabController(initialIndex: 0); // first page index "home"
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +66,9 @@ class _NavigationsState extends State<Navigations> {
           size: 30,
         ),
         title: ("Home"),
+        textStyle: TextStyle(fontSize: Constants.navTextFs),
         activeColorPrimary: Colors.black,
-        inactiveColorPrimary: Colors.grey[400],
+        inactiveColorPrimary: Colors.black54,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(
@@ -75,17 +76,19 @@ class _NavigationsState extends State<Navigations> {
           size: 30,
         ),
         title: ("Useful Information"),
+        textStyle: TextStyle(fontSize: Constants.navTextFs),
         activeColorPrimary: Colors.black,
-        inactiveColorPrimary: Colors.grey[400],
+        inactiveColorPrimary: Colors.black54,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(
           Icons.comment_rounded,
           size: 30,
         ),
+        textStyle: TextStyle(fontSize: Constants.navTextFs),
         title: ("Umi Live Chat"),
         activeColorPrimary: Colors.black,
-        inactiveColorPrimary: Colors.grey[400],
+        inactiveColorPrimary: Colors.black54,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(
@@ -93,8 +96,9 @@ class _NavigationsState extends State<Navigations> {
           size: 30,
         ),
         title: ("Profile"),
+        textStyle: TextStyle(fontSize: Constants.navTextFs),
         activeColorPrimary: Colors.black,
-        inactiveColorPrimary: Colors.grey[400],
+        inactiveColorPrimary: Colors.black54,
       ),
     ];
   }

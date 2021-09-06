@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Custom Widgets/hello_calendar_selection.dart';
+import 'package:tb_e_health/custom_widgets/hello_calendar_selection.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/appointment.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
-import 'package:tb_e_health/utils.dart';
+import 'package:tb_e_health/screens/shared/utils.dart';
 import 'package:uuid/uuid.dart';
 
 const int _INTERVAL = 30;
