@@ -16,7 +16,7 @@ class RequestApointmentScreen extends StatefulWidget {
 
 class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
   DateTime? dateTime;
-  final futureData = findAppointOfActiveUserAsMapping(myActiveUser());
+  final futureData = findAppointOfActiveUserAsMappingFuture(myActiveUser());
 
   Future<void> _createAppointment() async {
     if (dateTime!.isBefore(DateTime.now())) {
