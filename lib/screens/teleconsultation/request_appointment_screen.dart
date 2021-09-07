@@ -11,7 +11,8 @@ const int _INTERVAL = 30;
 
 class RequestApointmentScreen extends StatefulWidget {
   @override
-  _RequestApointmentScreenState createState() => _RequestApointmentScreenState();
+  _RequestApointmentScreenState createState() =>
+      _RequestApointmentScreenState();
 }
 
 class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
@@ -22,11 +23,11 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
     if (dateTime!.isBefore(DateTime.now())) {
       showDialog(
         barrierDismissible: true,
-        context: context, 
+        context: context,
         builder: (context) {
           return AlertDialog(
             title: Text('Error'),
-            content: Text('Cant choose before ${DateTime.now()}'),
+            content: Text('Cannot choose before ${DateTime.now()}'),
           );
         },
       );
@@ -36,11 +37,11 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
     if (dateTime!.hour < 8 || dateTime!.hour >= 17) {
       showDialog(
         barrierDismissible: true,
-        context: context, 
+        context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Cant choose before 8am or after 5pm'),
+            title: Text('Office Closed'),
+            content: Text('Please choose before 8am or after 5pm'),
           );
         },
       );
@@ -48,12 +49,12 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
     }
     // check if booked
     final data = await futureData;
-    final appointments = data[dateTime!.getToday()]?? [];
+    final appointments = data[dateTime!.getToday()] ?? [];
     for (var appointment in appointments) {
       if (appointment.timestamp.isAtSameMomentAs(dateTime!)) {
         showDialog(
           barrierDismissible: true,
-          context: context, 
+          context: context,
           builder: (context) {
             return AlertDialog(
               title: Text('Error'),
@@ -71,7 +72,8 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
 
     Appointment request = Appointment(
       appointmentDate: Appointment.toDate(dateTime!),
-      appointmentEndTime: Appointment.toTime(dateTime!.add(Duration(minutes: 30))),
+      appointmentEndTime:
+          Appointment.toTime(dateTime!.add(Duration(minutes: 30))),
       appointmentStartTime: Appointment.toTime(dateTime!),
       appointmentStatus: AppointmentStatus.pending,
       id: uuid.v4().toString(),
@@ -82,10 +84,10 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
       await createAppointment(request);
       // Get.back();
       Navigator.of(context).pop();
-    } catch(e) {
+    } catch (e) {
       showDialog(
         barrierDismissible: true,
-        context: context, 
+        context: context,
         builder: (context) {
           return AlertDialog(
             title: Text('Error'),
@@ -106,14 +108,15 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
         children: [
           HelloCalendarSelection(
             year: today.year,
-            month: dateTime != null ? dateTime!.month:today.month,
+            month: dateTime != null ? dateTime!.month : today.month,
             // TODO: get from state
-            from: DateTime.now().subtract(Duration(hours: 24)), 
+            from: DateTime.now().subtract(Duration(hours: 24)),
             to: DateTime.now().add(Duration(days: 90)),
             onSelect: (date) {
               date = date.setTime(DateTime.now());
-              dateTime = dateTime?? 
-                  date.add(Duration(minutes: _INTERVAL - (date.minute % _INTERVAL)));
+              dateTime = dateTime ??
+                  date.add(
+                      Duration(minutes: _INTERVAL - (date.minute % _INTERVAL)));
               setState(() {
                 dateTime = dateTime!.setDate(date);
               });
@@ -134,8 +137,7 @@ class _RequestApointmentScreenState extends State<RequestApointmentScreen> {
                 },
               ),
             ),
-          if (dateTime != null)
-            Text('Book Time will be 30 minutes'),
+          if (dateTime != null) Text('Book Time will be 30 minutes'),
           if (dateTime != null)
             SizedBox(
               height: 60,
