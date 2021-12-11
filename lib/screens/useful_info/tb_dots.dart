@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
-import 'package:tb_e_health/screens/navigations.dart';
-import 'package:tb_e_health/screens/ques_ans.dart';
 
 class DotsTherapyInfo extends StatelessWidget {
   @override

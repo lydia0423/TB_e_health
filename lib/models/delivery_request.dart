@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tb_e_health/models/active_user.dart';
 
@@ -117,13 +118,11 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfActiveUser(
     Query<Map<String, dynamic>> query = FirebaseFirestore.instance
         .collection("DrugDeliveryRequest")
         .where("UserId", isEqualTo: userId);
-
     if (history) {
       query = query.where("OrderStatus", isEqualTo: OrderStatus.Received);
     } else {
       query = query.where("OrderStatus", isNotEqualTo: OrderStatus.Received);
     }
-
     QuerySnapshot snapshot = await query.get();
     for (var doc in snapshot.docs) {
       print(doc.data());
@@ -131,29 +130,13 @@ Future<List<DrugDeliveryRequest>> findDrugDeliveryRequestOfActiveUser(
           DrugDeliveryRequest.fromJson(doc.data() as Map<String, dynamic>);
       result.add(submission);
     }
-
     result.sort((a, b) {
       return b.requestDate.compareTo(a.requestDate);
     });
-
     print('findDrugDeliveryRequestOfActiveUser: ${result.length}');
     return result;
   } catch (e) {
     print(e);
     return result;
   }
-}
-
-//? Takes the date String and converts it to DateTime
-DateTime parseStringToDate(String date) {
-  DateTime parsedDate;
-  List<String> newDate = date.split("-");
-  String day, month, year, displayDate;
-
-  (int.parse(newDate[0]) < 10) ? day = "0${newDate[0]}" : day = newDate[0];
-  (int.parse(newDate[1]) < 10) ? month = "0${newDate[1]}" : month = newDate[1];
-  year = newDate[2];
-  displayDate = year + month + day;
-  parsedDate = DateTime.parse(displayDate);
-  return parsedDate;
 }

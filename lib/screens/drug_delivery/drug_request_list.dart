@@ -4,9 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:tb_e_health/models/delivery_request.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/drug_delivery/request_display_card.dart';
+import 'package:tb_e_health/screens/drug_delivery/drug_request_screen.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
-
-import 'drug_request_screen.dart';
 
 class DrugRequestListScreen extends StatefulWidget {
   @override
@@ -15,12 +14,20 @@ class DrugRequestListScreen extends StatefulWidget {
 
 class _DrugRequestListScreenState extends State<DrugRequestListScreen> {
   _requestNewDrugDelivery(BuildContext context) async {
-    String received = await Navigator.push(
+    var user = await myActiveUser();
+    var ongoingRequests = await findDrugDeliveryRequestOfActiveUser(
+      myActiveUser(),
+      history: false,
+    );
+    await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (_) => DrugRequestScreen(
-                  dateFrom: DateTime(2021, 9, 1),
-                  dateUntil: DateTime(2021, 9, 15),
+                  ongoingRequests: ongoingRequests,
+                  dateFrom: DateTime.parse(user.therapyUntilDate)
+                      .add(Duration(days: 1)),
+                  dateUntil: DateTime.parse(user.therapyUntilDate)
+                      .add(Duration(days: 14)),
                 )));
     setState(() {
       // so that the page refresh, and show the newly added record.

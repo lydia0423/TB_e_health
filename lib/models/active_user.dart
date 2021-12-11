@@ -1,16 +1,23 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 class ActiveUser {
   //^ Attributes
-  String avatar, email, name, age, gender, healthInfo, address, userId, therapyEndDate, therapyStartDate;
+  String avatar, email, name, age, gender, healthInfo, address, userId, 
+      therapyEndDate, 
+      therapyStartDate, 
+      therapyUntilDate;
   bool notificationPreference;
 
   //^ Constructor
   ActiveUser(this.avatar, this.email, this.name, this.age, this.gender,
       this.healthInfo, this.notificationPreference, this.address, this.userId, {
         this.therapyEndDate = "2021-08-20",
-        this.therapyStartDate = "2021-09-30"});
+        this.therapyStartDate = "2021-09-30",
+        this.therapyUntilDate = "2021-09-30"});
 
   //? Factory - creates the ActiveUser instance from the JSON (database storage type) passed
   //? When Factory is used, implementing a constructor doesn't always create a new instance of its class
@@ -36,6 +43,7 @@ ActiveUser _activeUserFromJson(Map<dynamic, dynamic> json) {
     (json["UserId"] as String?)?? '',
     therapyEndDate: (json["TherapyEndDate"] as String?)?? '',
     therapyStartDate: (json["TherapyStartDate"] as String?)?? '',
+    therapyUntilDate: (json["TherapyUntilDate"] as String?)?? '',
   );
 }
 
@@ -53,6 +61,7 @@ Map<String, dynamic> _activeUserToJson(ActiveUser instance) =>
       "UserId": instance.userId,
       "TherapyEndDate": instance.therapyEndDate,
       "TherapyStartDate": instance.therapyStartDate,
+      "TherapyUntilDate": instance.therapyUntilDate,
     };
 
 //? Retrieves list of all users
@@ -88,4 +97,16 @@ Future<ActiveUser> myActiveUser({String? docId}) async {
 
   final ActiveUser activeUser = ActiveUser.fromJson(activeUserDetails.data()!);
   return activeUser;
+}
+
+Future<ActiveUser> updateTherapyUntilDate(DateTime dateTime) async {
+  String currentId;
+  User? currentUser = FirebaseAuth.instance.currentUser;
+  currentId = currentUser!.uid;
+
+  await FirebaseFirestore.instance.collection("User").doc(currentId).update({
+    "TherapyUntilDate": DateFormat('yyyy-MM-dd').format(dateTime),
+  });
+  
+  return myActiveUser();
 }

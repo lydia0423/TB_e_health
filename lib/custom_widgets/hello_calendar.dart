@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../utils.dart';
-import 'hello_calendar.dart';
+import '../screens/shared/utils.dart';
 
-class HelloCalendarSelection extends StatefulWidget {
+class HelloCalendar extends StatefulWidget {
   final int year;
   int month;
-
   // config data
 
   /// the day start TB treatment
@@ -15,28 +13,26 @@ class HelloCalendarSelection extends StatefulWidget {
   /// the day complete TB treatment
   final DateTime to;
 
-  final void Function(DateTime) onSelect;
+  /// the day ur supply can tahan
+  final DateTime until;
 
-  // load color for appointment
-  final DateTime? appointment;
-  final bool awaiting;
+  /// dates whether video is taken, true is done
+  final Map<DateTime, bool> dates;
 
-  HelloCalendarSelection({
+  HelloCalendar({
     required this.year,
     required this.month,
     required this.from,
     required this.to,
-    required this.onSelect,
-    this.appointment,
-    this.awaiting = true,
+    required this.until,
+    required this.dates,
   }) : assert(month <= DateTime.december && month >= DateTime.january);
 
-  _HelloCalendarSelection createState() => _HelloCalendarSelection();
+  @override
+  _HelloCalendarState createState() => _HelloCalendarState();
 }
 
-class _HelloCalendarSelection extends State<HelloCalendarSelection> {
-  DateTime? selected;
-
+class _HelloCalendarState extends State<HelloCalendar> {
   String get _monthToString {
     switch (widget.month) {
       case DateTime.january:
@@ -120,12 +116,23 @@ class _HelloCalendarSelection extends State<HelloCalendarSelection> {
   }
 
   Color? _computeColor(DateTime date) {
-    if (widget.appointment == null) {
-      return null;
+    print('_computeColor: date : $date');
+    var b = widget.dates[date];
+    if (widget.dates[date] ?? false) {
+      return HelloGreen;
     }
-    var a = widget.appointment!.getToday();
-    if (a.day == date.day && a.month == date.month && a.year == date.year) {
-      return widget.awaiting ? HelloYellow : HelloGreen;
+    // today or after that
+    if (date.isAfter(DateTime.now().subtract(const Duration(days: 1)))) {
+      if (date.isBefore(widget.until)) {
+        // still have supply
+        return Colors.transparent;
+      } else if (date.isBefore(widget.to)) {
+        // need resupply
+        return HelloGrey;
+      }
+    } else if (date.isAfter(widget.from)) {
+      // already pass but didnt take video
+      return HelloRed;
     }
     return null;
   }
@@ -134,32 +141,11 @@ class _HelloCalendarSelection extends State<HelloCalendarSelection> {
     BuildContext context,
     DateTime date,
   ) {
-    bool isSelectable = date.isAfter(widget.from) && date.isBefore(widget.to);
-    var child = GestureDetector(
-      onTap: isSelectable
-          ? () {
-              setState(() {
-                selected = date;
-              });
-              widget.onSelect(date);
-            }
-          : null,
-      child: SelectableDayBox(
-        size: MediaQuery.of(context).size.width / 7 - 8,
-        day: date.day,
-        color: _computeColor(date),
-        border: date.day == DateTime.now().day,
-        selectable: isSelectable,
-      ),
-    );
-    return SizedBox(
-      width: MediaQuery.of(context).size.width / 7,
-      height: MediaQuery.of(context).size.width / 7,
-      child: selected == date
-          ? Card(
-              child: child,
-            )
-          : child,
+    return DayBox(
+      size: MediaQuery.of(context).size.width / 7,
+      day: date.day,
+      color: _computeColor(date),
+      border: date.day == DateTime.now().day,
     );
   }
 
@@ -181,8 +167,7 @@ class _HelloCalendarSelection extends State<HelloCalendarSelection> {
       do {
         weeks[weeks.length - 1].add(dayDate);
         dayDate = dayDate.add(const Duration(days: 1));
-      } while (
-          dayDate.weekday != DateTime.sunday && dayDate.month == widget.month);
+      } while (dayDate.weekday != DateTime.sunday && dayDate.month == widget.month);
     }
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -253,30 +238,37 @@ class _HelloCalendarSelection extends State<HelloCalendarSelection> {
   }
 }
 
-class SelectableDayBox extends DayBox {
-  final bool selectable;
+class DayBox extends StatelessWidget {
+  final double size;
+  final int day;
+  final Color? color;
+  final bool border;
 
-  SelectableDayBox({
-    this.selectable = true,
-    double? size,
-    int day = 1,
-    Color? color,
-    bool border = false,
-  }) : super(
-          size: size ?? 60,
-          day: day,
-          color: color,
-          border: border,
-        );
+  DayBox({
+    this.size = 60,
+    this.day = 1,
+    this.color,
+    this.border = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: DefaultTextStyle(
-        style: TextStyle(
-          color: selectable ? Colors.black : Colors.grey,
+    return Container(
+      height: size,
+      width: size,
+      padding: EdgeInsets.all(3),
+      child: Container(
+        decoration: BoxDecoration(
+          color: color != null? color : null,
+          borderRadius: BorderRadius.all(Radius.circular(size/2-3)),
+          border: border
+            ? Border.all(
+              color: HelloBlue,
+            ) : null,
         ),
-        child: super.build(context),
+        child: Center(
+          child: Text('$day'),
+        ),
       ),
     );
   }

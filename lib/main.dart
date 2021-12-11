@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:tb_e_health/models/anonymous_user.dart';
 import 'package:tb_e_health/screens/wrapper.dart';
 import 'package:tb_e_health/services/auth_service.dart';
-import 'package:tb_e_health/theme.dart';
+import 'package:tb_e_health/screens/shared/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       initialData: null,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: helloTheme,
+        theme: helloTheme(context),
         home: Wrapper(),
       ),
     );

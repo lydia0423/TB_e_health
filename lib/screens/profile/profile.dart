@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/common/constants.dart';
+import 'package:tb_e_health/custom_widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
-import 'package:tb_e_health/screens/chatbot/live_chat.dart';
 import 'package:tb_e_health/services/auth_service.dart';
-
-import 'daily_progress_board.dart';
+import 'package:tb_e_health/screens/profile/daily_progress_board.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -43,7 +42,8 @@ class _ProfileState extends State<Profile> {
                         Text(
                           'MY PERSONAL PROFILE',
                           style: TextStyle(
-                              fontSize: 22.0, fontWeight: FontWeight.w500),
+                              fontSize: Constants.titleFs,
+                              fontWeight: FontWeight.w500),
                         ),
                         InkWell(
                           child: Container(
@@ -53,7 +53,9 @@ class _ProfileState extends State<Profile> {
                                 SizedBox(
                                   width: 5,
                                 ),
-                                Text('Logout'),
+                                Text('Logout',
+                                    style:
+                                        TextStyle(fontSize: Constants.textFs)),
                               ],
                             ),
                           ),
@@ -86,6 +88,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
                         padding:
@@ -106,41 +109,44 @@ class _ProfileState extends State<Profile> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Name: ${user.data!.name}",
-                              style: TextStyle(fontSize: 18.0)),
+                              style: TextStyle(fontSize: Constants.titleFs)),
                           SizedBox(height: 10.0),
                           Text(
                             "Age: ${user.data!.age}",
-                            style: TextStyle(fontSize: 18.0),
+                            style: TextStyle(fontSize: Constants.titleFs),
                           ),
                           SizedBox(height: 10.0),
                           Text(
                             "Gender: ${user.data!.gender}",
-                            style: TextStyle(fontSize: 18.0),
+                            style: TextStyle(fontSize: Constants.titleFs),
                           ),
                         ],
                       ),
                     ],
                   ),
                   SizedBox(height: 30.0),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 110.0),
-                    child: OutlinedButton(
-                        onPressed: () => Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return DailyProgressBoardScreen();
-                            })),
-                        child: Icon(
-                          Icons.analytics_rounded,
-                          size: 50.0,
-                          color: Colors.black,
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                          backgroundColor: Colors.white,
-                          padding: EdgeInsets.all(30.0),
-                          elevation: 1.5,
-                        )),
+                  Center(
+                    child: SizedBox(
+                      height: 150,
+                      width: 180,
+                      child: OutlinedButton(
+                          onPressed: () => Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return DailyProgressBoardScreen();
+                              })),
+                          child: Icon(
+                            Icons.analytics_rounded,
+                            size: 50.0,
+                            color: Colors.black,
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0)),
+                            backgroundColor: Colors.white,
+                            padding: EdgeInsets.all(30.0),
+                            elevation: 1.5,
+                          )),
+                    ),
                   ),
                   SizedBox(
                     height: 15.0,
@@ -307,7 +313,9 @@ class _ProfileState extends State<Profile> {
               ),
             );
           } else {
-            return LinearProgressIndicator();
+            return CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.grey),
+            );
           }
         });
   }

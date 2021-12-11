@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/custom_widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/common/constants.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/screens/authenticate/first_time_login.dart';
@@ -72,24 +72,20 @@ class _SignInState extends State<SignIn> {
               child: Column(
                 children: [
                   Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 50.0, bottom: 0.0, left: 40.0, right: 30.0),
+                    child: Center(
                       child: Image(
                         image: AssetImage('assets/Images/uni_logo.png'),
-                        width: 350,
+                        width: 350.0,
                       ),
                     ),
                   ),
 
                   // LOGO
                   Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 0.0, bottom: 10.0, left: 75.0, right: 60.0),
+                    child: Center(
                       child: Image(
                         image: AssetImage('assets/Images/app_logo.png'),
-                        width: 280,
+                        width: 280.0,
                       ),
                     ),
                   ),
@@ -113,6 +109,7 @@ class _SignInState extends State<SignIn> {
                         child: Column(
                           children: <Widget>[
                             TextFormField(
+                              textInputAction: TextInputAction.next,
                               validator: (v) => v!.isEmpty
                                   ? 'Enter an valid user id (e.g. RN1234)'
                                   : null,
@@ -130,6 +127,7 @@ class _SignInState extends State<SignIn> {
                             ),
                             SizedBox(height: 20.0),
                             TextFormField(
+                              textInputAction: TextInputAction.done,
                               validator: (v) => v!.length < 6
                                   ? 'Password at least 6 characters'
                                   : null,
@@ -218,73 +216,71 @@ class _SignInState extends State<SignIn> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      SizedBox(width: 30.0),
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: OutlinedButton(
-                            onPressed: () async {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => FirstTimeLogin()));
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Text(
-                                'First Time Login',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: Constants.buttonFs),
-                              ),
+                        flex: 6,
+                        child: OutlinedButton(
+                          onPressed: () async {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => FirstTimeLogin()));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text(
+                              'First Time Login',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: Constants.buttonFs),
                             ),
-                            style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              backgroundColor: Colors.black,
-                            ),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            backgroundColor: Colors.black,
                           ),
                         ),
                       ),
+                      SizedBox(width: 10.0),
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: OutlinedButton(
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                setState(() {
-                                  loading = true;
-                                });
-                                dynamic result =
-                                    await _auth.signInWithUserIdAndPassword(
-                                        emailCtrl.text, passwordCtrl.text);
-                                setState(() {
-                                  loading = false;
-                                });
-                                if (result is String) {
-                                  print('SignIn: error!!! ' + result);
-                                  loginError(context, result);
-                                } else {
-                                  print('SignIn: ' +
-                                      (result as ActiveUser).userId);
-                                }
+                        flex: 4,
+                        child: OutlinedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                                loading = true;
+                              });
+                              dynamic result =
+                                  await _auth.signInWithUserIdAndPassword(
+                                      emailCtrl.text, passwordCtrl.text);
+                              setState(() {
+                                loading = false;
+                              });
+                              if (result is String) {
+                                print('SignIn: error!!! ' + result);
+                                loginError(context, result);
+                              } else {
+                                print(
+                                    'SignIn: ' + (result as ActiveUser).userId);
                               }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: Constants.buttonFs),
-                              ),
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: Constants.buttonFs),
                             ),
-                            style: OutlinedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              backgroundColor: Colors.black,
-                            ),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            backgroundColor: Colors.black,
                           ),
                         ),
                       ),
-                      SizedBox(height: 10.0),
+                      SizedBox(width: 30.0),
                     ],
                   ),
                   SizedBox(height: 150.0),

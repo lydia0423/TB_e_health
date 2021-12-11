@@ -3,13 +3,12 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:tb_e_health/Custom%20Widgets/custom_alert_dialog.dart';
+import 'package:tb_e_health/custom_widgets/custom_alert_dialog.dart';
 import 'package:tb_e_health/models/active_user.dart';
 import 'package:tb_e_health/models/appointment.dart';
 import 'package:tb_e_health/screens/shared/common_app_bar.dart';
 import 'package:tb_e_health/screens/teleconsultation/request_appointment_screen.dart';
-
-import 'package:tb_e_health/utils.dart';
+import 'package:tb_e_health/screens/shared/utils.dart';
 
 class SchedulerScreen extends StatefulWidget {
   @override
@@ -18,13 +17,25 @@ class SchedulerScreen extends StatefulWidget {
 
 class _SchedulerScreenState extends State<SchedulerScreen> {
   DateTime focusDateTime = DateTime.now();
+  ActiveUser? user;
+
+  @override
+  void initState() {
+    super.initState();
+    myActiveUser().then((value) {
+      setState(() {
+        user = value;
+      });
+    });
+  }
 
   void _requestAppointment() async {
-    String received = await Navigator.push(
+    await Navigator.push(
         context, MaterialPageRoute(builder: (_) => RequestApointmentScreen()));
     setState(() {
       // so that the page refresh, and show the newly added record.
     });
+    print('Done');
   }
 
   @override
@@ -51,27 +62,33 @@ class _SchedulerScreenState extends State<SchedulerScreen> {
           ],
         ),
       ),
-      body: FutureBuilder<LinkedHashMap<DateTime, List<Appointment>>>(
-        future: findAppointOfActiveUserAsMapping(myActiveUser()),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return Center(
-                child: SizedBox(
-                  child: Text('Facing Error'),
-                ),
-              );
-            } else if (snapshot.hasData) {
-              return SchedulerScreenContent(snapshot.data!);
-            }
-          }
-          return Center(
-            child: SizedBox(
-              child: CircularProgressIndicator(),
+      body: user == null
+          ? Center(
+              child: SizedBox(
+                child: CircularProgressIndicator(),
+              ),
+            )
+          : FutureBuilder<LinkedHashMap<DateTime, List<Appointment>>>(
+              future: findAppointOfActiveUserAsMapping(user!),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: SizedBox(
+                        child: Text('Facing Error'),
+                      ),
+                    );
+                  } else if (snapshot.hasData) {
+                    return SchedulerScreenContent(snapshot.data!);
+                  }
+                }
+                return Center(
+                  child: SizedBox(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
     );
   }
 }
@@ -136,11 +153,15 @@ class _SchedulerScreenContentState extends State<SchedulerScreenContent> {
                     child: ListTile(
                       trailing: IconButton(
                         onPressed: () async {
-                          await cancelAppointmentDialog(context, value[0]);
-                          setState(() {
-                            print('refresh the page');
-                            _selectedEvents.value.removeAt(index);
-                          });
+                          bool result = (await cancelAppointmentDialog(
+                                  context, value[0])) ??
+                              false;
+                          if (result) {
+                            setState(() {
+                              print('refresh the page');
+                              _selectedEvents.value.removeAt(index);
+                            });
+                          }
                         },
                         icon: Icon(Icons.remove_circle_outlined),
                       ),
